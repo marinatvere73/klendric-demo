@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Klendric — STR Listing Intelligence | Live Product Preview</title>
+  <meta name="description" content="Klendric scores short-term-rental listings across 22 dimensions including profitability. This is the live product preview that updates with every push.">
+  <meta name="robots" content="noindex,nofollow">
+  <meta property="og:title" content="Klendric — Live Product Preview">
+  <meta property="og:description" content="Built by operators, for operators. Score 22 dimensions including profitability.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif; }
+    .gradient-bg { background: radial-gradient(ellipse at top, #1e293b 0%, #0f172a 50%, #020617 100%); }
+    .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.06); }
+    .grade-A { color: #34d399; }
+    .grade-B { color: #60a5fa; }
+    .grade-C { color: #fbbf24; }
+    .grade-D { color: #fb923c; }
+    .grade-F { color: #f87171; }
+    .ticker { animation: pulse 2.5s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: 0.5 } }
+  </style>
+</head>
+<body class="gradient-bg text-slate-100 min-h-screen">
+  <!-- Top status bar -->
+  <div class="border-b border-slate-800 bg-slate-950/60">
+    <div class="max-w-6xl mx-auto px-6 py-2 flex items-center justify-between text-xs text-slate-400">
+      <div class="flex items-center gap-2">
+        <span class="ticker inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span>Live preview &middot; auto-deployed from <code class="text-slate-300">main</code> branch</span>
+      </div>
+      <div>Last build: <span id="builtAt">2026-05-03</span></div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <header class="max-w-6xl mx-auto px-6 pt-16 pb-12">
+    <div class="flex items-center gap-3 mb-6">
+      <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center font-black text-slate-900">K</div>
+      <div class="text-xl font-semibold tracking-tight">Klendric</div>
+      <span class="text-xs px-2 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 ml-2">PRODUCT PREVIEW</span>
+    </div>
+    <h1 class="text-5xl md:text-6xl font-black tracking-tight leading-[1.05] mb-6">
+      Every listing. Every metric.<br>
+      <span class="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">Every dollar.</span>
+    </h1>
+    <p class="text-xl text-slate-300 max-w-2xl mb-8">
+      The only short-term-rental listing optimizer that scores <strong class="text-white">22 dimensions</strong>
+      including profitability. Built by operators, for operators.
+    </p>
+    <div class="flex flex-wrap gap-3">
+      <a href="#demos" class="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-amber-500 text-slate-900 font-semibold hover:bg-amber-400 transition">
+        See the live demo &rarr;
+      </a>
+      <a href="marketing.html" class="inline-flex items-center gap-2 px-5 py-3 rounded-lg glass text-slate-200 font-medium hover:bg-white/5 transition">
+        View marketing one-pager
+      </a>
+    </div>
+  </header>
+
+  <!-- Stats strip -->
+  <section class="max-w-6xl mx-auto px-6 pb-16">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="glass rounded-xl p-5">
+        <div class="text-3xl font-bold text-white">22</div>
+        <div class="text-xs text-slate-400 mt-1">scoring dimensions</div>
+      </div>
+      <div class="glass rounded-xl p-5">
+        <div class="text-3xl font-bold text-white">5</div>
+        <div class="text-xs text-slate-400 mt-1">live property scorecards</div>
+      </div>
+      <div class="glass rounded-xl p-5">
+        <div class="text-3xl font-bold text-white">2</div>
+        <div class="text-xs text-slate-400 mt-1">markets · Reno + San Diego</div>
+      </div>
+      <div class="glass rounded-xl p-5">
+        <div class="text-3xl font-bold text-white">1</div>
+        <div class="text-xs text-slate-400 mt-1">Airbnb URL demo (any link)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demo cards -->
+  <section id="demos" class="max-w-6xl mx-auto px-6 pb-16">
+    <div class="flex items-end justify-between mb-6 border-b border-slate-800 pb-4">
+      <div>
+        <h2 class="text-2xl font-bold text-white">Live demos</h2>
+        <p class="text-slate-400 text-sm mt-1">Real scorecards from a real portfolio. Click any tile to see the full report.</p>
+      </div>
+      <a href="runs/2026-05-03/" class="text-amber-400 hover:text-amber-300 text-sm font-medium">
+        Portfolio dashboard &rarr;
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <a href="runs/2026-05-03/" class="block glass rounded-xl p-6 hover:bg-white/5 transition group">
+        <div class="text-xs text-amber-400 font-medium mb-2">PORTFOLIO ROLLUP</div>
+        <div class="text-lg font-bold text-white mb-1">All 5 properties</div>
+        <div class="text-sm text-slate-400 mb-4">Side-by-side dimension scores, top fixes, distribution.</div>
+        <div class="text-2xl font-bold grade-C">Avg 73 · C</div>
+        <div class="text-xs text-slate-500 mt-3 group-hover:text-amber-400">Open dashboard &rarr;</div>
+      </a>
+
+      <a href="runs/2026-05-03/property/RID3403.html" class="block glass rounded-xl p-6 hover:bg-white/5 transition group">
+        <div class="text-xs text-emerald-400 font-medium mb-2">TOP PERFORMER</div>
+        <div class="text-lg font-bold text-white mb-1">Ridge Mountain Modern</div>
+        <div class="text-sm text-slate-400 mb-4">Reno/Sparks · RID3403</div>
+        <div class="text-2xl font-bold grade-A">92 · A</div>
+        <div class="text-xs text-slate-500 mt-3 group-hover:text-amber-400">View scorecard &rarr;</div>
+      </a>
+
+      <a href="runs/2026-05-03/property/SD3902.html" class="block glass rounded-xl p-6 hover:bg-white/5 transition group">
+        <div class="text-xs text-blue-400 font-medium mb-2">FLAGSHIP</div>
+        <div class="text-lg font-bold text-white mb-1">39th-Floor Penthouse</div>
+        <div class="text-sm text-slate-400 mb-4">San Diego · SD3902</div>
+        <div class="text-2xl font-bold grade-B">80 · B</div>
+        <div class="text-xs text-slate-500 mt-3 group-hover:text-amber-400">View scorecard &rarr;</div>
+      </a>
+
+      <a href="runs/2026-05-03/property/QUA1990.html" class="block glass rounded-xl p-6 hover:bg-white/5 transition group">
+        <div class="text-xs text-yellow-400 font-medium mb-2">MID-TIER</div>
+        <div class="text-lg font-bold text-white mb-1">Quail Hollow Reno</div>
+        <div class="text-sm text-slate-400 mb-4">Reno/Sparks · QUA1990</div>
+        <div class="text-2xl font-bold grade-C">78 · C</div>
+        <div class="text-xs text-slate-500 mt-3 group-hover:text-amber-400">View scorecard &rarr;</div>
+      </a>
+
+      <a href="runs/2026-05-03/property/SD1303.html" class="block glass rounded-xl p-6 hover:bg-white/5 transition group">
+        <div class="text-xs text-orange-400 font-medium mb-2">NEEDS WORK</div>
+        <div class="text-lg font-bold text-white mb-1">Marina Bay Suite</div>
+        <div class="text-sm text-slate-400 mb-4">San Diego · SD1303</div>
+        <div class="text-2xl font-bold grade-D">69 · D</div>
+        <div class="text-xs text-slate-500 mt-3 group-hover:text-amber-400">View scorecard &rarr;</div>
+      </a>
+
+      <a href="runs/2026-05-03/property/ALX2434.html" class="block glass rounded-xl p-6 hover:bg-white/5 transition group">
+        <div class="text-xs text-red-400 font-medium mb-2">DELIST RISK</div>
+        <div class="text-lg font-bold text-white mb-1">Alexander Lakefront</div>
+        <div class="text-sm text-slate-400 mb-4">Reno/Sparks · ALX2434</div>
+        <div class="text-2xl font-bold grade-F">46 · F</div>
+        <div class="text-xs text-slate-500 mt-3 group-hover:text-amber-400">View scorecard &rarr;</div>
+      </a>
+
+    </div>
+
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <a href="runs/demo-airbnb-1334271564949136409/" class="block glass rounded-xl p-6 hover:bg-white/5 transition group border border-amber-500/20">
+        <div class="text-xs text-amber-400 font-medium mb-2">AIRBNB URL DEMO</div>
+        <div class="text-lg font-bold text-white mb-1">Any Airbnb listing &rarr; full scorecard</div>
+        <div class="text-sm text-slate-400 mb-4">Paste an Airbnb URL, get a 22-dimension report. Live working demo.</div>
+        <div class="text-2xl font-bold text-amber-400">Try it &rarr;</div>
+      </a>
+      <div class="glass rounded-xl p-6">
+        <div class="text-xs text-slate-400 font-medium mb-2">UPDATE CADENCE</div>
+        <div class="text-lg font-bold text-white mb-1">Every push to main rebuilds this site</div>
+        <div class="text-sm text-slate-400">Bookmark this URL. As the team ships briefs 13-20 (pricing overlay, search visibility, owner portal), the demos here update automatically.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800 mt-16">
+    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-sm text-slate-500">
+      <div>
+        Klendric is a product preview. Branding, naming, and scoring methodology are subject to change.
+      </div>
+      <div class="flex gap-4">
+        <a href="marketing.html" class="hover:text-amber-400">Marketing one-pager</a>
+        <a href="runs/2026-05-03/" class="hover:text-amber-400">Portfolio</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Set built-at time from current date
+    document.getElementById('builtAt').textContent = new Date().toISOString().slice(0, 10);
+  </script>
+</body>
+</html>

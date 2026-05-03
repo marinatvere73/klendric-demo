@@ -1,0 +1,1474 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Klendric Portfolio - 2026-05-03</title>
+<script>
+  // Apply theme + view BEFORE Tailwind/CSS loads to prevent flash
+  (function () {
+    try {
+      var t = localStorage.getItem('liq-theme');
+      if (t === 'dark') document.documentElement.classList.add('dark');
+      // default: LIGHT (Marina's preference)
+    } catch (e) {}
+    try {
+      // ?view=pm|owner|pdf — set body attribute as soon as body parses
+      var qs = (window.location.search || '').toLowerCase();
+      var m = qs.match(/[?&]view=(pm|owner|pdf)/);
+      var v = m ? m[1] : 'pm';
+      document.documentElement.setAttribute('data-view', v);
+    } catch (e) {}
+  })();
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+          serif: ['Georgia', 'Cambria', '"Times New Roman"', 'serif'],
+        },
+        colors: {
+          ink: '#0b1120',
+          panel: '#111827',
+          panel2: '#1f2937',
+        }
+      }
+    }
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Inter', system-ui, sans-serif; }
+  /* Grade colors */
+  .grade-A { color: #16a34a; }
+  .grade-B { color: #2563eb; }
+  .grade-C { color: #ca8a04; }
+  .grade-D { color: #ea580c; }
+  .grade-F { color: #dc2626; }
+  .dark .grade-A { color: #22c55e; }
+  .dark .grade-B { color: #3b82f6; }
+  .dark .grade-C { color: #eab308; }
+  .dark .grade-D { color: #f97316; }
+  .dark .grade-F { color: #ef4444; }
+  .bg-grade-A { background-color: rgba(22, 163, 74, 0.12); border-color: rgba(22, 163, 74, 0.35); }
+  .bg-grade-B { background-color: rgba(37, 99, 235, 0.12); border-color: rgba(37, 99, 235, 0.35); }
+  .bg-grade-C { background-color: rgba(202, 138, 4, 0.12); border-color: rgba(202, 138, 4, 0.35); }
+  .bg-grade-D { background-color: rgba(234, 88, 12, 0.12); border-color: rgba(234, 88, 12, 0.35); }
+  .bg-grade-F { background-color: rgba(220, 38, 38, 0.12); border-color: rgba(220, 38, 38, 0.35); }
+  .dark .bg-grade-A { background-color: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.4); }
+  .dark .bg-grade-B { background-color: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.4); }
+  .dark .bg-grade-C { background-color: rgba(234, 179, 8, 0.15); border-color: rgba(234, 179, 8, 0.4); }
+  .dark .bg-grade-D { background-color: rgba(249, 115, 22, 0.15); border-color: rgba(249, 115, 22, 0.4); }
+  .dark .bg-grade-F { background-color: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); }
+  .heatcell { transition: transform 120ms ease; }
+  .heatcell:hover { transform: scale(1.08); z-index: 10; }
+  .row-link { transition: background-color 120ms ease; }
+  .row-link:hover { background-color: rgba(99, 102, 241, 0.10); }
+  ::-webkit-scrollbar { height: 10px; width: 10px; }
+  ::-webkit-scrollbar-track { background: #f1f5f9; }
+  .dark ::-webkit-scrollbar-track { background: #0b1120; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; }
+  .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 5px; }
+  .fix-resolved { opacity: 0.5; text-decoration: line-through; }
+
+  /* ================ VIEW MODES ================ */
+  /* PM view (default) — show everything; nothing to hide */
+  /* Owner view hides PM-internal blocks */
+  html[data-view="owner"] .pm-only { display: none !important; }
+  /* Show owner-only blocks only in owner view */
+  .owner-only { display: none; }
+  html[data-view="owner"] .owner-only { display: block; }
+  html[data-view="owner"] .owner-only-flex { display: flex; }
+  html[data-view="owner"] .owner-only-grid { display: grid; }
+  /* PDF view — printable layout, hides interactive chrome */
+  html[data-view="pdf"] .no-print,
+  @media print { .no-print { display: none !important; } }
+  html[data-view="pdf"] .pdf-only { display: block; }
+  .pdf-only { display: none; }
+
+  /* PDF / print stylesheet */
+  @media print {
+    @page { size: letter; margin: 0.5in; }
+    body { background: #ffffff !important; color: #111827 !important; font-family: Georgia, 'Times New Roman', serif !important; }
+    .dark body, body.dark { background: #ffffff !important; color: #111827 !important; }
+    h1, h2, h3, h4, .heading-sans { font-family: 'Inter', sans-serif !important; }
+    .no-print, header, footer, #theme-toggle, #view-switch, #reanalyze-btn, .resolve-btn { display: none !important; }
+    main { max-width: 100% !important; padding: 0 !important; }
+    section { break-inside: avoid; page-break-inside: avoid; }
+    section + section { break-before: auto; page-break-before: auto; margin-top: 0.5rem; }
+    .page-break-before { break-before: page; page-break-before: always; }
+    .pdf-only { display: block !important; }
+    /* Force light theme colors for printable elements */
+    .bg-white, .dark\:bg-panel, .dark\:bg-slate-900, .dark\:bg-slate-950\/40,
+    .dark\:bg-slate-900\/50, .dark\:bg-slate-900\/60, .dark\:bg-slate-900\/30,
+    .dark\:bg-slate-900\/40, .dark\:bg-slate-950, .dark\:bg-slate-950\/80 {
+      background: #ffffff !important; color: #111827 !important;
+    }
+    .text-slate-100, .text-slate-200, .text-slate-300, .text-white,
+    .dark\:text-slate-100, .dark\:text-slate-200, .dark\:text-slate-300, .dark\:text-white {
+      color: #111827 !important;
+    }
+    .border-slate-700, .border-slate-800, .dark\:border-slate-700, .dark\:border-slate-800 {
+      border-color: #cbd5e1 !important;
+    }
+    img { max-width: 100% !important; }
+    a { color: #1d4ed8 !important; text-decoration: none !important; }
+    @page { @bottom-right { content: "Page " counter(page) " of " counter(pages); font-family: Georgia, serif; font-size: 9pt; color: #64748b; } }
+  }
+
+  /* When ?view=pdf is active in-browser preview — apply same look without print */
+  html[data-view="pdf"] body { background: #ffffff !important; color: #111827 !important; font-family: Georgia, 'Times New Roman', serif !important; }
+  html[data-view="pdf"] h1, html[data-view="pdf"] h2, html[data-view="pdf"] h3 { font-family: 'Inter', sans-serif !important; }
+  html[data-view="pdf"] .bg-white, html[data-view="pdf"] [class*="dark:bg-"] { background: #ffffff !important; color: #111827 !important; }
+  html[data-view="pdf"] [class*="dark:text-"], html[data-view="pdf"] .text-white { color: #111827 !important; }
+  html[data-view="pdf"] [class*="dark:border-"] { border-color: #cbd5e1 !important; }
+  html[data-view="pdf"] .pdf-paper { background: #ffffff; color: #111827; padding: 0.5in; max-width: 8.5in; margin: 0 auto; box-shadow: 0 0 30px rgba(0,0,0,0.08); }
+  html[data-view="pdf"] header, html[data-view="pdf"] footer, html[data-view="pdf"] .no-print { display: none !important; }
+  html[data-view="pdf"] main { max-width: 8.5in !important; }
+
+  /* View switcher dropdown */
+  .view-switch-menu { display: none; }
+  .view-switch-menu.open { display: block; }
+</style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100 text-slate-900 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 dark:text-slate-100">
+  <header class="border-b border-slate-200 bg-white/80 dark:border-slate-800 dark:bg-slate-950/80 backdrop-blur sticky top-0 z-30 no-print">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-fuchsia-500 grid place-items-center font-bold text-sm text-white">N</div>
+        <div>
+          <div class="text-sm uppercase tracking-widest text-slate-500 dark:text-slate-400">LussoStay</div>
+          <div class="text-base font-semibold">Listing Intelligence Quotient</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <nav class="text-sm flex items-center gap-3">
+          <a href="index.html" class="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">Portfolio</a>
+          <span class="text-slate-300 dark:text-slate-700">/</span>
+          <span class="text-slate-700 dark:text-slate-300">Portfolio Overview</span>
+        </nav>
+        
+        <button id="theme-toggle" type="button"
+                class="relative w-10 h-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 grid place-items-center transition-colors"
+                title="Toggle light/dark theme" aria-label="Toggle theme">
+          <svg class="hidden dark:block w-5 h-5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="4"/>
+            <path stroke-linecap="round" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/>
+          </svg>
+          <svg class="block dark:hidden w-5 h-5 text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  
+  <div class="pdf-only" style="text-align:center; padding: 0.25in 0; border-bottom: 1px solid #cbd5e1; margin-bottom: 0.25in;">
+    <div style="font-family: 'Inter', sans-serif; font-weight: 800; font-size: 18pt; letter-spacing: 0.05em; color: #4f46e5;">Klendric</div>
+    <div style="font-family: Georgia, serif; font-size: 11pt; color: #475569; margin-top: 4px;">Listing Intelligence Quotient · LussoStay</div>
+    <div style="font-family: Georgia, serif; font-size: 9pt; color: #94a3b8; margin-top: 2px;">Generated 2026-05-03T21:28:58.226188Z</div>
+  </div>
+
+  <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
+    
+<section class="space-y-2">
+  <div class="flex items-baseline justify-between flex-wrap gap-3">
+    <h1 class="text-3xl font-bold tracking-tight">Portfolio Klendric Report</h1>
+    <div class="text-sm text-slate-500 dark:text-slate-400">Run: <span class="text-slate-900 dark:text-slate-200 font-medium">2026-05-03</span></div>
+  </div>
+  <p class="text-slate-600 dark:text-slate-400 max-w-2xl">In-house alternative to industry-standard listing tools. Scores 16 dimensions including booking settings, profitability, and operational fit (hidden profit levers).</p>
+</section>
+
+<!-- KPI ROW -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+  <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 shadow-sm">
+    <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Portfolio Klendric</div>
+    <div class="mt-2 flex items-baseline gap-2">
+      <span class="text-4xl font-bold grade-C">73</span>
+      <span class="text-lg font-semibold grade-C">C</span>
+    </div>
+  </div>
+  <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 shadow-sm">
+    <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Properties Scored</div>
+    <div class="mt-2 text-4xl font-bold">5</div>
+  </div>
+  <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 shadow-sm">
+    <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">A or B grade</div>
+    <div class="mt-2 text-4xl font-bold">
+      2
+      <span class="text-base text-slate-400 dark:text-slate-500 font-normal">/ 5</span>
+    </div>
+  </div>
+  <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 shadow-sm">
+    <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">D or F grade</div>
+    <div class="mt-2 text-4xl font-bold grade-F">
+      2
+    </div>
+  </div>
+</section>
+
+<!-- CHART ROW -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 lg:col-span-2 shadow-sm">
+    <h2 class="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-4">Score Distribution</h2>
+    <div class="relative h-64"><canvas id="distChart"></canvas></div>
+  </div>
+  <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 shadow-sm">
+    <h2 class="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-4">Dimension Averages</h2>
+    <div class="space-y-2 max-h-72 overflow-y-auto pr-1">
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">photos</span>
+          <span class="font-semibold grade-C">79.2</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-yellow-500"
+               style="width: 79.2%"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">title</span>
+          <span class="font-semibold grade-B">82</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-blue-500"
+               style="width: 82%"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">description</span>
+          <span class="font-semibold grade-C">74.6</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-yellow-500"
+               style="width: 74.6%"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">amenities</span>
+          <span class="font-semibold grade-B">83</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-blue-500"
+               style="width: 83%"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">reviews</span>
+          <span class="font-semibold grade-D">63.4</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-orange-500"
+               style="width: 63.4%"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">pricing</span>
+          <span class="font-semibold grade-C">70.6</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-yellow-500"
+               style="width: 70.6%"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">booking settings</span>
+          <span class="font-semibold grade-D">62.8</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-orange-500"
+               style="width: 62.8%"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">operational fit</span>
+          <span class="font-semibold grade-C">72</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-yellow-500"
+               style="width: 72%"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">consistency score</span>
+          <span class="font-semibold grade-C">74.4</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-yellow-500"
+               style="width: 74.4%"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">guest favorite</span>
+          <span class="font-semibold grade-C">70</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-yellow-500"
+               style="width: 70%"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">review summary</span>
+          <span class="font-semibold grade-C">75.2</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-yellow-500"
+               style="width: 75.2%"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">listing overview</span>
+          <span class="font-semibold grade-C">74.4</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-yellow-500"
+               style="width: 74.4%"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">comp summary</span>
+          <span class="font-semibold grade-D">68</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-orange-500"
+               style="width: 68%"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">profitability score</span>
+          <span class="font-semibold grade-C">77.6</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-yellow-500"
+               style="width: 77.6%"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">revenue efficiency</span>
+          <span class="font-semibold grade-D">66</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-orange-500"
+               style="width: 66%"></div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="text-slate-700 dark:text-slate-300 capitalize">brand voice compliance</span>
+          <span class="font-semibold grade-A">95</span>
+        </div>
+        <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+          <div class="h-full rounded-full bg-green-500"
+               style="width: 95%"></div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- TOP PORTFOLIO FIXES -->
+<section class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-6 shadow-sm">
+  <h2 class="text-lg font-semibold mb-1">Top Portfolio-Wide Fixes</h2>
+  <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Issues affecting the most properties, ranked by frequency and severity.</p>
+  <div class="grid md:grid-cols-2 gap-3">
+    
+    <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-4">
+      <div class="flex items-start justify-between gap-2 mb-2">
+        <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">booking settings</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400">4 properties</div>
+      </div>
+      <div class="text-sm text-slate-800 dark:text-slate-100">⚠️ MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).</div>
+      <div class="mt-2 flex flex-wrap gap-1">
+        
+        <a href="property/ALX2434.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">ALX2434</a>
+        
+        <a href="property/QUA1990.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">QUA1990</a>
+        
+        <a href="property/SD1303.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">SD1303</a>
+        
+        <a href="property/SD3902.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">SD3902</a>
+        
+        
+      </div>
+    </div>
+    
+    <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-4">
+      <div class="flex items-start justify-between gap-2 mb-2">
+        <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">reviews</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400">4 properties</div>
+      </div>
+      <div class="text-sm text-slate-800 dark:text-slate-100">Only 2 reviews — implement automated post-stay review prompt to lift count.</div>
+      <div class="mt-2 flex flex-wrap gap-1">
+        
+        <a href="property/ALX2434.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">ALX2434</a>
+        
+        <a href="property/RID3403.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">RID3403</a>
+        
+        <a href="property/SD1303.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">SD1303</a>
+        
+        <a href="property/SD3902.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">SD3902</a>
+        
+        
+      </div>
+    </div>
+    
+    <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-4">
+      <div class="flex items-start justify-between gap-2 mb-2">
+        <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">reviews</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400">4 properties</div>
+      </div>
+      <div class="text-sm text-slate-800 dark:text-slate-100">Only 0 reviews in last 90d — review velocity is too low.</div>
+      <div class="mt-2 flex flex-wrap gap-1">
+        
+        <a href="property/ALX2434.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">ALX2434</a>
+        
+        <a href="property/RID3403.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">RID3403</a>
+        
+        <a href="property/SD1303.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">SD1303</a>
+        
+        <a href="property/SD3902.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">SD3902</a>
+        
+        
+      </div>
+    </div>
+    
+    <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-4">
+      <div class="flex items-start justify-between gap-2 mb-2">
+        <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">operational fit</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400">4 properties</div>
+      </div>
+      <div class="text-sm text-slate-800 dark:text-slate-100">Diversify channels — only 1 active in review history.</div>
+      <div class="mt-2 flex flex-wrap gap-1">
+        
+        <a href="property/QUA1990.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">QUA1990</a>
+        
+        <a href="property/RID3403.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">RID3403</a>
+        
+        <a href="property/SD1303.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">SD1303</a>
+        
+        <a href="property/SD3902.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">SD3902</a>
+        
+        
+      </div>
+    </div>
+    
+    <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-4">
+      <div class="flex items-start justify-between gap-2 mb-2">
+        <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">reviews</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400">3 properties</div>
+      </div>
+      <div class="text-sm text-slate-800 dark:text-slate-100">Host response rate 50% — respond to all reviews within 48h.</div>
+      <div class="mt-2 flex flex-wrap gap-1">
+        
+        <a href="property/ALX2434.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">ALX2434</a>
+        
+        <a href="property/RID3403.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">RID3403</a>
+        
+        <a href="property/SD3902.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">SD3902</a>
+        
+        
+      </div>
+    </div>
+    
+    <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-4">
+      <div class="flex items-start justify-between gap-2 mb-2">
+        <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">reviews</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400">1 property</div>
+      </div>
+      <div class="text-sm text-slate-800 dark:text-slate-100">CRITICAL: 1.2-star recent rating - delist risk per Airbnb policy.</div>
+      <div class="mt-2 flex flex-wrap gap-1">
+        
+        <a href="property/ALX2434.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">ALX2434</a>
+        
+        
+      </div>
+    </div>
+    
+    <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-4">
+      <div class="flex items-start justify-between gap-2 mb-2">
+        <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">profitability score</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400">1 property</div>
+      </div>
+      <div class="text-sm text-slate-800 dark:text-slate-100">No P&amp;L data entered for this property. Enter actuals to enable profitability scoring.</div>
+      <div class="mt-2 flex flex-wrap gap-1">
+        
+        <a href="property/SD1303.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">SD1303</a>
+        
+        
+      </div>
+    </div>
+    
+    <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-4">
+      <div class="flex items-start justify-between gap-2 mb-2">
+        <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">review summary</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400">1 property</div>
+      </div>
+      <div class="text-sm text-slate-800 dark:text-slate-100">Recurring negative signals: noisy. Audit and resolve.</div>
+      <div class="mt-2 flex flex-wrap gap-1">
+        
+        <a href="property/QUA1990.html" class="text-xs px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-indigo-600 hover:text-white">QUA1990</a>
+        
+        
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- DIMENSION HEATMAP -->
+<section class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-6 shadow-sm">
+  <h2 class="text-lg font-semibold mb-1">Dimension Heatmap</h2>
+  <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Each cell shows the dimension score for one property. Click a row to drill into the property.</p>
+  <div class="overflow-x-auto">
+    <table class="text-xs min-w-full">
+      <thead>
+        <tr class="text-slate-500 dark:text-slate-400">
+          <th class="text-left font-medium px-2 py-2 sticky left-0 bg-white dark:bg-panel">Property</th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">photos</th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">title</th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">description</th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">amenities</th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">reviews</th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">pricing</th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">booking settin</th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">operational fi</th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">consistency sc</th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">guest favorite</th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">review summary</th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">listing overvi</th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">comp summary</th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">profitability </th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">revenue effici</th>
+          
+          <th class="text-center font-medium px-2 py-2 capitalize whitespace-nowrap">brand voice co</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr class="row-link border-t border-slate-200 dark:border-slate-800/60">
+          <td class="px-2 py-2 sticky left-0 bg-white dark:bg-panel">
+            <a href="property/ALX2434.html" class="font-medium text-slate-800 dark:text-slate-100 hover:text-indigo-600 dark:hover:text-indigo-400">ALX2434</a>
+            <div class="text-[10px] text-slate-400 dark:text-slate-500 truncate max-w-[160px]">Alexander Lakefront Estate</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-F grade-F"
+                 title="photos: 55 (F)">55</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="title: 70 (C)">70</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-F grade-F"
+                 title="description: 45 (F)">45</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-D grade-D"
+                 title="amenities: 60 (D)">60</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-F grade-F"
+                 title="reviews: 30 (F)">30</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-F grade-F"
+                 title="pricing: 40 (F)">40</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-F grade-F"
+                 title="booking_settings: 35 (F)">35</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-F grade-F"
+                 title="operational_fit: 55 (F)">55</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-F grade-F"
+                 title="consistency_score: 50 (F)">50</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-F grade-F"
+                 title="guest_favorite: 30 (F)">30</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-F grade-F"
+                 title="review_summary: 40 (F)">40</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-F grade-F"
+                 title="listing_overview: 55 (F)">55</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-F grade-F"
+                 title="comp_summary: 35 (F)">35</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-F grade-F"
+                 title="profitability_score: 50 (F)">50</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-F grade-F"
+                 title="revenue_efficiency: 35 (F)">35</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="brand_voice_compliance: 75 (C)">75</div>
+          </td>
+          
+        </tr>
+        
+        <tr class="row-link border-t border-slate-200 dark:border-slate-800/60">
+          <td class="px-2 py-2 sticky left-0 bg-white dark:bg-panel">
+            <a href="property/QUA1990.html" class="font-medium text-slate-800 dark:text-slate-100 hover:text-indigo-600 dark:hover:text-indigo-400">QUA1990</a>
+            <div class="text-[10px] text-slate-400 dark:text-slate-500 truncate max-w-[160px]">Quail Hollow Reno Home</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-B grade-B"
+                 title="photos: 80 (B)">80</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="title: 75 (C)">75</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-B grade-B"
+                 title="description: 80 (B)">80</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="amenities: 78 (C)">78</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-B grade-B"
+                 title="reviews: 82 (B)">82</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="pricing: 75 (C)">75</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="booking_settings: 70 (C)">70</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="operational_fit: 75 (C)">75</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-B grade-B"
+                 title="consistency_score: 80 (B)">80</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-D grade-D"
+                 title="guest_favorite: 60 (D)">60</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="review_summary: 78 (C)">78</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="listing_overview: 75 (C)">75</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="comp_summary: 72 (C)">72</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="profitability_score: 94 (A)">94</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="revenue_efficiency: 72 (C)">72</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="brand_voice_compliance: 100 (A)">100</div>
+          </td>
+          
+        </tr>
+        
+        <tr class="row-link border-t border-slate-200 dark:border-slate-800/60">
+          <td class="px-2 py-2 sticky left-0 bg-white dark:bg-panel">
+            <a href="property/RID3403.html" class="font-medium text-slate-800 dark:text-slate-100 hover:text-indigo-600 dark:hover:text-indigo-400">RID3403</a>
+            <div class="text-[10px] text-slate-400 dark:text-slate-500 truncate max-w-[160px]">Ridge Mountain Modern</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="photos: 95 (A)">95</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="title: 100 (A)">100</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="description: 92 (A)">92</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="amenities: 95 (A)">95</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-B grade-B"
+                 title="reviews: 88 (B)">88</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="pricing: 90 (A)">90</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-B grade-B"
+                 title="booking_settings: 85 (B)">85</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="operational_fit: 90 (A)">90</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="consistency_score: 92 (A)">92</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="guest_favorite: 100 (A)">100</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="review_summary: 95 (A)">95</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="listing_overview: 90 (A)">90</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-B grade-B"
+                 title="comp_summary: 88 (B)">88</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="profitability_score: 94 (A)">94</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-B grade-B"
+                 title="revenue_efficiency: 88 (B)">88</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="brand_voice_compliance: 100 (A)">100</div>
+          </td>
+          
+        </tr>
+        
+        <tr class="row-link border-t border-slate-200 dark:border-slate-800/60">
+          <td class="px-2 py-2 sticky left-0 bg-white dark:bg-panel">
+            <a href="property/SD1303.html" class="font-medium text-slate-800 dark:text-slate-100 hover:text-indigo-600 dark:hover:text-indigo-400">SD1303</a>
+            <div class="text-[10px] text-slate-400 dark:text-slate-500 truncate max-w-[160px]">Marina Bay 13th-Floor Suite</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="photos: 78 (C)">78</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-D grade-D"
+                 title="title: 65 (D)">65</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="description: 75 (C)">75</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-B grade-B"
+                 title="amenities: 82 (B)">82</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="reviews: 70 (C)">70</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-D grade-D"
+                 title="pricing: 68 (D)">68</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-D grade-D"
+                 title="booking_settings: 60 (D)">60</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-D grade-D"
+                 title="operational_fit: 65 (D)">65</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="consistency_score: 72 (C)">72</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-D grade-D"
+                 title="guest_favorite: 60 (D)">60</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="review_summary: 75 (C)">75</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="listing_overview: 70 (C)">70</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="comp_summary: 70 (C)">70</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-F grade-F"
+                 title="profitability_score: 50 (F)">50</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-D grade-D"
+                 title="revenue_efficiency: 65 (D)">65</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="brand_voice_compliance: 100 (A)">100</div>
+          </td>
+          
+        </tr>
+        
+        <tr class="row-link border-t border-slate-200 dark:border-slate-800/60">
+          <td class="px-2 py-2 sticky left-0 bg-white dark:bg-panel">
+            <a href="property/SD3902.html" class="font-medium text-slate-800 dark:text-slate-100 hover:text-indigo-600 dark:hover:text-indigo-400">SD3902</a>
+            <div class="text-[10px] text-slate-400 dark:text-slate-500 truncate max-w-[160px]">39th-Floor Penthouse - Gaslamp</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-B grade-B"
+                 title="photos: 88 (B)">88</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="title: 100 (A)">100</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-B grade-B"
+                 title="description: 81 (B)">81</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="amenities: 100 (A)">100</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-F grade-F"
+                 title="reviews: 47 (F)">47</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-B grade-B"
+                 title="pricing: 80 (B)">80</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-D grade-D"
+                 title="booking_settings: 64 (D)">64</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="operational_fit: 75 (C)">75</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="consistency_score: 78 (C)">78</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="guest_favorite: 100 (A)">100</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-B grade-B"
+                 title="review_summary: 88 (B)">88</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-B grade-B"
+                 title="listing_overview: 82 (B)">82</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="comp_summary: 75 (C)">75</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="profitability_score: 100 (A)">100</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-C grade-C"
+                 title="revenue_efficiency: 70 (C)">70</div>
+          </td>
+          
+          <td class="text-center p-1">
+            <div class="heatcell mx-auto w-12 h-9 rounded grid place-items-center text-xs font-semibold border bg-grade-A grade-A"
+                 title="brand_voice_compliance: 100 (A)">100</div>
+          </td>
+          
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PROPERTY TABLE -->
+<section class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-6 shadow-sm">
+  <div class="flex items-center justify-between flex-wrap gap-2 mb-4">
+    <h2 class="text-lg font-semibold">All Properties</h2>
+    <div class="text-xs text-slate-400 dark:text-slate-500">Click column header to sort</div>
+  </div>
+  <div class="overflow-x-auto">
+    <table id="propTable" class="text-sm min-w-full">
+      <thead class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
+        <tr>
+          <th class="text-left px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white" data-sort="code">Code</th>
+          <th class="text-left px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white" data-sort="nickname">Property</th>
+          <th class="text-left px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white" data-sort="market">Market</th>
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white" data-sort="overall_score">Klendric</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="photos">photos</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="title">title</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="description">descriptio</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="amenities">amenities</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="reviews">reviews</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="pricing">pricing</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="booking_settings">booking se</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="operational_fit">operationa</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="consistency_score">consistenc</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="guest_favorite">guest favo</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="review_summary">review sum</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="listing_overview">listing ov</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="comp_summary">comp summa</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="profitability_score">profitabil</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="revenue_efficiency">revenue ef</th>
+          
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="brand_voice_compliance">brand voic</th>
+          
+          <th class="text-left px-3 py-2">Top Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr class="row-link border-b border-slate-200 dark:border-slate-800/40 cursor-pointer" onclick="window.location='property/ALX2434.html'">
+          <td class="px-3 py-2 font-mono text-xs text-indigo-600 dark:text-indigo-400">ALX2434</td>
+          <td class="px-3 py-2">Alexander Lakefront Estate</td>
+          <td class="px-3 py-2 text-slate-500 dark:text-slate-400">Reno/Sparks</td>
+          <td class="px-3 py-2 text-right">
+            <span class="font-bold grade-F">46</span>
+            <span class="text-xs grade-F ml-1">F</span>
+          </td>
+          
+          <td class="px-3 py-2 text-right grade-F font-medium">55</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">70</td>
+          
+          <td class="px-3 py-2 text-right grade-F font-medium">45</td>
+          
+          <td class="px-3 py-2 text-right grade-D font-medium">60</td>
+          
+          <td class="px-3 py-2 text-right grade-F font-medium">30</td>
+          
+          <td class="px-3 py-2 text-right grade-F font-medium">40</td>
+          
+          <td class="px-3 py-2 text-right grade-F font-medium">35</td>
+          
+          <td class="px-3 py-2 text-right grade-F font-medium">55</td>
+          
+          <td class="px-3 py-2 text-right grade-F font-medium">50</td>
+          
+          <td class="px-3 py-2 text-right grade-F font-medium">30</td>
+          
+          <td class="px-3 py-2 text-right grade-F font-medium">40</td>
+          
+          <td class="px-3 py-2 text-right grade-F font-medium">55</td>
+          
+          <td class="px-3 py-2 text-right grade-F font-medium">35</td>
+          
+          <td class="px-3 py-2 text-right grade-F font-medium">50</td>
+          
+          <td class="px-3 py-2 text-right grade-F font-medium">35</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">75</td>
+          
+          <td class="px-3 py-2 text-xs text-slate-500 dark:text-slate-400 max-w-md truncate">CRITICAL: 1.2-star recent rating - delist risk per Airbnb policy.</td>
+        </tr>
+        
+        <tr class="row-link border-b border-slate-200 dark:border-slate-800/40 cursor-pointer" onclick="window.location='property/QUA1990.html'">
+          <td class="px-3 py-2 font-mono text-xs text-indigo-600 dark:text-indigo-400">QUA1990</td>
+          <td class="px-3 py-2">Quail Hollow Reno Home</td>
+          <td class="px-3 py-2 text-slate-500 dark:text-slate-400">Reno/Sparks</td>
+          <td class="px-3 py-2 text-right">
+            <span class="font-bold grade-C">78</span>
+            <span class="text-xs grade-C ml-1">C</span>
+          </td>
+          
+          <td class="px-3 py-2 text-right grade-B font-medium">80</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">75</td>
+          
+          <td class="px-3 py-2 text-right grade-B font-medium">80</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">78</td>
+          
+          <td class="px-3 py-2 text-right grade-B font-medium">82</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">75</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">70</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">75</td>
+          
+          <td class="px-3 py-2 text-right grade-B font-medium">80</td>
+          
+          <td class="px-3 py-2 text-right grade-D font-medium">60</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">78</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">75</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">72</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">94</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">72</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">100</td>
+          
+          <td class="px-3 py-2 text-xs text-slate-500 dark:text-slate-400 max-w-md truncate">⚠️ MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).</td>
+        </tr>
+        
+        <tr class="row-link border-b border-slate-200 dark:border-slate-800/40 cursor-pointer" onclick="window.location='property/RID3403.html'">
+          <td class="px-3 py-2 font-mono text-xs text-indigo-600 dark:text-indigo-400">RID3403</td>
+          <td class="px-3 py-2">Ridge Mountain Modern</td>
+          <td class="px-3 py-2 text-slate-500 dark:text-slate-400">Reno/Sparks</td>
+          <td class="px-3 py-2 text-right">
+            <span class="font-bold grade-A">92</span>
+            <span class="text-xs grade-A ml-1">A</span>
+          </td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">95</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">100</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">92</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">95</td>
+          
+          <td class="px-3 py-2 text-right grade-B font-medium">88</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">90</td>
+          
+          <td class="px-3 py-2 text-right grade-B font-medium">85</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">90</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">92</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">100</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">95</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">90</td>
+          
+          <td class="px-3 py-2 text-right grade-B font-medium">88</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">94</td>
+          
+          <td class="px-3 py-2 text-right grade-B font-medium">88</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">100</td>
+          
+          <td class="px-3 py-2 text-xs text-slate-500 dark:text-slate-400 max-w-md truncate">Only 2 reviews — implement automated post-stay review prompt to lift count.</td>
+        </tr>
+        
+        <tr class="row-link border-b border-slate-200 dark:border-slate-800/40 cursor-pointer" onclick="window.location='property/SD1303.html'">
+          <td class="px-3 py-2 font-mono text-xs text-indigo-600 dark:text-indigo-400">SD1303</td>
+          <td class="px-3 py-2">Marina Bay 13th-Floor Suite</td>
+          <td class="px-3 py-2 text-slate-500 dark:text-slate-400">San Diego</td>
+          <td class="px-3 py-2 text-right">
+            <span class="font-bold grade-D">69</span>
+            <span class="text-xs grade-D ml-1">D</span>
+          </td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">78</td>
+          
+          <td class="px-3 py-2 text-right grade-D font-medium">65</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">75</td>
+          
+          <td class="px-3 py-2 text-right grade-B font-medium">82</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">70</td>
+          
+          <td class="px-3 py-2 text-right grade-D font-medium">68</td>
+          
+          <td class="px-3 py-2 text-right grade-D font-medium">60</td>
+          
+          <td class="px-3 py-2 text-right grade-D font-medium">65</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">72</td>
+          
+          <td class="px-3 py-2 text-right grade-D font-medium">60</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">75</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">70</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">70</td>
+          
+          <td class="px-3 py-2 text-right grade-F font-medium">50</td>
+          
+          <td class="px-3 py-2 text-right grade-D font-medium">65</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">100</td>
+          
+          <td class="px-3 py-2 text-xs text-slate-500 dark:text-slate-400 max-w-md truncate">No P&amp;L data entered for this property. Enter actuals to enable profitability scoring.</td>
+        </tr>
+        
+        <tr class="row-link border-b border-slate-200 dark:border-slate-800/40 cursor-pointer" onclick="window.location='property/SD3902.html'">
+          <td class="px-3 py-2 font-mono text-xs text-indigo-600 dark:text-indigo-400">SD3902</td>
+          <td class="px-3 py-2">39th-Floor Penthouse - Gaslamp</td>
+          <td class="px-3 py-2 text-slate-500 dark:text-slate-400">San Diego</td>
+          <td class="px-3 py-2 text-right">
+            <span class="font-bold grade-B">80</span>
+            <span class="text-xs grade-B ml-1">B</span>
+          </td>
+          
+          <td class="px-3 py-2 text-right grade-B font-medium">88</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">100</td>
+          
+          <td class="px-3 py-2 text-right grade-B font-medium">81</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">100</td>
+          
+          <td class="px-3 py-2 text-right grade-F font-medium">47</td>
+          
+          <td class="px-3 py-2 text-right grade-B font-medium">80</td>
+          
+          <td class="px-3 py-2 text-right grade-D font-medium">64</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">75</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">78</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">100</td>
+          
+          <td class="px-3 py-2 text-right grade-B font-medium">88</td>
+          
+          <td class="px-3 py-2 text-right grade-B font-medium">82</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">75</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">100</td>
+          
+          <td class="px-3 py-2 text-right grade-C font-medium">70</td>
+          
+          <td class="px-3 py-2 text-right grade-A font-medium">100</td>
+          
+          <td class="px-3 py-2 text-xs text-slate-500 dark:text-slate-400 max-w-md truncate">Only 2 reviews — implement automated post-stay review prompt to lift count.</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- DATA EMBED -->
+<script id="liq-portfolio" type="application/json">{"run_date": "2026-05-03", "property_count": 5, "avg_overall": 73, "avg_overall_grade": "C", "dimension_avgs": {"photos": 79.2, "title": 82, "description": 74.6, "amenities": 83, "reviews": 63.4, "pricing": 70.6, "booking_settings": 62.8, "operational_fit": 72, "consistency_score": 74.4, "guest_favorite": 70, "review_summary": 75.2, "listing_overview": 74.4, "comp_summary": 68, "profitability_score": 77.6, "revenue_efficiency": 66, "brand_voice_compliance": 95}, "dimension_grades": {"photos": "C", "title": "B", "description": "C", "amenities": "B", "reviews": "D", "pricing": "C", "booking_settings": "D", "operational_fit": "C", "consistency_score": "C", "guest_favorite": "C", "review_summary": "C", "listing_overview": "C", "comp_summary": "D", "profitability_score": "C", "revenue_efficiency": "D", "brand_voice_compliance": "A"}, "distribution": {"A (90-100)": 1, "B (80-89)": 1, "C (70-79)": 1, "D (60-69)": 1, "F (<60)": 1}, "top_5": [{"code": "RID3403", "nickname": "Ridge Mountain Modern", "market": "Reno/Sparks", "overall_score": 92, "overall_grade": "A", "dimension_scores": {"photos": 95, "title": 100, "description": 92, "amenities": 95, "reviews": 88, "pricing": 90, "booking_settings": 85, "operational_fit": 90, "consistency_score": 92, "guest_favorite": 100, "review_summary": 95, "listing_overview": 90, "comp_summary": 88, "profitability_score": 94, "revenue_efficiency": 88, "brand_voice_compliance": 100}, "dimension_grades": {"photos": "A", "title": "A", "description": "A", "amenities": "A", "reviews": "B", "pricing": "A", "booking_settings": "B", "operational_fit": "A", "consistency_score": "A", "guest_favorite": "A", "review_summary": "A", "listing_overview": "A", "comp_summary": "B", "profitability_score": "A", "revenue_efficiency": "B", "brand_voice_compliance": "A"}, "top_fix": "Only 2 reviews \u2014 implement automated post-stay review prompt to lift count."}, {"code": "SD3902", "nickname": "39th-Floor Penthouse - Gaslamp", "market": "San Diego", "overall_score": 80, "overall_grade": "B", "dimension_scores": {"photos": 88, "title": 100, "description": 81, "amenities": 100, "reviews": 47, "pricing": 80, "booking_settings": 64, "operational_fit": 75, "consistency_score": 78, "guest_favorite": 100, "review_summary": 88, "listing_overview": 82, "comp_summary": 75, "profitability_score": 100, "revenue_efficiency": 70, "brand_voice_compliance": 100}, "dimension_grades": {"photos": "B", "title": "A", "description": "B", "amenities": "A", "reviews": "F", "pricing": "B", "booking_settings": "D", "operational_fit": "C", "consistency_score": "C", "guest_favorite": "A", "review_summary": "B", "listing_overview": "B", "comp_summary": "C", "profitability_score": "A", "revenue_efficiency": "C", "brand_voice_compliance": "A"}, "top_fix": "Only 2 reviews \u2014 implement automated post-stay review prompt to lift count."}, {"code": "QUA1990", "nickname": "Quail Hollow Reno Home", "market": "Reno/Sparks", "overall_score": 78, "overall_grade": "C", "dimension_scores": {"photos": 80, "title": 75, "description": 80, "amenities": 78, "reviews": 82, "pricing": 75, "booking_settings": 70, "operational_fit": 75, "consistency_score": 80, "guest_favorite": 60, "review_summary": 78, "listing_overview": 75, "comp_summary": 72, "profitability_score": 94, "revenue_efficiency": 72, "brand_voice_compliance": 100}, "dimension_grades": {"photos": "B", "title": "C", "description": "B", "amenities": "C", "reviews": "B", "pricing": "C", "booking_settings": "C", "operational_fit": "C", "consistency_score": "B", "guest_favorite": "D", "review_summary": "C", "listing_overview": "C", "comp_summary": "C", "profitability_score": "A", "revenue_efficiency": "C", "brand_voice_compliance": "A"}, "top_fix": "\u26a0\ufe0f MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only)."}, {"code": "SD1303", "nickname": "Marina Bay 13th-Floor Suite", "market": "San Diego", "overall_score": 69, "overall_grade": "D", "dimension_scores": {"photos": 78, "title": 65, "description": 75, "amenities": 82, "reviews": 70, "pricing": 68, "booking_settings": 60, "operational_fit": 65, "consistency_score": 72, "guest_favorite": 60, "review_summary": 75, "listing_overview": 70, "comp_summary": 70, "profitability_score": 50, "revenue_efficiency": 65, "brand_voice_compliance": 100}, "dimension_grades": {"photos": "C", "title": "D", "description": "C", "amenities": "B", "reviews": "C", "pricing": "D", "booking_settings": "D", "operational_fit": "D", "consistency_score": "C", "guest_favorite": "D", "review_summary": "C", "listing_overview": "C", "comp_summary": "C", "profitability_score": "F", "revenue_efficiency": "D", "brand_voice_compliance": "A"}, "top_fix": "No P&L data entered for this property. Enter actuals to enable profitability scoring."}, {"code": "ALX2434", "nickname": "Alexander Lakefront Estate", "market": "Reno/Sparks", "overall_score": 46, "overall_grade": "F", "dimension_scores": {"photos": 55, "title": 70, "description": 45, "amenities": 60, "reviews": 30, "pricing": 40, "booking_settings": 35, "operational_fit": 55, "consistency_score": 50, "guest_favorite": 30, "review_summary": 40, "listing_overview": 55, "comp_summary": 35, "profitability_score": 50, "revenue_efficiency": 35, "brand_voice_compliance": 75}, "dimension_grades": {"photos": "F", "title": "C", "description": "F", "amenities": "D", "reviews": "F", "pricing": "F", "booking_settings": "F", "operational_fit": "F", "consistency_score": "F", "guest_favorite": "F", "review_summary": "F", "listing_overview": "F", "comp_summary": "F", "profitability_score": "F", "revenue_efficiency": "F", "brand_voice_compliance": "C"}, "top_fix": "CRITICAL: 1.2-star recent rating - delist risk per Airbnb policy."}], "bottom_5": [{"code": "ALX2434", "nickname": "Alexander Lakefront Estate", "market": "Reno/Sparks", "overall_score": 46, "overall_grade": "F", "dimension_scores": {"photos": 55, "title": 70, "description": 45, "amenities": 60, "reviews": 30, "pricing": 40, "booking_settings": 35, "operational_fit": 55, "consistency_score": 50, "guest_favorite": 30, "review_summary": 40, "listing_overview": 55, "comp_summary": 35, "profitability_score": 50, "revenue_efficiency": 35, "brand_voice_compliance": 75}, "dimension_grades": {"photos": "F", "title": "C", "description": "F", "amenities": "D", "reviews": "F", "pricing": "F", "booking_settings": "F", "operational_fit": "F", "consistency_score": "F", "guest_favorite": "F", "review_summary": "F", "listing_overview": "F", "comp_summary": "F", "profitability_score": "F", "revenue_efficiency": "F", "brand_voice_compliance": "C"}, "top_fix": "CRITICAL: 1.2-star recent rating - delist risk per Airbnb policy."}, {"code": "SD1303", "nickname": "Marina Bay 13th-Floor Suite", "market": "San Diego", "overall_score": 69, "overall_grade": "D", "dimension_scores": {"photos": 78, "title": 65, "description": 75, "amenities": 82, "reviews": 70, "pricing": 68, "booking_settings": 60, "operational_fit": 65, "consistency_score": 72, "guest_favorite": 60, "review_summary": 75, "listing_overview": 70, "comp_summary": 70, "profitability_score": 50, "revenue_efficiency": 65, "brand_voice_compliance": 100}, "dimension_grades": {"photos": "C", "title": "D", "description": "C", "amenities": "B", "reviews": "C", "pricing": "D", "booking_settings": "D", "operational_fit": "D", "consistency_score": "C", "guest_favorite": "D", "review_summary": "C", "listing_overview": "C", "comp_summary": "C", "profitability_score": "F", "revenue_efficiency": "D", "brand_voice_compliance": "A"}, "top_fix": "No P&L data entered for this property. Enter actuals to enable profitability scoring."}, {"code": "QUA1990", "nickname": "Quail Hollow Reno Home", "market": "Reno/Sparks", "overall_score": 78, "overall_grade": "C", "dimension_scores": {"photos": 80, "title": 75, "description": 80, "amenities": 78, "reviews": 82, "pricing": 75, "booking_settings": 70, "operational_fit": 75, "consistency_score": 80, "guest_favorite": 60, "review_summary": 78, "listing_overview": 75, "comp_summary": 72, "profitability_score": 94, "revenue_efficiency": 72, "brand_voice_compliance": 100}, "dimension_grades": {"photos": "B", "title": "C", "description": "B", "amenities": "C", "reviews": "B", "pricing": "C", "booking_settings": "C", "operational_fit": "C", "consistency_score": "B", "guest_favorite": "D", "review_summary": "C", "listing_overview": "C", "comp_summary": "C", "profitability_score": "A", "revenue_efficiency": "C", "brand_voice_compliance": "A"}, "top_fix": "\u26a0\ufe0f MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only)."}, {"code": "SD3902", "nickname": "39th-Floor Penthouse - Gaslamp", "market": "San Diego", "overall_score": 80, "overall_grade": "B", "dimension_scores": {"photos": 88, "title": 100, "description": 81, "amenities": 100, "reviews": 47, "pricing": 80, "booking_settings": 64, "operational_fit": 75, "consistency_score": 78, "guest_favorite": 100, "review_summary": 88, "listing_overview": 82, "comp_summary": 75, "profitability_score": 100, "revenue_efficiency": 70, "brand_voice_compliance": 100}, "dimension_grades": {"photos": "B", "title": "A", "description": "B", "amenities": "A", "reviews": "F", "pricing": "B", "booking_settings": "D", "operational_fit": "C", "consistency_score": "C", "guest_favorite": "A", "review_summary": "B", "listing_overview": "B", "comp_summary": "C", "profitability_score": "A", "revenue_efficiency": "C", "brand_voice_compliance": "A"}, "top_fix": "Only 2 reviews \u2014 implement automated post-stay review prompt to lift count."}, {"code": "RID3403", "nickname": "Ridge Mountain Modern", "market": "Reno/Sparks", "overall_score": 92, "overall_grade": "A", "dimension_scores": {"photos": 95, "title": 100, "description": 92, "amenities": 95, "reviews": 88, "pricing": 90, "booking_settings": 85, "operational_fit": 90, "consistency_score": 92, "guest_favorite": 100, "review_summary": 95, "listing_overview": 90, "comp_summary": 88, "profitability_score": 94, "revenue_efficiency": 88, "brand_voice_compliance": 100}, "dimension_grades": {"photos": "A", "title": "A", "description": "A", "amenities": "A", "reviews": "B", "pricing": "A", "booking_settings": "B", "operational_fit": "A", "consistency_score": "A", "guest_favorite": "A", "review_summary": "A", "listing_overview": "A", "comp_summary": "B", "profitability_score": "A", "revenue_efficiency": "B", "brand_voice_compliance": "A"}, "top_fix": "Only 2 reviews \u2014 implement automated post-stay review prompt to lift count."}], "top_portfolio_fixes": [{"fix": "\u26a0\ufe0f MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).", "dimension": "booking_settings", "property_count": 4, "affected_properties": ["ALX2434", "QUA1990", "SD1303", "SD3902"], "avg_dim_score": 57.2}, {"fix": "Only 2 reviews \u2014 implement automated post-stay review prompt to lift count.", "dimension": "reviews", "property_count": 4, "affected_properties": ["ALX2434", "RID3403", "SD1303", "SD3902"], "avg_dim_score": 58.8}, {"fix": "Only 0 reviews in last 90d \u2014 review velocity is too low.", "dimension": "reviews", "property_count": 4, "affected_properties": ["ALX2434", "RID3403", "SD1303", "SD3902"], "avg_dim_score": 58.8}, {"fix": "Diversify channels \u2014 only 1 active in review history.", "dimension": "operational_fit", "property_count": 4, "affected_properties": ["QUA1990", "RID3403", "SD1303", "SD3902"], "avg_dim_score": 76.2}, {"fix": "Host response rate 50% \u2014 respond to all reviews within 48h.", "dimension": "reviews", "property_count": 3, "affected_properties": ["ALX2434", "RID3403", "SD3902"], "avg_dim_score": 55}, {"fix": "CRITICAL: 1.2-star recent rating - delist risk per Airbnb policy.", "dimension": "reviews", "property_count": 1, "affected_properties": ["ALX2434"], "avg_dim_score": 30}, {"fix": "No P&L data entered for this property. Enter actuals to enable profitability scoring.", "dimension": "profitability_score", "property_count": 1, "affected_properties": ["SD1303"], "avg_dim_score": 50}, {"fix": "Recurring negative signals: noisy. Audit and resolve.", "dimension": "review_summary", "property_count": 1, "affected_properties": ["QUA1990"], "avg_dim_score": 78}], "properties": [{"code": "ALX2434", "nickname": "Alexander Lakefront Estate", "market": "Reno/Sparks", "overall_score": 46, "overall_grade": "F", "dimension_scores": {"photos": 55, "title": 70, "description": 45, "amenities": 60, "reviews": 30, "pricing": 40, "booking_settings": 35, "operational_fit": 55, "consistency_score": 50, "guest_favorite": 30, "review_summary": 40, "listing_overview": 55, "comp_summary": 35, "profitability_score": 50, "revenue_efficiency": 35, "brand_voice_compliance": 75}, "dimension_grades": {"photos": "F", "title": "C", "description": "F", "amenities": "D", "reviews": "F", "pricing": "F", "booking_settings": "F", "operational_fit": "F", "consistency_score": "F", "guest_favorite": "F", "review_summary": "F", "listing_overview": "F", "comp_summary": "F", "profitability_score": "F", "revenue_efficiency": "F", "brand_voice_compliance": "C"}, "top_fix": "CRITICAL: 1.2-star recent rating - delist risk per Airbnb policy."}, {"code": "QUA1990", "nickname": "Quail Hollow Reno Home", "market": "Reno/Sparks", "overall_score": 78, "overall_grade": "C", "dimension_scores": {"photos": 80, "title": 75, "description": 80, "amenities": 78, "reviews": 82, "pricing": 75, "booking_settings": 70, "operational_fit": 75, "consistency_score": 80, "guest_favorite": 60, "review_summary": 78, "listing_overview": 75, "comp_summary": 72, "profitability_score": 94, "revenue_efficiency": 72, "brand_voice_compliance": 100}, "dimension_grades": {"photos": "B", "title": "C", "description": "B", "amenities": "C", "reviews": "B", "pricing": "C", "booking_settings": "C", "operational_fit": "C", "consistency_score": "B", "guest_favorite": "D", "review_summary": "C", "listing_overview": "C", "comp_summary": "C", "profitability_score": "A", "revenue_efficiency": "C", "brand_voice_compliance": "A"}, "top_fix": "\u26a0\ufe0f MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only)."}, {"code": "RID3403", "nickname": "Ridge Mountain Modern", "market": "Reno/Sparks", "overall_score": 92, "overall_grade": "A", "dimension_scores": {"photos": 95, "title": 100, "description": 92, "amenities": 95, "reviews": 88, "pricing": 90, "booking_settings": 85, "operational_fit": 90, "consistency_score": 92, "guest_favorite": 100, "review_summary": 95, "listing_overview": 90, "comp_summary": 88, "profitability_score": 94, "revenue_efficiency": 88, "brand_voice_compliance": 100}, "dimension_grades": {"photos": "A", "title": "A", "description": "A", "amenities": "A", "reviews": "B", "pricing": "A", "booking_settings": "B", "operational_fit": "A", "consistency_score": "A", "guest_favorite": "A", "review_summary": "A", "listing_overview": "A", "comp_summary": "B", "profitability_score": "A", "revenue_efficiency": "B", "brand_voice_compliance": "A"}, "top_fix": "Only 2 reviews \u2014 implement automated post-stay review prompt to lift count."}, {"code": "SD1303", "nickname": "Marina Bay 13th-Floor Suite", "market": "San Diego", "overall_score": 69, "overall_grade": "D", "dimension_scores": {"photos": 78, "title": 65, "description": 75, "amenities": 82, "reviews": 70, "pricing": 68, "booking_settings": 60, "operational_fit": 65, "consistency_score": 72, "guest_favorite": 60, "review_summary": 75, "listing_overview": 70, "comp_summary": 70, "profitability_score": 50, "revenue_efficiency": 65, "brand_voice_compliance": 100}, "dimension_grades": {"photos": "C", "title": "D", "description": "C", "amenities": "B", "reviews": "C", "pricing": "D", "booking_settings": "D", "operational_fit": "D", "consistency_score": "C", "guest_favorite": "D", "review_summary": "C", "listing_overview": "C", "comp_summary": "C", "profitability_score": "F", "revenue_efficiency": "D", "brand_voice_compliance": "A"}, "top_fix": "No P&L data entered for this property. Enter actuals to enable profitability scoring."}, {"code": "SD3902", "nickname": "39th-Floor Penthouse - Gaslamp", "market": "San Diego", "overall_score": 80, "overall_grade": "B", "dimension_scores": {"photos": 88, "title": 100, "description": 81, "amenities": 100, "reviews": 47, "pricing": 80, "booking_settings": 64, "operational_fit": 75, "consistency_score": 78, "guest_favorite": 100, "review_summary": 88, "listing_overview": 82, "comp_summary": 75, "profitability_score": 100, "revenue_efficiency": 70, "brand_voice_compliance": 100}, "dimension_grades": {"photos": "B", "title": "A", "description": "B", "amenities": "A", "reviews": "F", "pricing": "B", "booking_settings": "D", "operational_fit": "C", "consistency_score": "C", "guest_favorite": "A", "review_summary": "B", "listing_overview": "B", "comp_summary": "C", "profitability_score": "A", "revenue_efficiency": "C", "brand_voice_compliance": "A"}, "top_fix": "Only 2 reviews \u2014 implement automated post-stay review prompt to lift count."}], "weights": {"photos": 0.1, "title": 0.05, "description": 0.08, "amenities": 0.07, "reviews": 0.1, "pricing": 0.08, "booking_settings": 0.1, "operational_fit": 0.08, "consistency_score": 0.04, "guest_favorite": 0.04, "review_summary": 0.04, "listing_overview": 0.04, "comp_summary": 0.04, "profitability_score": 0.08, "revenue_efficiency": 0.04, "brand_voice_compliance": 0.02}, "generated_at": "2026-05-03T21:28:58.226188Z"}</script>
+
+  </main>
+
+  <footer class="border-t border-slate-200 dark:border-slate-800 mt-16 no-print">
+    <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between text-xs text-slate-500">
+      <div>Klendric v1.6 · Internal listing optimizer · Built in-house</div>
+      <div>Generated 2026-05-03T21:28:58.226188Z</div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var isDark = document.documentElement.classList.toggle('dark');
+        try { localStorage.setItem('liq-theme', isDark ? 'dark' : 'light'); } catch (e) {}
+      });
+    })();
+
+    // View switcher — set ?view=… and reload (cheap, robust, keeps URL shareable)
+    window.Klendric_setView = function (mode) {
+      try {
+        var url = new URL(window.location.href);
+        if (mode === 'pm') url.searchParams.delete('view');
+        else url.searchParams.set('view', mode);
+        window.location.href = url.toString();
+      } catch (e) { window.location.search = '?view=' + mode; }
+    };
+
+    // PDF download — switch to pdf view, trigger print, then return
+    window.Klendric_downloadPdf = function () {
+      var url = new URL(window.location.href);
+      if (url.searchParams.get('view') === 'pdf') {
+        window.print();
+        return;
+      }
+      url.searchParams.set('view', 'pdf');
+      // Open pdf-view in new tab and auto-print
+      var pdfUrl = url.toString() + '#auto-print';
+      var w = window.open(pdfUrl, '_blank');
+      if (!w) { window.location.href = pdfUrl; }
+    };
+
+    // Auto-print when arriving with #auto-print
+    (function () {
+      if (window.location.hash === '#auto-print') {
+        window.addEventListener('load', function () { setTimeout(function () { window.print(); }, 600); });
+      }
+    })();
+
+    // View-switch dropdown toggle (delegated)
+    document.addEventListener('click', function (e) {
+      var trig = e.target.closest('[data-view-switch-trigger]');
+      var menu = document.querySelector('.view-switch-menu');
+      if (trig && menu) { menu.classList.toggle('open'); e.stopPropagation(); return; }
+      if (menu && !e.target.closest('.view-switch-menu')) menu.classList.remove('open');
+    });
+  </script>
+
+  
+<script>
+  const portfolio = JSON.parse(document.getElementById('liq-portfolio').textContent);
+
+  function chartColors() {
+    const isDark = document.documentElement.classList.contains('dark');
+    return {
+      tick: isDark ? '#94a3b8' : '#64748b',
+      grid: isDark ? '#1f2937' : '#e2e8f0',
+    };
+  }
+
+  // Distribution chart
+  const dist = portfolio.distribution;
+  const ctx = document.getElementById('distChart').getContext('2d');
+  let distChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: Object.keys(dist),
+      datasets: [{
+        data: Object.values(dist),
+        backgroundColor: ['#22c55e', '#3b82f6', '#eab308', '#f97316', '#ef4444'],
+        borderRadius: 6,
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: chartColors().tick }, grid: { display: false } },
+        y: { ticks: { color: chartColors().tick, stepSize: 1 }, grid: { color: chartColors().grid }, beginAtZero: true }
+      },
+      maintainAspectRatio: false,
+    }
+  });
+
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    setTimeout(function () {
+      const c = chartColors();
+      distChart.options.scales.x.ticks.color = c.tick;
+      distChart.options.scales.y.ticks.color = c.tick;
+      distChart.options.scales.y.grid.color = c.grid;
+      distChart.update();
+    }, 50);
+  });
+
+  // Sortable table
+  (function () {
+    const table = document.getElementById('propTable');
+    const tbody = table.querySelector('tbody');
+    const headers = table.querySelectorAll('th[data-sort]');
+    let currentSort = { key: 'overall_score', dir: 'desc' };
+
+    headers.forEach(h => h.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const key = h.dataset.sort;
+      currentSort = {
+        key,
+        dir: (currentSort.key === key && currentSort.dir === 'desc') ? 'asc' : 'desc'
+      };
+      sortRows();
+    }));
+
+    function getValue(row, key) {
+      const cells = Array.from(row.children);
+      const headerKeys = Array.from(headers).map(h => h.dataset.sort);
+      const idx = headerKeys.indexOf(key);
+      const txt = cells[idx]?.innerText.trim() || '';
+      const num = parseFloat(txt);
+      return isNaN(num) ? txt.toLowerCase() : num;
+    }
+
+    function sortRows() {
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      rows.sort((a, b) => {
+        const av = getValue(a, currentSort.key);
+        const bv = getValue(b, currentSort.key);
+        if (av < bv) return currentSort.dir === 'asc' ? -1 : 1;
+        if (av > bv) return currentSort.dir === 'asc' ? 1 : -1;
+        return 0;
+      });
+      rows.forEach(r => tbody.appendChild(r));
+    }
+  })();
+</script>
+
+</body>
+</html>

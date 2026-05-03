@@ -1,0 +1,253 @@
+{
+  "run_date": "demo-airbnb-1334271564949136409",
+  "property_count": 1,
+  "avg_overall": 61,
+  "avg_overall_grade": "D",
+  "dimension_avgs": {
+    "photos": 41,
+    "title": 60,
+    "description": 40,
+    "amenities": 89,
+    "reviews": 68,
+    "pricing": 79,
+    "booking_settings": 83,
+    "operational_fit": 75,
+    "consistency_score": 0,
+    "guest_favorite": 30,
+    "review_summary": 40,
+    "listing_overview": 54,
+    "comp_summary": 75,
+    "profitability_score": 50,
+    "revenue_efficiency": 65,
+    "brand_voice_compliance": 100
+  },
+  "dimension_grades": {
+    "photos": "F",
+    "title": "D",
+    "description": "F",
+    "amenities": "B",
+    "reviews": "D",
+    "pricing": "C",
+    "booking_settings": "B",
+    "operational_fit": "C",
+    "consistency_score": "F",
+    "guest_favorite": "F",
+    "review_summary": "F",
+    "listing_overview": "F",
+    "comp_summary": "C",
+    "profitability_score": "F",
+    "revenue_efficiency": "D",
+    "brand_voice_compliance": "A"
+  },
+  "distribution": {
+    "A (90-100)": 0,
+    "B (80-89)": 0,
+    "C (70-79)": 0,
+    "D (60-69)": 1,
+    "F (<60)": 0
+  },
+  "top_5": [
+    {
+      "code": "AIRBNB-DEMO",
+      "nickname": "Amazing Water View Escape",
+      "market": "",
+      "overall_score": 61,
+      "overall_grade": "D",
+      "dimension_scores": {
+        "photos": 41,
+        "title": 60,
+        "description": 40,
+        "amenities": 89,
+        "reviews": 68,
+        "pricing": 79,
+        "booking_settings": 83,
+        "operational_fit": 75,
+        "consistency_score": 0,
+        "guest_favorite": 30,
+        "review_summary": 40,
+        "listing_overview": 54,
+        "comp_summary": 75,
+        "profitability_score": 50,
+        "revenue_efficiency": 65,
+        "brand_voice_compliance": 100
+      },
+      "dimension_grades": {
+        "photos": "F",
+        "title": "D",
+        "description": "F",
+        "amenities": "B",
+        "reviews": "D",
+        "pricing": "C",
+        "booking_settings": "B",
+        "operational_fit": "C",
+        "consistency_score": "F",
+        "guest_favorite": "F",
+        "review_summary": "F",
+        "listing_overview": "F",
+        "comp_summary": "C",
+        "profitability_score": "F",
+        "revenue_efficiency": "D",
+        "brand_voice_compliance": "A"
+      },
+      "top_fix": "Photos missing for declared amenities: pool, hot tub, kitchen. Visual proof builds trust."
+    }
+  ],
+  "bottom_5": [
+    {
+      "code": "AIRBNB-DEMO",
+      "nickname": "Amazing Water View Escape",
+      "market": "",
+      "overall_score": 61,
+      "overall_grade": "D",
+      "dimension_scores": {
+        "photos": 41,
+        "title": 60,
+        "description": 40,
+        "amenities": 89,
+        "reviews": 68,
+        "pricing": 79,
+        "booking_settings": 83,
+        "operational_fit": 75,
+        "consistency_score": 0,
+        "guest_favorite": 30,
+        "review_summary": 40,
+        "listing_overview": 54,
+        "comp_summary": 75,
+        "profitability_score": 50,
+        "revenue_efficiency": 65,
+        "brand_voice_compliance": 100
+      },
+      "dimension_grades": {
+        "photos": "F",
+        "title": "D",
+        "description": "F",
+        "amenities": "B",
+        "reviews": "D",
+        "pricing": "C",
+        "booking_settings": "B",
+        "operational_fit": "C",
+        "consistency_score": "F",
+        "guest_favorite": "F",
+        "review_summary": "F",
+        "listing_overview": "F",
+        "comp_summary": "C",
+        "profitability_score": "F",
+        "revenue_efficiency": "D",
+        "brand_voice_compliance": "A"
+      },
+      "top_fix": "Photos missing for declared amenities: pool, hot tub, kitchen. Visual proof builds trust."
+    }
+  ],
+  "top_portfolio_fixes": [
+    {
+      "fix": "Photos missing for declared amenities: pool, hot tub, kitchen. Visual proof builds trust.",
+      "dimension": "consistency_score",
+      "property_count": 1,
+      "affected_properties": [
+        "AIRBNB-DEMO"
+      ],
+      "avg_dim_score": 0
+    },
+    {
+      "fix": "Lift avg rating from 4.18 toward 4.85+ to qualify for Airbnb Guest Favorite (top ~10%).",
+      "dimension": "guest_favorite",
+      "property_count": 1,
+      "affected_properties": [
+        "AIRBNB-DEMO"
+      ],
+      "avg_dim_score": 30
+    },
+    {
+      "fix": "Fill missing description sections: space, access, interactionWithGuests, neighborhood, transit, notes, houseRules",
+      "dimension": "description",
+      "property_count": 1,
+      "affected_properties": [
+        "AIRBNB-DEMO"
+      ],
+      "avg_dim_score": 40
+    },
+    {
+      "fix": "Expand total description to 1500+ chars (current 499)",
+      "dimension": "description",
+      "property_count": 1,
+      "affected_properties": [
+        "AIRBNB-DEMO"
+      ],
+      "avg_dim_score": 40
+    },
+    {
+      "fix": "Add 4+ photos (current 21; OTA optimal is 25-40)",
+      "dimension": "photos",
+      "property_count": 1,
+      "affected_properties": [
+        "AIRBNB-DEMO"
+      ],
+      "avg_dim_score": 41
+    }
+  ],
+  "properties": [
+    {
+      "code": "AIRBNB-DEMO",
+      "nickname": "Amazing Water View Escape",
+      "market": "",
+      "overall_score": 61,
+      "overall_grade": "D",
+      "dimension_scores": {
+        "photos": 41,
+        "title": 60,
+        "description": 40,
+        "amenities": 89,
+        "reviews": 68,
+        "pricing": 79,
+        "booking_settings": 83,
+        "operational_fit": 75,
+        "consistency_score": 0,
+        "guest_favorite": 30,
+        "review_summary": 40,
+        "listing_overview": 54,
+        "comp_summary": 75,
+        "profitability_score": 50,
+        "revenue_efficiency": 65,
+        "brand_voice_compliance": 100
+      },
+      "dimension_grades": {
+        "photos": "F",
+        "title": "D",
+        "description": "F",
+        "amenities": "B",
+        "reviews": "D",
+        "pricing": "C",
+        "booking_settings": "B",
+        "operational_fit": "C",
+        "consistency_score": "F",
+        "guest_favorite": "F",
+        "review_summary": "F",
+        "listing_overview": "F",
+        "comp_summary": "C",
+        "profitability_score": "F",
+        "revenue_efficiency": "D",
+        "brand_voice_compliance": "A"
+      },
+      "top_fix": "Photos missing for declared amenities: pool, hot tub, kitchen. Visual proof builds trust."
+    }
+  ],
+  "weights": {
+    "photos": 0.1,
+    "title": 0.05,
+    "description": 0.08,
+    "amenities": 0.07,
+    "reviews": 0.1,
+    "pricing": 0.08,
+    "booking_settings": 0.1,
+    "operational_fit": 0.08,
+    "consistency_score": 0.04,
+    "guest_favorite": 0.04,
+    "review_summary": 0.04,
+    "listing_overview": 0.04,
+    "comp_summary": 0.04,
+    "profitability_score": 0.08,
+    "revenue_efficiency": 0.04,
+    "brand_voice_compliance": 0.02
+  },
+  "generated_at": "2026-05-03T21:28:58.402240Z"
+}

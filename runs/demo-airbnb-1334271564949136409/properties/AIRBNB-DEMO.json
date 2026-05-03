@@ -1,0 +1,412 @@
+{
+  "code": "AIRBNB-DEMO",
+  "nickname": "Amazing Water View Escape",
+  "title": "Amazing Water View Escape | By LussoStay",
+  "city": "Sparks, Nevada",
+  "address": "Sparks, NV (1316 sqft, 2BR/2BA waterfront apartment)",
+  "source_url": "https://www.airbnb.com/rooms/1334271564949136409",
+  "analyzed_at": "2026-05-03T21:10:00Z",
+  "data_source": "Airbnb scrape + LussoStay portfolio benchmarks",
+  "overall_score": 61,
+  "dimension_scores": {
+    "photos": 41,
+    "title": 60,
+    "description": 40,
+    "amenities": 89,
+    "reviews": 68,
+    "pricing": 79,
+    "booking_settings": 83,
+    "operational_fit": 75,
+    "consistency_score": 0,
+    "guest_favorite": 30,
+    "review_summary": 40,
+    "listing_overview": 54,
+    "comp_summary": 75,
+    "profitability_score": 50,
+    "revenue_efficiency": 65,
+    "brand_voice_compliance": 100
+  },
+  "dimensions": {
+    "photos": {
+      "score": 41,
+      "photo_count": 21,
+      "captioned_count": 0,
+      "pct_captioned": 0.0,
+      "rooms_covered_in_captions": [],
+      "sub_scores": {
+        "count": 75,
+        "caption_coverage": 10,
+        "hero_quality": 60,
+        "room_coverage": 0
+      },
+      "fixes": [
+        "Add 4+ photos (current 21; OTA optimal is 25-40)",
+        "Caption 0 more photos to reach 80%+ captioned (current 0%)",
+        "Add photos covering: amenity, balcony, bathroom, bedroom, dining, exterior, gym, kitchen, living, poo"
+      ]
+    },
+    "title": {
+      "score": 60,
+      "title": "Amazing Water View Escape | By LussoStay",
+      "length": 40,
+      "has_location": false,
+      "has_property_type": false,
+      "has_signature": true,
+      "sub_scores": {
+        "length": 75,
+        "keywords": 34,
+        "no_anti_patterns": 100
+      },
+      "fixes": [
+        "Title only 40 chars; expand to 50-65 (Airbnb cuts off ~50, VRBO ~65)",
+        "Add location keyword (neighborhood/city)",
+        "Add property type (penthouse/home/apartment)"
+      ]
+    },
+    "description": {
+      "score": 40,
+      "total_chars": 499,
+      "sections_filled": 1,
+      "section_lens": {
+        "summary": 499,
+        "space": 0,
+        "access": 0,
+        "interactionWithGuests": 0,
+        "neighborhood": 0,
+        "transit": 0,
+        "notes": 0,
+        "houseRules": 0
+      },
+      "sub_scores": {
+        "sections_filled": 25,
+        "total_length": 30,
+        "hook": 80
+      },
+      "fixes": [
+        "Fill missing description sections: space, access, interactionWithGuests, neighborhood, transit, notes, houseRules",
+        "Expand total description to 1500+ chars (current 499)"
+      ]
+    },
+    "amenities": {
+      "score": 89,
+      "amenity_count": 44,
+      "high_impact_coverage_pct": 100,
+      "high_impact_present": [
+        "air_conditioning",
+        "dryer",
+        "gym",
+        "hairdryer",
+        "heating",
+        "hot_tub",
+        "iron",
+        "kitchen",
+        "parking",
+        "pool",
+        "self_checkin",
+        "tv",
+        "view",
+        "washer",
+        "wifi",
+        "workspace"
+      ],
+      "high_impact_missing": [],
+      "sub_scores": {
+        "count": 75,
+        "high_impact_coverage": 100
+      },
+      "fixes": []
+    },
+    "reviews": {
+      "score": 68,
+      "review_count": 17,
+      "avg_rating": 4.18,
+      "response_rate_pct": 71,
+      "recent_90d_count": 12,
+      "sub_scores": {
+        "count": 70,
+        "rating": 40,
+        "recency": 100,
+        "response": 65
+      },
+      "fixes": [
+        "Host response rate 71% \u2014 respond to all reviews within 48h."
+      ]
+    },
+    "pricing": {
+      "score": 79,
+      "base": 255.0,
+      "min": 195.0,
+      "max": 475.0,
+      "recommended_base": 279.0,
+      "occ_30d": 47,
+      "market_occ_30d": 43,
+      "occ_delta_vs_market": 4,
+      "sub_scores": {
+        "recommendation_fit": 85,
+        "spread": 85,
+        "market_relative": 70
+      },
+      "fixes": []
+    },
+    "booking_settings": {
+      "score": 83,
+      "min_nights": 2,
+      "max_nights": 60,
+      "cleaning_fee": 145,
+      "base_price": 255,
+      "cleaning_to_base_ratio": 0.57,
+      "sub_scores": {
+        "min_nights": 95,
+        "max_nights": 85,
+        "cleaning_ratio": 55
+      },
+      "fixes": [
+        "Cleaning fee $145 vs base $255 \u2014 high ratio scares short-stay bookings."
+      ]
+    },
+    "operational_fit": {
+      "score": 75,
+      "channels_in_review_history": [
+        "airbnb2"
+      ],
+      "is_active": true,
+      "tags": [
+        "reno-sparks",
+        "apartment",
+        "waterfront",
+        "2br",
+        "mid-tier"
+      ],
+      "sub_scores": {
+        "channel_diversification": 45,
+        "active_state": 100,
+        "tag_quality": 100
+      },
+      "fixes": [
+        "Diversify channels \u2014 only 1 active in review history."
+      ]
+    },
+    "consistency_score": {
+      "score": 0,
+      "declared_amenities_checked": [
+        "pool",
+        "hot tub",
+        "kitchen",
+        "gym",
+        "workspace",
+        "balcony"
+      ],
+      "visible_in_photos": [],
+      "missing_visual_proof": [
+        "pool",
+        "hot tub",
+        "kitchen",
+        "gym",
+        "workspace",
+        "balcony"
+      ],
+      "sub_scores": {
+        "visual_coverage_pct": 0
+      },
+      "fixes": [
+        "Photos missing for declared amenities: pool, hot tub, kitchen. Visual proof builds trust."
+      ],
+      "note": "STUB \u2014 v2 uses Claude vision for true photo<>amenity verification."
+    },
+    "guest_favorite": {
+      "score": 30,
+      "guest_favorite_eligible": false,
+      "avg_rating": 4.18,
+      "review_count": 17,
+      "sub_scores": {
+        "eligibility": 0
+      },
+      "fixes": [
+        "Lift avg rating from 4.18 toward 4.85+ to qualify for Airbnb Guest Favorite (top ~10%)."
+      ],
+      "note": "STUB \u2014 v2 reads true badge state from Airbnb listing scrape."
+    },
+    "review_summary": {
+      "score": 40,
+      "positive_signals": [],
+      "negative_signals": [],
+      "review_count_analyzed": 17,
+      "sub_scores": {
+        "positive_tone": 0,
+        "absence_of_negatives": 100
+      },
+      "fixes": [],
+      "note": "STUB \u2014 v2 uses Claude for true sentiment + theme clusters."
+    },
+    "listing_overview": {
+      "score": 54,
+      "usp_signals_found": 5,
+      "segment_signals_found": 0,
+      "summary_length": 499,
+      "sub_scores": {
+        "usp_clarity": 60,
+        "segment_targeting": 0,
+        "hook_length": 100
+      },
+      "fixes": [
+        "Name your target guest segment (couples, families, business travelers)."
+      ]
+    },
+    "comp_summary": {
+      "score": 75,
+      "occ_30d": 47,
+      "market_occ_30d": 43,
+      "delta_vs_market": 4,
+      "sub_scores": {
+        "occupancy_vs_comp": 75
+      },
+      "fixes": [],
+      "note": "STUB \u2014 v2 pulls real comp set ADR + revenue per available night."
+    },
+    "profitability_score": {
+      "score": 50,
+      "has_pnl_data": false,
+      "sub_scores": {
+        "data_availability": 0
+      },
+      "fixes": [
+        "No P&L data entered for this property. Enter actuals to enable profitability scoring."
+      ],
+      "note": "Add P&L block to enable real scoring."
+    },
+    "revenue_efficiency": {
+      "score": 65,
+      "estimated_revpar": 119.85,
+      "base_price": 255.0,
+      "occupancy_30d": 47,
+      "market_occupancy_30d": 43,
+      "sub_scores": {
+        "rate_strength": 50,
+        "occupancy_vs_market": 80
+      },
+      "fixes": [
+        "RevPAR efficiency below par. Estimated RevPAR $120; verify against PMS actuals."
+      ],
+      "note": "STUB \u2014 v2 wires true RevPAR from PMS (booked nights \u00d7 ADR / available nights)."
+    },
+    "brand_voice_compliance": {
+      "score": 100,
+      "violations_found": 0,
+      "violation_list": [],
+      "sub_scores": {
+        "rule_compliance": 100
+      },
+      "fixes": []
+    }
+  },
+  "prioritized_fixes": [
+    {
+      "dimension": "consistency_score",
+      "fix": "Photos missing for declared amenities: pool, hot tub, kitchen. Visual proof builds trust.",
+      "dim_score": 0
+    },
+    {
+      "dimension": "guest_favorite",
+      "fix": "Lift avg rating from 4.18 toward 4.85+ to qualify for Airbnb Guest Favorite (top ~10%).",
+      "dim_score": 30
+    },
+    {
+      "dimension": "description",
+      "fix": "Fill missing description sections: space, access, interactionWithGuests, neighborhood, transit, notes, houseRules",
+      "dim_score": 40
+    },
+    {
+      "dimension": "description",
+      "fix": "Expand total description to 1500+ chars (current 499)",
+      "dim_score": 40
+    },
+    {
+      "dimension": "photos",
+      "fix": "Add 4+ photos (current 21; OTA optimal is 25-40)",
+      "dim_score": 41
+    },
+    {
+      "dimension": "photos",
+      "fix": "Caption 0 more photos to reach 80%+ captioned (current 0%)",
+      "dim_score": 41
+    },
+    {
+      "dimension": "photos",
+      "fix": "Add photos covering: amenity, balcony, bathroom, bedroom, dining, exterior, gym, kitchen, living, poo",
+      "dim_score": 41
+    },
+    {
+      "dimension": "profitability_score",
+      "fix": "No P&L data entered for this property. Enter actuals to enable profitability scoring.",
+      "dim_score": 50
+    },
+    {
+      "dimension": "listing_overview",
+      "fix": "Name your target guest segment (couples, families, business travelers).",
+      "dim_score": 54
+    },
+    {
+      "dimension": "title",
+      "fix": "Title only 40 chars; expand to 50-65 (Airbnb cuts off ~50, VRBO ~65)",
+      "dim_score": 60
+    },
+    {
+      "dimension": "title",
+      "fix": "Add location keyword (neighborhood/city)",
+      "dim_score": 60
+    },
+    {
+      "dimension": "title",
+      "fix": "Add property type (penthouse/home/apartment)",
+      "dim_score": 60
+    }
+  ],
+  "weights": {
+    "photos": 0.1,
+    "title": 0.05,
+    "description": 0.08,
+    "amenities": 0.07,
+    "reviews": 0.1,
+    "pricing": 0.08,
+    "booking_settings": 0.1,
+    "operational_fit": 0.08,
+    "consistency_score": 0.04,
+    "guest_favorite": 0.04,
+    "review_summary": 0.04,
+    "listing_overview": 0.04,
+    "comp_summary": 0.04,
+    "profitability_score": 0.08,
+    "revenue_efficiency": 0.04,
+    "brand_voice_compliance": 0.02
+  },
+  "pnl": {
+    "period_label": "2025 FY (estimated)",
+    "revenue_gross": 53400,
+    "revenue_source": "Airbnb scrape + WAT416 industry-tools benchmark",
+    "expenses": {
+      "rent_paid": 0,
+      "cleaning": 5800,
+      "utilities": 3600,
+      "supplies": 1500,
+      "maintenance": 1200,
+      "insurance": 800,
+      "software": 1200,
+      "other": 0
+    },
+    "net_contribution": 39300,
+    "margin_pct": 73.6
+  },
+  "metadata": {
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "accommodates": 4,
+    "sqft": 1316,
+    "review_count": 17,
+    "rating_avg": 4.47,
+    "review_response_rate_pct": 71,
+    "amenity_count": 44,
+    "photo_count": 21,
+    "lat": 39.5367,
+    "lng": -119.7279
+  }
+}

@@ -1,0 +1,1541 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SD1303 - Klendric 69</title>
+<script>
+  // Apply theme + view BEFORE Tailwind/CSS loads to prevent flash
+  (function () {
+    try {
+      var t = localStorage.getItem('liq-theme');
+      if (t === 'dark') document.documentElement.classList.add('dark');
+      // default: LIGHT (Marina's preference)
+    } catch (e) {}
+    try {
+      // ?view=pm|owner|pdf — set body attribute as soon as body parses
+      var qs = (window.location.search || '').toLowerCase();
+      var m = qs.match(/[?&]view=(pm|owner|pdf)/);
+      var v = m ? m[1] : 'pm';
+      document.documentElement.setAttribute('data-view', v);
+    } catch (e) {}
+  })();
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+          serif: ['Georgia', 'Cambria', '"Times New Roman"', 'serif'],
+        },
+        colors: {
+          ink: '#0b1120',
+          panel: '#111827',
+          panel2: '#1f2937',
+        }
+      }
+    }
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Inter', system-ui, sans-serif; }
+  /* Grade colors */
+  .grade-A { color: #16a34a; }
+  .grade-B { color: #2563eb; }
+  .grade-C { color: #ca8a04; }
+  .grade-D { color: #ea580c; }
+  .grade-F { color: #dc2626; }
+  .dark .grade-A { color: #22c55e; }
+  .dark .grade-B { color: #3b82f6; }
+  .dark .grade-C { color: #eab308; }
+  .dark .grade-D { color: #f97316; }
+  .dark .grade-F { color: #ef4444; }
+  .bg-grade-A { background-color: rgba(22, 163, 74, 0.12); border-color: rgba(22, 163, 74, 0.35); }
+  .bg-grade-B { background-color: rgba(37, 99, 235, 0.12); border-color: rgba(37, 99, 235, 0.35); }
+  .bg-grade-C { background-color: rgba(202, 138, 4, 0.12); border-color: rgba(202, 138, 4, 0.35); }
+  .bg-grade-D { background-color: rgba(234, 88, 12, 0.12); border-color: rgba(234, 88, 12, 0.35); }
+  .bg-grade-F { background-color: rgba(220, 38, 38, 0.12); border-color: rgba(220, 38, 38, 0.35); }
+  .dark .bg-grade-A { background-color: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.4); }
+  .dark .bg-grade-B { background-color: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.4); }
+  .dark .bg-grade-C { background-color: rgba(234, 179, 8, 0.15); border-color: rgba(234, 179, 8, 0.4); }
+  .dark .bg-grade-D { background-color: rgba(249, 115, 22, 0.15); border-color: rgba(249, 115, 22, 0.4); }
+  .dark .bg-grade-F { background-color: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); }
+  .heatcell { transition: transform 120ms ease; }
+  .heatcell:hover { transform: scale(1.08); z-index: 10; }
+  .row-link { transition: background-color 120ms ease; }
+  .row-link:hover { background-color: rgba(99, 102, 241, 0.10); }
+  ::-webkit-scrollbar { height: 10px; width: 10px; }
+  ::-webkit-scrollbar-track { background: #f1f5f9; }
+  .dark ::-webkit-scrollbar-track { background: #0b1120; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; }
+  .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 5px; }
+  .fix-resolved { opacity: 0.5; text-decoration: line-through; }
+
+  /* ================ VIEW MODES ================ */
+  /* PM view (default) — show everything; nothing to hide */
+  /* Owner view hides PM-internal blocks */
+  html[data-view="owner"] .pm-only { display: none !important; }
+  /* Show owner-only blocks only in owner view */
+  .owner-only { display: none; }
+  html[data-view="owner"] .owner-only { display: block; }
+  html[data-view="owner"] .owner-only-flex { display: flex; }
+  html[data-view="owner"] .owner-only-grid { display: grid; }
+  /* PDF view — printable layout, hides interactive chrome */
+  html[data-view="pdf"] .no-print,
+  @media print { .no-print { display: none !important; } }
+  html[data-view="pdf"] .pdf-only { display: block; }
+  .pdf-only { display: none; }
+
+  /* PDF / print stylesheet */
+  @media print {
+    @page { size: letter; margin: 0.5in; }
+    body { background: #ffffff !important; color: #111827 !important; font-family: Georgia, 'Times New Roman', serif !important; }
+    .dark body, body.dark { background: #ffffff !important; color: #111827 !important; }
+    h1, h2, h3, h4, .heading-sans { font-family: 'Inter', sans-serif !important; }
+    .no-print, header, footer, #theme-toggle, #view-switch, #reanalyze-btn, .resolve-btn { display: none !important; }
+    main { max-width: 100% !important; padding: 0 !important; }
+    section { break-inside: avoid; page-break-inside: avoid; }
+    section + section { break-before: auto; page-break-before: auto; margin-top: 0.5rem; }
+    .page-break-before { break-before: page; page-break-before: always; }
+    .pdf-only { display: block !important; }
+    /* Force light theme colors for printable elements */
+    .bg-white, .dark\:bg-panel, .dark\:bg-slate-900, .dark\:bg-slate-950\/40,
+    .dark\:bg-slate-900\/50, .dark\:bg-slate-900\/60, .dark\:bg-slate-900\/30,
+    .dark\:bg-slate-900\/40, .dark\:bg-slate-950, .dark\:bg-slate-950\/80 {
+      background: #ffffff !important; color: #111827 !important;
+    }
+    .text-slate-100, .text-slate-200, .text-slate-300, .text-white,
+    .dark\:text-slate-100, .dark\:text-slate-200, .dark\:text-slate-300, .dark\:text-white {
+      color: #111827 !important;
+    }
+    .border-slate-700, .border-slate-800, .dark\:border-slate-700, .dark\:border-slate-800 {
+      border-color: #cbd5e1 !important;
+    }
+    img { max-width: 100% !important; }
+    a { color: #1d4ed8 !important; text-decoration: none !important; }
+    @page { @bottom-right { content: "Page " counter(page) " of " counter(pages); font-family: Georgia, serif; font-size: 9pt; color: #64748b; } }
+  }
+
+  /* When ?view=pdf is active in-browser preview — apply same look without print */
+  html[data-view="pdf"] body { background: #ffffff !important; color: #111827 !important; font-family: Georgia, 'Times New Roman', serif !important; }
+  html[data-view="pdf"] h1, html[data-view="pdf"] h2, html[data-view="pdf"] h3 { font-family: 'Inter', sans-serif !important; }
+  html[data-view="pdf"] .bg-white, html[data-view="pdf"] [class*="dark:bg-"] { background: #ffffff !important; color: #111827 !important; }
+  html[data-view="pdf"] [class*="dark:text-"], html[data-view="pdf"] .text-white { color: #111827 !important; }
+  html[data-view="pdf"] [class*="dark:border-"] { border-color: #cbd5e1 !important; }
+  html[data-view="pdf"] .pdf-paper { background: #ffffff; color: #111827; padding: 0.5in; max-width: 8.5in; margin: 0 auto; box-shadow: 0 0 30px rgba(0,0,0,0.08); }
+  html[data-view="pdf"] header, html[data-view="pdf"] footer, html[data-view="pdf"] .no-print { display: none !important; }
+  html[data-view="pdf"] main { max-width: 8.5in !important; }
+
+  /* View switcher dropdown */
+  .view-switch-menu { display: none; }
+  .view-switch-menu.open { display: block; }
+</style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100 text-slate-900 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 dark:text-slate-100">
+  <header class="border-b border-slate-200 bg-white/80 dark:border-slate-800 dark:bg-slate-950/80 backdrop-blur sticky top-0 z-30 no-print">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-fuchsia-500 grid place-items-center font-bold text-sm text-white">N</div>
+        <div>
+          <div class="text-sm uppercase tracking-widest text-slate-500 dark:text-slate-400">LussoStay</div>
+          <div class="text-base font-semibold">Listing Intelligence Quotient</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <nav class="text-sm flex items-center gap-3">
+          <a href="../index.html" class="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">Portfolio</a>
+          <span class="text-slate-300 dark:text-slate-700">/</span>
+          <span class="text-slate-700 dark:text-slate-300">SD1303 - Marina Bay 13th-Floor Suite</span>
+        </nav>
+        
+<div class="relative no-print">
+  <button type="button" data-view-switch-trigger
+          class="text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 font-semibold">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/>
+    </svg>
+    <span id="view-switch-label">Switch View</span>
+    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+  </button>
+  <div class="view-switch-menu absolute right-0 mt-2 w-56 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl overflow-hidden z-50">
+    <button type="button" onclick="Klendric_setView('pm')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-indigo-50 dark:hover:bg-slate-800 flex items-start gap-2">
+      <span class="text-indigo-500 font-bold">PM</span>
+      <span><div class="font-semibold">Property Manager</div><div class="text-xs text-slate-500">Full ops + financial detail</div></span>
+    </button>
+    
+    <button type="button" onclick="Klendric_setView('owner')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-emerald-50 dark:hover:bg-slate-800 border-t border-slate-100 dark:border-slate-800 flex items-start gap-2">
+      <span class="text-emerald-500 font-bold">OW</span>
+      <span><div class="font-semibold">Homeowner</div><div class="text-xs text-slate-500">Simplified, owner-friendly</div></span>
+    </button>
+    
+    <button type="button" onclick="Klendric_downloadPdf()" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 border-t border-slate-100 dark:border-slate-800 flex items-start gap-2">
+      <span class="text-slate-500 font-bold">PDF</span>
+      <span><div class="font-semibold">Download PDF</div><div class="text-xs text-slate-500">Print-ready report</div></span>
+    </button>
+  </div>
+</div>
+
+        <button id="theme-toggle" type="button"
+                class="relative w-10 h-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 grid place-items-center transition-colors"
+                title="Toggle light/dark theme" aria-label="Toggle theme">
+          <svg class="hidden dark:block w-5 h-5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="4"/>
+            <path stroke-linecap="round" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/>
+          </svg>
+          <svg class="block dark:hidden w-5 h-5 text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  
+  <div class="pdf-only" style="text-align:center; padding: 0.25in 0; border-bottom: 1px solid #cbd5e1; margin-bottom: 0.25in;">
+    <div style="font-family: 'Inter', sans-serif; font-weight: 800; font-size: 18pt; letter-spacing: 0.05em; color: #4f46e5;">Klendric</div>
+    <div style="font-family: Georgia, serif; font-size: 11pt; color: #475569; margin-top: 4px;">Listing Intelligence Quotient · LussoStay</div>
+    <div style="font-family: Georgia, serif; font-size: 9pt; color: #94a3b8; margin-top: 2px;">Generated 2026-05-03T21:28:58.226188Z</div>
+  </div>
+
+  <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
+    
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="lg:col-span-2 space-y-6">
+    <div class="flex items-start justify-between gap-4 flex-wrap">
+      <div>
+        <div class="text-xs uppercase tracking-widest text-indigo-600 dark:text-indigo-400 font-semibold">San Diego</div>
+        <h1 class="text-3xl font-bold tracking-tight mt-1">Marina Bay 13th-Floor Suite</h1>
+        <div class="text-sm text-slate-500 dark:text-slate-400 mt-1">1303 Marina Bay Dr, San Diego, CA</div>
+        <div class="text-xs font-mono text-slate-400 dark:text-slate-500 mt-1">SD1303</div>
+      </div>
+      <button id="reanalyze-btn" type="button" disabled
+              class="pm-only no-print text-xs px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 cursor-not-allowed flex items-center gap-2"
+              title="Demo only — real re-run wired in v2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v6h6M20 20v-6h-6M4 10a8 8 0 0114-3m2 7a8 8 0 01-14 3"/>
+        </svg>
+        Re-analyze (4 runs left this month)
+      </button>
+    </div>
+
+    
+    <div class="grid grid-cols-3 gap-2">
+      
+      <div class="aspect-[4/3] rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        
+        <img src="https://picsum.photos/seed/SD1303-1/640/480" loading="lazy" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.classList.add('grid','place-items-center'); this.parentElement.innerHTML='<span class=\'text-xs text-slate-500\'>image unavailable</span>';" />
+        
+      </div>
+      
+      <div class="aspect-[4/3] rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        
+        <img src="https://picsum.photos/seed/SD1303-2/640/480" loading="lazy" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.classList.add('grid','place-items-center'); this.parentElement.innerHTML='<span class=\'text-xs text-slate-500\'>image unavailable</span>';" />
+        
+      </div>
+      
+      <div class="aspect-[4/3] rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        
+        <img src="https://picsum.photos/seed/SD1303-3/640/480" loading="lazy" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.classList.add('grid','place-items-center'); this.parentElement.innerHTML='<span class=\'text-xs text-slate-500\'>image unavailable</span>';" />
+        
+      </div>
+      
+      <div class="aspect-[4/3] rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        
+        <img src="https://picsum.photos/seed/SD1303-4/640/480" loading="lazy" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.classList.add('grid','place-items-center'); this.parentElement.innerHTML='<span class=\'text-xs text-slate-500\'>image unavailable</span>';" />
+        
+      </div>
+      
+      <div class="aspect-[4/3] rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        
+        <img src="https://picsum.photos/seed/SD1303-5/640/480" loading="lazy" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.classList.add('grid','place-items-center'); this.parentElement.innerHTML='<span class=\'text-xs text-slate-500\'>image unavailable</span>';" />
+        
+      </div>
+      
+      <div class="aspect-[4/3] rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        
+        <img src="https://picsum.photos/seed/SD1303-6/640/480" loading="lazy" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.classList.add('grid','place-items-center'); this.parentElement.innerHTML='<span class=\'text-xs text-slate-500\'>image unavailable</span>';" />
+        
+      </div>
+      
+    </div>
+    
+  </div>
+
+  <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-6 flex flex-col items-center justify-center text-center shadow-sm">
+    <div class="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">Listing Intelligence Quotient</div>
+    <div class="mt-3 flex items-baseline gap-2">
+      <span class="text-7xl font-bold grade-D">69</span>
+      <span class="text-3xl font-bold grade-D">D</span>
+    </div>
+    <div class="text-sm text-slate-500 dark:text-slate-400 mt-2">Out of 100</div>
+    <div class="mt-4 w-full">
+      <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-orange-500"
+             style="width: 69%"></div>
+      </div>
+    </div>
+    <div class="mt-4 text-xs text-slate-400 dark:text-slate-500">Run 2026-05-03</div>
+  </div>
+</section>
+
+
+
+
+
+<section class="owner-only">
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-6 shadow-sm">
+      <h2 class="text-lg font-semibold mb-1">How your listing is winning</h2>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Top 3 strengths driving bookings.</p>
+      
+      <ul class="space-y-3">
+        
+        <li class="flex items-start gap-3">
+          <div class="shrink-0 w-10 h-10 rounded-full grid place-items-center text-sm font-bold bg-grade-A grade-A border">100</div>
+          <div>
+            <div class="font-semibold capitalize">brand voice compliance</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">Score 100 / 100 · grade A</div>
+          </div>
+        </li>
+        
+        <li class="flex items-start gap-3">
+          <div class="shrink-0 w-10 h-10 rounded-full grid place-items-center text-sm font-bold bg-grade-B grade-B border">82</div>
+          <div>
+            <div class="font-semibold capitalize">amenities</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">Score 82 / 100 · grade B</div>
+          </div>
+        </li>
+        
+        <li class="flex items-start gap-3">
+          <div class="shrink-0 w-10 h-10 rounded-full grid place-items-center text-sm font-bold bg-grade-C grade-C border">78</div>
+          <div>
+            <div class="font-semibold capitalize">photos</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">Score 78 / 100 · grade C</div>
+          </div>
+        </li>
+        
+      </ul>
+    </div>
+    <div class="rounded-xl border border-amber-300 dark:border-amber-700/40 bg-gradient-to-br from-amber-50 to-white dark:from-amber-950/30 dark:to-slate-900 p-6">
+      <h2 class="text-lg font-semibold mb-1">Top opportunities</h2>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Where your property could grow most.</p>
+      
+      <ol class="space-y-3 list-decimal list-inside">
+        
+        <li class="text-sm">
+          <span class="font-semibold capitalize">profitability score:</span>
+          <span class="text-slate-700 dark:text-slate-300">No P&amp;L data entered for this property. Enter actuals to enable profitability scoring.</span>
+        </li>
+        
+        <li class="text-sm">
+          <span class="font-semibold capitalize">booking settings:</span>
+          <span class="text-slate-700 dark:text-slate-300">⚠️ MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).</span>
+        </li>
+        
+        <li class="text-sm">
+          <span class="font-semibold capitalize">operational fit:</span>
+          <span class="text-slate-700 dark:text-slate-300">Diversify channels — only 1 active in review history.</span>
+        </li>
+        
+      </ol>
+      
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="owner-only rounded-xl border border-indigo-200 dark:border-indigo-800/40 bg-gradient-to-br from-indigo-50 to-white dark:from-indigo-950/30 dark:to-slate-900 p-6">
+  <h2 class="text-lg font-semibold mb-1">How you compare in your area</h2>
+  <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">San Diego comparison</p>
+  <div class="grid md:grid-cols-3 gap-4">
+    <div class="rounded-lg bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 p-4 text-center">
+      <div class="text-xs uppercase tracking-wider text-slate-500">Your occupancy (30d)</div>
+      <div class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mt-1">68%</div>
+    </div>
+    <div class="rounded-lg bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 p-4 text-center">
+      <div class="text-xs uppercase tracking-wider text-slate-500">Local market avg</div>
+      <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mt-1">65%</div>
+    </div>
+    <div class="rounded-lg bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 p-4 text-center">
+      <div class="text-xs uppercase tracking-wider text-slate-500">Your edge</div>
+      <div class="text-2xl font-bold mt-1 text-emerald-600 dark:text-emerald-400">
+        +3.0 pts
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="owner-only rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-6 shadow-sm">
+  <h2 class="text-lg font-semibold mb-1">Questions for your property manager</h2>
+  <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Talking points for your next call — generated from areas where your listing scored lowest.</p>
+  <ul class="space-y-3">
+    
+    
+    <li class="flex gap-3">
+      <span class="text-indigo-500 font-bold shrink-0">Q.</span>
+      <span class="text-sm text-slate-700 dark:text-slate-300">Could we add photos of <span class="font-semibold">workspace</span>? Guests look for visual proof of the amenities we list.</span>
+    </li>
+    
+    
+    
+    
+    <li class="flex gap-3">
+      <span class="text-indigo-500 font-bold shrink-0">Q.</span>
+      <span class="text-sm text-slate-700 dark:text-slate-300">Could we capture more revenue with pricing adjustments? Current occupancy is 20% vs market 27%.</span>
+    </li>
+    
+    
+    
+    
+    <li class="flex gap-3">
+      <span class="text-indigo-500 font-bold shrink-0">Q.</span>
+      <span class="text-sm text-slate-700 dark:text-slate-300">On <span class="font-semibold capitalize">profitability score</span>: No P&amp;L data entered for this property. Enter actuals to enable profitability scoring.</span>
+    </li>
+    
+    
+    
+    <li class="flex gap-3">
+      <span class="text-indigo-500 font-bold shrink-0">Q.</span>
+      <span class="text-sm text-slate-700 dark:text-slate-300">On <span class="font-semibold capitalize">booking settings</span>: ⚠️ MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).</span>
+    </li>
+    
+    
+    
+  </ul>
+  <div class="mt-5 pt-4 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 italic">
+    These questions are generated automatically. Your PM uses Klendric to stay on top of the same metrics — bring these up to start a productive conversation.
+  </div>
+</section>
+
+
+<section class="pm-only grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 lg:col-span-1 shadow-sm">
+    <h2 class="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-4">16-Dimension Radar</h2>
+    <div class="relative h-72"><canvas id="radarChart"></canvas></div>
+  </div>
+
+  <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-6 lg:col-span-2 shadow-sm">
+    <h2 class="text-lg font-semibold mb-1">Prioritized Fixes</h2>
+    <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Lowest-scoring dimensions first. Focus here for fastest score gains.</p>
+    
+    <ol class="space-y-2" id="fixes-list">
+      
+      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
+          data-fix-id="SD1303-1">
+        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-F grade-F border">50</div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">profitability score</div>
+            <div class="flex items-center gap-2">
+              
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$200-500/mo est.</span>
+              
+              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
+                <span class="resolve-label">Mark as Resolved</span>
+              </button>
+            </div>
+          </div>
+          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">No P&amp;L data entered for this property. Enter actuals to enable profitability scoring.</div>
+        </div>
+      </li>
+      
+      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
+          data-fix-id="SD1303-2">
+        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-D grade-D border">60</div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">booking settings</div>
+            <div class="flex items-center gap-2">
+              
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$340-820/mo est.</span>
+              
+              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
+                <span class="resolve-label">Mark as Resolved</span>
+              </button>
+            </div>
+          </div>
+          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">⚠️ MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).</div>
+        </div>
+      </li>
+      
+      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
+          data-fix-id="SD1303-3">
+        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-D grade-D border">65</div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">operational fit</div>
+            <div class="flex items-center gap-2">
+              
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$110-280/mo est.</span>
+              
+              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
+                <span class="resolve-label">Mark as Resolved</span>
+              </button>
+            </div>
+          </div>
+          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Diversify channels — only 1 active in review history.</div>
+        </div>
+      </li>
+      
+      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
+          data-fix-id="SD1303-4">
+        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-C grade-C border">70</div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">reviews</div>
+            <div class="flex items-center gap-2">
+              
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$280-720/mo est.</span>
+              
+              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
+                <span class="resolve-label">Mark as Resolved</span>
+              </button>
+            </div>
+          </div>
+          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Only 2 reviews — implement automated post-stay review prompt to lift count.</div>
+        </div>
+      </li>
+      
+      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
+          data-fix-id="SD1303-5">
+        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-C grade-C border">70</div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">reviews</div>
+            <div class="flex items-center gap-2">
+              
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$280-720/mo est.</span>
+              
+              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
+                <span class="resolve-label">Mark as Resolved</span>
+              </button>
+            </div>
+          </div>
+          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Only 0 reviews in last 90d — review velocity is too low.</div>
+        </div>
+      </li>
+      
+      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
+          data-fix-id="SD1303-6">
+        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-C grade-C border">70</div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">reviews</div>
+            <div class="flex items-center gap-2">
+              
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$280-720/mo est.</span>
+              
+              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
+                <span class="resolve-label">Mark as Resolved</span>
+              </button>
+            </div>
+          </div>
+          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Host response rate 50% — respond to all reviews within 48h.</div>
+        </div>
+      </li>
+      
+      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
+          data-fix-id="SD1303-7">
+        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-C grade-C border">72</div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">consistency score</div>
+            <div class="flex items-center gap-2">
+              
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$70-160/mo est.</span>
+              
+              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
+                <span class="resolve-label">Mark as Resolved</span>
+              </button>
+            </div>
+          </div>
+          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Photos missing for declared amenities: workspace. Visual proof builds trust.</div>
+        </div>
+      </li>
+      
+      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
+          data-fix-id="SD1303-8">
+        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-C grade-C border">75</div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">review summary</div>
+            <div class="flex items-center gap-2">
+              
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$90-210/mo est.</span>
+              
+              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
+                <span class="resolve-label">Mark as Resolved</span>
+              </button>
+            </div>
+          </div>
+          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Recurring negative signals: noisy. Audit and resolve.</div>
+        </div>
+      </li>
+      
+      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
+          data-fix-id="SD1303-9">
+        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-C grade-C border">78</div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">photos</div>
+            <div class="flex items-center gap-2">
+              
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$120-340/mo est.</span>
+              
+              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
+                <span class="resolve-label">Mark as Resolved</span>
+              </button>
+            </div>
+          </div>
+          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Caption 9 more photos to reach 80%+ captioned (current 51%)</div>
+        </div>
+      </li>
+      
+      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
+          data-fix-id="SD1303-10">
+        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-C grade-C border">78</div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2 flex-wrap">
+            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">photos</div>
+            <div class="flex items-center gap-2">
+              
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$120-340/mo est.</span>
+              
+              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
+                <span class="resolve-label">Mark as Resolved</span>
+              </button>
+            </div>
+          </div>
+          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Add photos covering: amenity, exterior, gym</div>
+        </div>
+      </li>
+      
+    </ol>
+    
+  </div>
+</section>
+
+
+<section class="pm-only rounded-xl border border-amber-300 dark:border-amber-700/40 bg-gradient-to-br from-amber-50 to-white dark:from-amber-950/40 dark:to-slate-900 p-6">
+  <div class="flex items-center gap-2 mb-1">
+    <div class="w-8 h-8 rounded grid place-items-center bg-amber-200 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold">industry-tools</div>
+    <h2 class="text-lg font-semibold">Hidden Profit Levers</h2>
+  </div>
+  <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">industry-tools's Listing Optimizer can't see these dimensions. Our internal scorer catches them.</p>
+  <div class="grid md:grid-cols-2 gap-4">
+    
+    
+    <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/40 p-4">
+      <div class="flex items-center justify-between mb-2">
+        <div class="text-sm font-semibold capitalize">booking settings</div>
+        <div class="text-xl font-bold grade-D">60</div>
+      </div>
+      <div class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
+        
+        <div><span class="text-slate-500">min nights:</span>
+          <span class="text-slate-800 dark:text-slate-200">4</span>
+        </div>
+        
+        <div><span class="text-slate-500">max nights:</span>
+          <span class="text-slate-800 dark:text-slate-200">60</span>
+        </div>
+        
+        <div><span class="text-slate-500">cleaning fee:</span>
+          <span class="text-slate-800 dark:text-slate-200">165</span>
+        </div>
+        
+        <div><span class="text-slate-500">base price:</span>
+          <span class="text-slate-800 dark:text-slate-200">449</span>
+        </div>
+        
+        <div><span class="text-slate-500">cleaning to base ratio:</span>
+          <span class="text-slate-800 dark:text-slate-200">0.37</span>
+        </div>
+        
+      </div>
+      
+      <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800 space-y-1">
+        
+        <div class="text-xs text-amber-700 dark:text-amber-300">- ⚠️ MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).</div>
+        
+      </div>
+      
+    </div>
+    
+    
+    <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/40 p-4">
+      <div class="flex items-center justify-between mb-2">
+        <div class="text-sm font-semibold capitalize">operational fit</div>
+        <div class="text-xl font-bold grade-D">65</div>
+      </div>
+      <div class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
+        
+        <div><span class="text-slate-500">channels in review history:</span>
+          <span class="text-slate-800 dark:text-slate-200">[&#39;airbnb2&#39;]</span>
+        </div>
+        
+        <div><span class="text-slate-500">is active:</span>
+          <span class="text-slate-800 dark:text-slate-200">True</span>
+        </div>
+        
+        <div><span class="text-slate-500">tags:</span>
+          <span class="text-slate-800 dark:text-slate-200">[&#39;san-diego&#39;, &#39;penthouse&#39;, &#39;1br&#39;, &#39;premium-tier&#39;, &#39;gaslamp&#39;]</span>
+        </div>
+        
+      </div>
+      
+      <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800 space-y-1">
+        
+        <div class="text-xs text-amber-700 dark:text-amber-300">- Diversify channels — only 1 active in review history.</div>
+        
+      </div>
+      
+    </div>
+    
+  </div>
+</section>
+
+
+
+
+<section class="pm-only rounded-xl border border-emerald-300 dark:border-emerald-700/40 bg-gradient-to-br from-emerald-50 to-white dark:from-emerald-950/30 dark:to-slate-900 p-6">
+  <div class="flex items-center justify-between gap-2 mb-1 flex-wrap">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded grid place-items-center bg-emerald-200 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 font-bold">$</div>
+      <h2 class="text-lg font-semibold">Profitability</h2>
+    </div>
+    
+  </div>
+  
+  <div class="mt-4 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 p-8 flex flex-col items-center text-center">
+    <div class="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-900/30 grid place-items-center text-emerald-600 dark:text-emerald-400 mb-3">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.66 0-3 .9-3 2s1.34 2 3 2 3 .9 3 2-1.34 2-3 2m0-8v8m0 0v2m0-10V6m9 6a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+    </div>
+    <div class="font-semibold text-slate-800 dark:text-slate-200">P&L not yet entered</div>
+    <div class="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-md">
+      Enter actual revenue and expense data to unlock profitability scoring, margin analysis, and revenue efficiency calculations.
+    </div>
+    <button type="button" disabled class="no-print mt-4 px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold cursor-not-allowed opacity-75" title="Wired in v2">
+      + Add P&L data
+    </button>
+    <div class="text-[10px] text-slate-400 mt-2">Demo placeholder — wired to QBO/Mark in v2</div>
+  </div>
+  
+</section>
+
+
+<section class="pm-only">
+  <h2 class="text-lg font-semibold mb-3">All Dimensions (16)</h2>
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">photos</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 10%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-C">78</span>
+        <span class="text-sm font-semibold grade-C">C</span>
+        
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-yellow-500"
+             style="width: 78%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">count</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">caption coverage</span>
+          <span class="font-medium grade-F">50</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">hero quality</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">room coverage</span>
+          <span class="font-medium grade-A">90</span>
+        </div>
+        
+      </div>
+      
+
+      
+      <div class="mt-auto pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
+        
+        <div class="text-xs text-slate-700 dark:text-slate-300">- Caption 9 more photos to reach 80%+ captioned (current 51%)</div>
+        
+        <div class="text-xs text-slate-700 dark:text-slate-300">- Add photos covering: amenity, exterior, gym</div>
+        
+      </div>
+      
+    </div>
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">title</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 5%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-D">65</span>
+        <span class="text-sm font-semibold grade-D">D</span>
+        
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-orange-500"
+             style="width: 65%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">length</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">keywords</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">no anti patterns</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+      </div>
+      
+
+      
+    </div>
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">description</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 8%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-C">75</span>
+        <span class="text-sm font-semibold grade-C">C</span>
+        
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-yellow-500"
+             style="width: 75%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">sections filled</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">total length</span>
+          <span class="font-medium grade-D">60</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">hook</span>
+          <span class="font-medium grade-B">80</span>
+        </div>
+        
+      </div>
+      
+
+      
+    </div>
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">amenities</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 7%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-B">82</span>
+        <span class="text-sm font-semibold grade-B">B</span>
+        
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-blue-500"
+             style="width: 82%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">count</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">high impact coverage</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+      </div>
+      
+
+      
+    </div>
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">reviews</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 10%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-C">70</span>
+        <span class="text-sm font-semibold grade-C">C</span>
+        
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-yellow-500"
+             style="width: 70%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">count</span>
+          <span class="font-medium grade-F">15</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">rating</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">recency</span>
+          <span class="font-medium grade-F">20</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">response</span>
+          <span class="font-medium grade-D">65</span>
+        </div>
+        
+      </div>
+      
+
+      
+      <div class="mt-auto pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
+        
+        <div class="text-xs text-slate-700 dark:text-slate-300">- Only 2 reviews — implement automated post-stay review prompt to lift count.</div>
+        
+        <div class="text-xs text-slate-700 dark:text-slate-300">- Only 0 reviews in last 90d — review velocity is too low.</div>
+        
+        <div class="text-xs text-slate-700 dark:text-slate-300">- Host response rate 50% — respond to all reviews within 48h.</div>
+        
+      </div>
+      
+    </div>
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">pricing</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 8%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-D">68</span>
+        <span class="text-sm font-semibold grade-D">D</span>
+        
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-orange-500"
+             style="width: 68%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">recommendation fit</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">spread</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">market relative</span>
+          <span class="font-medium grade-F">50</span>
+        </div>
+        
+      </div>
+      
+
+      
+    </div>
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">booking settings</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 10%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-D">60</span>
+        <span class="text-sm font-semibold grade-D">D</span>
+        
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-orange-500"
+             style="width: 60%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">min nights</span>
+          <span class="font-medium grade-F">50</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">max nights</span>
+          <span class="font-medium grade-B">85</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">cleaning ratio</span>
+          <span class="font-medium grade-B">80</span>
+        </div>
+        
+      </div>
+      
+
+      
+      <div class="mt-auto pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
+        
+        <div class="text-xs text-slate-700 dark:text-slate-300">- ⚠️ MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).</div>
+        
+      </div>
+      
+    </div>
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">operational fit</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 8%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-D">65</span>
+        <span class="text-sm font-semibold grade-D">D</span>
+        
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-orange-500"
+             style="width: 65%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">channel diversification</span>
+          <span class="font-medium grade-F">45</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">active state</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">tag quality</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+      </div>
+      
+
+      
+      <div class="mt-auto pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
+        
+        <div class="text-xs text-slate-700 dark:text-slate-300">- Diversify channels — only 1 active in review history.</div>
+        
+      </div>
+      
+    </div>
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">consistency score</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 4%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-C">72</span>
+        <span class="text-sm font-semibold grade-C">C</span>
+        <span class="ml-auto text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300" title="STUB — v2 uses Claude vision for true photo&lt;&gt;amenity verification.">STUB</span>
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-yellow-500"
+             style="width: 72%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">visual coverage pct</span>
+          <span class="font-medium grade-C">78</span>
+        </div>
+        
+      </div>
+      
+
+      
+      <div class="mt-auto pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
+        
+        <div class="text-xs text-slate-700 dark:text-slate-300">- Photos missing for declared amenities: workspace. Visual proof builds trust.</div>
+        
+      </div>
+      
+    </div>
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">guest favorite</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 4%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-D">60</span>
+        <span class="text-sm font-semibold grade-D">D</span>
+        <span class="ml-auto text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300" title="STUB — v2 reads true badge state from Airbnb listing scrape.">STUB</span>
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-orange-500"
+             style="width: 60%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">eligibility</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+      </div>
+      
+
+      
+    </div>
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">review summary</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 4%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-C">75</span>
+        <span class="text-sm font-semibold grade-C">C</span>
+        <span class="ml-auto text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300" title="STUB — v2 uses Claude for true sentiment + theme clusters.">STUB</span>
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-yellow-500"
+             style="width: 75%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">positive tone</span>
+          <span class="font-medium grade-D">60</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">absence of negatives</span>
+          <span class="font-medium grade-B">80</span>
+        </div>
+        
+      </div>
+      
+
+      
+      <div class="mt-auto pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
+        
+        <div class="text-xs text-slate-700 dark:text-slate-300">- Recurring negative signals: noisy. Audit and resolve.</div>
+        
+      </div>
+      
+    </div>
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">listing overview</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 4%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-C">70</span>
+        <span class="text-sm font-semibold grade-C">C</span>
+        
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-yellow-500"
+             style="width: 70%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">usp clarity</span>
+          <span class="font-medium grade-C">72</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">segment targeting</span>
+          <span class="font-medium grade-F">50</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">hook length</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+      </div>
+      
+
+      
+    </div>
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">comp summary</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 4%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-C">70</span>
+        <span class="text-sm font-semibold grade-C">C</span>
+        <span class="ml-auto text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300" title="STUB — v2 pulls real comp set ADR + revenue per available night.">STUB</span>
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-yellow-500"
+             style="width: 70%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">occupancy vs comp</span>
+          <span class="font-medium grade-C">75</span>
+        </div>
+        
+      </div>
+      
+
+      
+    </div>
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">profitability score</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 8%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-F">50</span>
+        <span class="text-sm font-semibold grade-F">F</span>
+        <span class="ml-auto text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300" title="Add P&amp;L block to enable real scoring.">STUB</span>
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-red-500"
+             style="width: 50%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">data availability</span>
+          <span class="font-medium grade-F">0</span>
+        </div>
+        
+      </div>
+      
+
+      
+      <div class="mt-auto pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
+        
+        <div class="text-xs text-slate-700 dark:text-slate-300">- No P&amp;L data entered for this property. Enter actuals to enable profitability scoring.</div>
+        
+      </div>
+      
+    </div>
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">revenue efficiency</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 4%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-D">65</span>
+        <span class="text-sm font-semibold grade-D">D</span>
+        <span class="ml-auto text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300" title="STUB — v2 wires true RevPAR from PMS.">STUB</span>
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-orange-500"
+             style="width: 65%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">rate strength</span>
+          <span class="font-medium grade-C">70</span>
+        </div>
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">occupancy vs market</span>
+          <span class="font-medium grade-B">80</span>
+        </div>
+        
+      </div>
+      
+
+      
+    </div>
+    
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
+      <div class="flex items-center justify-between mb-2 gap-2">
+        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">brand voice compliance</div>
+        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 2%</div>
+      </div>
+      <div class="flex items-baseline gap-1">
+        <span class="text-3xl font-bold grade-A">100</span>
+        <span class="text-sm font-semibold grade-A">A</span>
+        
+      </div>
+      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+        <div class="h-full bg-green-500"
+             style="width: 100%"></div>
+      </div>
+
+      
+      <div class="space-y-1 text-xs mb-3">
+        
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500 capitalize">rule compliance</span>
+          <span class="font-medium grade-A">100</span>
+        </div>
+        
+      </div>
+      
+
+      
+    </div>
+    
+  </div>
+</section>
+
+<section class="pm-only rounded-xl border border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/30 p-6">
+  <div class="flex items-center gap-3">
+    <div class="w-10 h-10 rounded-lg bg-slate-200 dark:bg-slate-800 grid place-items-center text-slate-500">i</div>
+    <div>
+      <div class="font-semibold text-slate-800 dark:text-slate-200">Score History</div>
+      <div class="text-sm text-slate-500 dark:text-slate-400">Score-over-time charts will appear here after multiple Klendric runs are stored. Run weekly to enable trend analysis.</div>
+    </div>
+  </div>
+</section>
+
+
+<section class="owner-only text-center py-6 border-t border-slate-200 dark:border-slate-800">
+  <div class="text-xs text-slate-500 dark:text-slate-400">
+    Powered by <span class="font-semibold text-indigo-600 dark:text-indigo-400">Klendric</span> — your property manager uses this tool to stay on top of your investment.
+  </div>
+</section>
+
+<script id="liq-property" type="application/json">{"overall_score": 69, "dimension_scores": {"photos": 78, "title": 65, "description": 75, "amenities": 82, "reviews": 70, "pricing": 68, "booking_settings": 60, "operational_fit": 65, "consistency_score": 72, "guest_favorite": 60, "review_summary": 75, "listing_overview": 70, "comp_summary": 70, "profitability_score": 50, "revenue_efficiency": 65, "brand_voice_compliance": 100}, "dimensions": {"photos": {"score": 78, "photo_count": 51, "captioned_count": 26, "pct_captioned": 51.0, "rooms_covered_in_captions": ["balcony", "bathroom", "bedroom", "dining", "kitchen", "living", "pool", "rooftop", "view"], "sub_scores": {"count": 100, "caption_coverage": 50, "hero_quality": 100, "room_coverage": 90}, "fixes": ["Caption 9 more photos to reach 80%+ captioned (current 51%)", "Add photos covering: amenity, exterior, gym"]}, "title": {"score": 65, "title": "39th-Floor Penthouse \u00b7 Ocean Views \u00b7 Gaslamp Quarter", "length": 52, "has_location": true, "has_property_type": true, "has_signature": true, "sub_scores": {"length": 100, "keywords": 100, "no_anti_patterns": 100}, "fixes": []}, "description": {"score": 75, "total_chars": 5557, "sections_filled": 8, "section_lens": {"summary": 691, "space": 1196, "access": 431, "interactionWithGuests": 346, "neighborhood": 1028, "transit": 1053, "notes": 269, "houseRules": 543}, "sub_scores": {"sections_filled": 100, "total_length": 60, "hook": 80}, "fixes": []}, "amenities": {"score": 82, "amenity_count": 142, "high_impact_coverage_pct": 100, "high_impact_present": ["air_conditioning", "dryer", "gym", "hairdryer", "heating", "hot_tub", "iron", "kitchen", "parking", "pool", "self_checkin", "tv", "view", "washer", "wifi", "workspace"], "high_impact_missing": [], "sub_scores": {"count": 100, "high_impact_coverage": 100}, "fixes": []}, "reviews": {"score": 70, "review_count": 2, "avg_rating": 5.0, "response_rate_pct": 50, "recent_90d_count": 0, "sub_scores": {"count": 15, "rating": 100, "recency": 20, "response": 65}, "fixes": ["Only 2 reviews \u2014 implement automated post-stay review prompt to lift count.", "Only 0 reviews in last 90d \u2014 review velocity is too low.", "Host response rate 50% \u2014 respond to all reviews within 48h."]}, "pricing": {"score": 68, "base": 449.0, "min": 449.0, "max": 1200.0, "recommended_base": 446.0, "occ_30d": 20, "market_occ_30d": 27, "occ_delta_vs_market": -7, "sub_scores": {"recommendation_fit": 100, "spread": 100, "market_relative": 50}, "fixes": []}, "booking_settings": {"score": 60, "min_nights": 4, "max_nights": 60, "cleaning_fee": 165, "base_price": 449, "cleaning_to_base_ratio": 0.37, "sub_scores": {"min_nights": 50, "max_nights": 85, "cleaning_ratio": 80}, "fixes": ["\u26a0\ufe0f MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only)."]}, "operational_fit": {"score": 65, "channels_in_review_history": ["airbnb2"], "is_active": true, "tags": ["san-diego", "penthouse", "1br", "premium-tier", "gaslamp"], "sub_scores": {"channel_diversification": 45, "active_state": 100, "tag_quality": 100}, "fixes": ["Diversify channels \u2014 only 1 active in review history."]}, "consistency_score": {"score": 72, "declared_amenities_checked": ["pool", "kitchen", "workspace"], "visible_in_photos": ["pool", "kitchen"], "missing_visual_proof": ["workspace"], "sub_scores": {"visual_coverage_pct": 78}, "fixes": ["Photos missing for declared amenities: workspace. Visual proof builds trust."], "note": "STUB \u2014 v2 uses Claude vision for true photo<>amenity verification."}, "guest_favorite": {"score": 60, "guest_favorite_eligible": true, "avg_rating": 4.91, "review_count": 47, "sub_scores": {"eligibility": 100}, "fixes": [], "note": "STUB \u2014 v2 reads true badge state from Airbnb listing scrape."}, "review_summary": {"score": 75, "positive_signals": ["amazing", "beautiful", "stunning", "spotless"], "negative_signals": ["noisy"], "review_count_analyzed": 47, "sub_scores": {"positive_tone": 60, "absence_of_negatives": 80}, "fixes": ["Recurring negative signals: noisy. Audit and resolve."], "note": "STUB \u2014 v2 uses Claude for true sentiment + theme clusters."}, "listing_overview": {"score": 70, "usp_signals_found": 6, "segment_signals_found": 2, "summary_length": 412, "sub_scores": {"usp_clarity": 72, "segment_targeting": 50, "hook_length": 100}, "fixes": []}, "comp_summary": {"score": 70, "occ_30d": 68, "market_occ_30d": 65, "delta_vs_market": 3.0, "sub_scores": {"occupancy_vs_comp": 75}, "fixes": [], "note": "STUB \u2014 v2 pulls real comp set ADR + revenue per available night."}, "profitability_score": {"score": 50, "has_pnl_data": false, "sub_scores": {"data_availability": 0}, "fixes": ["No P&L data entered for this property. Enter actuals to enable profitability scoring."], "note": "Add P&L block to enable real scoring."}, "revenue_efficiency": {"score": 65, "estimated_revpar": 268.4, "base_price": 449, "occupancy_30d": 68, "market_occupancy_30d": 65, "sub_scores": {"rate_strength": 70, "occupancy_vs_market": 80}, "fixes": [], "note": "STUB \u2014 v2 wires true RevPAR from PMS."}, "brand_voice_compliance": {"score": 100, "violations_found": 0, "violation_list": [], "sub_scores": {"rule_compliance": 100}, "fixes": []}}, "prioritized_fixes": [{"dimension": "profitability_score", "fix": "No P&L data entered for this property. Enter actuals to enable profitability scoring.", "dim_score": 50, "est_impact": "+$200-500/mo est.", "resolved": false}, {"dimension": "booking_settings", "fix": "\u26a0\ufe0f MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).", "dim_score": 60, "est_impact": "+$340-820/mo est.", "resolved": false}, {"dimension": "operational_fit", "fix": "Diversify channels \u2014 only 1 active in review history.", "dim_score": 65, "est_impact": "+$110-280/mo est.", "resolved": false}, {"dimension": "reviews", "fix": "Only 2 reviews \u2014 implement automated post-stay review prompt to lift count.", "dim_score": 70, "est_impact": "+$280-720/mo est.", "resolved": false}, {"dimension": "reviews", "fix": "Only 0 reviews in last 90d \u2014 review velocity is too low.", "dim_score": 70, "est_impact": "+$280-720/mo est.", "resolved": false}, {"dimension": "reviews", "fix": "Host response rate 50% \u2014 respond to all reviews within 48h.", "dim_score": 70, "est_impact": "+$280-720/mo est.", "resolved": false}, {"dimension": "consistency_score", "fix": "Photos missing for declared amenities: workspace. Visual proof builds trust.", "dim_score": 72, "est_impact": "+$70-160/mo est.", "resolved": false}, {"dimension": "review_summary", "fix": "Recurring negative signals: noisy. Audit and resolve.", "dim_score": 75, "est_impact": "+$90-210/mo est.", "resolved": false}, {"dimension": "photos", "fix": "Caption 9 more photos to reach 80%+ captioned (current 51%)", "dim_score": 78, "est_impact": "+$120-340/mo est.", "resolved": false}, {"dimension": "photos", "fix": "Add photos covering: amenity, exterior, gym", "dim_score": 78, "est_impact": "+$120-340/mo est.", "resolved": false}], "weights": {"photos": 0.1, "title": 0.05, "description": 0.08, "amenities": 0.07, "reviews": 0.1, "pricing": 0.08, "booking_settings": 0.1, "operational_fit": 0.08, "consistency_score": 0.04, "guest_favorite": 0.04, "review_summary": 0.04, "listing_overview": 0.04, "comp_summary": 0.04, "profitability_score": 0.08, "revenue_efficiency": 0.04, "brand_voice_compliance": 0.02}, "code": "SD1303", "nickname": "Marina Bay 13th-Floor Suite", "market": "San Diego", "address": "1303 Marina Bay Dr, San Diego, CA", "pnl": null, "liq_version": "1.5", "photos": ["https://picsum.photos/seed/SD1303-1/640/480", "https://picsum.photos/seed/SD1303-2/640/480", "https://picsum.photos/seed/SD1303-3/640/480", "https://picsum.photos/seed/SD1303-4/640/480", "https://picsum.photos/seed/SD1303-5/640/480", "https://picsum.photos/seed/SD1303-6/640/480"], "overall_grade": "D"}</script>
+
+  </main>
+
+  <footer class="border-t border-slate-200 dark:border-slate-800 mt-16 no-print">
+    <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between text-xs text-slate-500">
+      <div>Klendric v1.6 · Internal listing optimizer · Built in-house</div>
+      <div>Generated 2026-05-03T21:28:58.226188Z</div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        var isDark = document.documentElement.classList.toggle('dark');
+        try { localStorage.setItem('liq-theme', isDark ? 'dark' : 'light'); } catch (e) {}
+      });
+    })();
+
+    // View switcher — set ?view=… and reload (cheap, robust, keeps URL shareable)
+    window.Klendric_setView = function (mode) {
+      try {
+        var url = new URL(window.location.href);
+        if (mode === 'pm') url.searchParams.delete('view');
+        else url.searchParams.set('view', mode);
+        window.location.href = url.toString();
+      } catch (e) { window.location.search = '?view=' + mode; }
+    };
+
+    // PDF download — switch to pdf view, trigger print, then return
+    window.Klendric_downloadPdf = function () {
+      var url = new URL(window.location.href);
+      if (url.searchParams.get('view') === 'pdf') {
+        window.print();
+        return;
+      }
+      url.searchParams.set('view', 'pdf');
+      // Open pdf-view in new tab and auto-print
+      var pdfUrl = url.toString() + '#auto-print';
+      var w = window.open(pdfUrl, '_blank');
+      if (!w) { window.location.href = pdfUrl; }
+    };
+
+    // Auto-print when arriving with #auto-print
+    (function () {
+      if (window.location.hash === '#auto-print') {
+        window.addEventListener('load', function () { setTimeout(function () { window.print(); }, 600); });
+      }
+    })();
+
+    // View-switch dropdown toggle (delegated)
+    document.addEventListener('click', function (e) {
+      var trig = e.target.closest('[data-view-switch-trigger]');
+      var menu = document.querySelector('.view-switch-menu');
+      if (trig && menu) { menu.classList.toggle('open'); e.stopPropagation(); return; }
+      if (menu && !e.target.closest('.view-switch-menu')) menu.classList.remove('open');
+    });
+  </script>
+
+  
+<script>
+  const prop = JSON.parse(document.getElementById('liq-property').textContent);
+  const dimScores = prop.dimension_scores;
+  const labels = Object.keys(dimScores).map(k => k.replace(/_/g, ' '));
+  const data = Object.values(dimScores);
+
+  function chartColors() {
+    const isDark = document.documentElement.classList.contains('dark');
+    const isPdf = document.documentElement.getAttribute('data-view') === 'pdf';
+    if (isPdf) {
+      return { tick: '#64748b', grid: '#cbd5e1', label: '#334155', fill: 'rgba(99, 102, 241, 0.15)', stroke: '#6366f1' };
+    }
+    return {
+      tick: isDark ? '#64748b' : '#94a3b8',
+      grid: isDark ? '#334155' : '#e2e8f0',
+      label: isDark ? '#cbd5e1' : '#334155',
+      fill: isDark ? 'rgba(99, 102, 241, 0.25)' : 'rgba(99, 102, 241, 0.15)',
+      stroke: '#6366f1',
+    };
+  }
+
+  let radarChart = null;
+  const canvas = document.getElementById('radarChart');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    radarChart = new Chart(ctx, {
+      type: 'radar',
+      data: { labels, datasets: [{ label: 'Score', data,
+        backgroundColor: chartColors().fill, borderColor: chartColors().stroke,
+        borderWidth: 2, pointBackgroundColor: chartColors().stroke, pointBorderColor: '#fff', pointRadius: 3, }] },
+      options: { scales: { r: { min: 0, max: 100,
+        ticks: { color: chartColors().tick, backdropColor: 'transparent', stepSize: 25 },
+        grid: { color: chartColors().grid }, angleLines: { color: chartColors().grid },
+        pointLabels: { color: chartColors().label, font: { size: 10 } } } },
+        plugins: { legend: { display: false } }, maintainAspectRatio: false, responsive: true, }
+    });
+  }
+
+  const themeBtn = document.getElementById('theme-toggle');
+  if (themeBtn && radarChart) {
+    themeBtn.addEventListener('click', function () {
+      setTimeout(function () {
+        const c = chartColors();
+        radarChart.data.datasets[0].backgroundColor = c.fill;
+        radarChart.data.datasets[0].borderColor = c.stroke;
+        radarChart.data.datasets[0].pointBackgroundColor = c.stroke;
+        radarChart.options.scales.r.ticks.color = c.tick;
+        radarChart.options.scales.r.grid.color = c.grid;
+        radarChart.options.scales.r.angleLines.color = c.grid;
+        radarChart.options.scales.r.pointLabels.color = c.label;
+        radarChart.update();
+      }, 50);
+    });
+  }
+
+  // View-switch label reflects current view
+  (function () {
+    const v = document.documentElement.getAttribute('data-view') || 'pm';
+    const lbl = document.getElementById('view-switch-label');
+    if (!lbl) return;
+    lbl.textContent = ({ pm: 'PM View', owner: 'Owner View', pdf: 'PDF Preview' })[v] || 'Switch View';
+  })();
+
+  // Mark as Resolved — persist in localStorage
+  (function () {
+    const KEY = 'liq-resolved-' + prop.code;
+    let resolved = {};
+    try { resolved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+    document.querySelectorAll('.fix-item').forEach(function (item) {
+      const id = item.dataset.fixId;
+      const txt = item.querySelector('.fix-text');
+      const btn = item.querySelector('.resolve-btn');
+      const lbl = item.querySelector('.resolve-label');
+      if (!btn) return;
+      function paint(isResolved) {
+        if (isResolved) {
+          txt.classList.add('fix-resolved');
+          lbl.textContent = 'Resolved ✓';
+          btn.classList.add('bg-emerald-100', 'dark:bg-emerald-900/40', 'border-emerald-400', 'text-emerald-700', 'dark:text-emerald-300');
+        } else {
+          txt.classList.remove('fix-resolved');
+          lbl.textContent = 'Mark as Resolved';
+          btn.classList.remove('bg-emerald-100', 'dark:bg-emerald-900/40', 'border-emerald-400', 'text-emerald-700', 'dark:text-emerald-300');
+        }
+      }
+      paint(!!resolved[id]);
+      btn.addEventListener('click', function () {
+        resolved[id] = !resolved[id];
+        try { localStorage.setItem(KEY, JSON.stringify(resolved)); } catch (e) {}
+        paint(!!resolved[id]);
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

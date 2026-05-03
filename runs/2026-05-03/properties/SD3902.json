@@ -1,0 +1,410 @@
+{
+  "overall_score": 80,
+  "dimension_scores": {
+    "photos": 88,
+    "title": 100,
+    "description": 81,
+    "amenities": 100,
+    "reviews": 47,
+    "pricing": 80,
+    "booking_settings": 64,
+    "operational_fit": 75,
+    "consistency_score": 78,
+    "guest_favorite": 100,
+    "review_summary": 88,
+    "listing_overview": 82,
+    "comp_summary": 75,
+    "profitability_score": 100,
+    "revenue_efficiency": 70,
+    "brand_voice_compliance": 100
+  },
+  "dimensions": {
+    "photos": {
+      "score": 88,
+      "photo_count": 51,
+      "captioned_count": 26,
+      "pct_captioned": 51.0,
+      "rooms_covered_in_captions": [
+        "balcony",
+        "bathroom",
+        "bedroom",
+        "dining",
+        "kitchen",
+        "living",
+        "pool",
+        "rooftop",
+        "view"
+      ],
+      "sub_scores": {
+        "count": 100,
+        "caption_coverage": 50,
+        "hero_quality": 100,
+        "room_coverage": 90
+      },
+      "fixes": [
+        "Caption 9 more photos to reach 80%+ captioned (current 51%)",
+        "Add photos covering: amenity, exterior, gym"
+      ]
+    },
+    "title": {
+      "score": 100,
+      "title": "39th-Floor Penthouse \u00b7 Ocean Views \u00b7 Gaslamp Quarter",
+      "length": 52,
+      "has_location": true,
+      "has_property_type": true,
+      "has_signature": true,
+      "sub_scores": {
+        "length": 100,
+        "keywords": 100,
+        "no_anti_patterns": 100
+      },
+      "fixes": []
+    },
+    "description": {
+      "score": 81,
+      "total_chars": 5557,
+      "sections_filled": 8,
+      "section_lens": {
+        "summary": 691,
+        "space": 1196,
+        "access": 431,
+        "interactionWithGuests": 346,
+        "neighborhood": 1028,
+        "transit": 1053,
+        "notes": 269,
+        "houseRules": 543
+      },
+      "sub_scores": {
+        "sections_filled": 100,
+        "total_length": 60,
+        "hook": 80
+      },
+      "fixes": []
+    },
+    "amenities": {
+      "score": 100,
+      "amenity_count": 142,
+      "high_impact_coverage_pct": 100,
+      "high_impact_present": [
+        "air_conditioning",
+        "dryer",
+        "gym",
+        "hairdryer",
+        "heating",
+        "hot_tub",
+        "iron",
+        "kitchen",
+        "parking",
+        "pool",
+        "self_checkin",
+        "tv",
+        "view",
+        "washer",
+        "wifi",
+        "workspace"
+      ],
+      "high_impact_missing": [],
+      "sub_scores": {
+        "count": 100,
+        "high_impact_coverage": 100
+      },
+      "fixes": []
+    },
+    "reviews": {
+      "score": 47,
+      "review_count": 2,
+      "avg_rating": 5.0,
+      "response_rate_pct": 50,
+      "recent_90d_count": 0,
+      "sub_scores": {
+        "count": 15,
+        "rating": 100,
+        "recency": 20,
+        "response": 65
+      },
+      "fixes": [
+        "Only 2 reviews \u2014 implement automated post-stay review prompt to lift count.",
+        "Only 0 reviews in last 90d \u2014 review velocity is too low.",
+        "Host response rate 50% \u2014 respond to all reviews within 48h."
+      ]
+    },
+    "pricing": {
+      "score": 80,
+      "base": 449.0,
+      "min": 449.0,
+      "max": 1200.0,
+      "recommended_base": 446.0,
+      "occ_30d": 20,
+      "market_occ_30d": 27,
+      "occ_delta_vs_market": -7,
+      "sub_scores": {
+        "recommendation_fit": 100,
+        "spread": 100,
+        "market_relative": 50
+      },
+      "fixes": []
+    },
+    "booking_settings": {
+      "score": 64,
+      "min_nights": 4,
+      "max_nights": 60,
+      "cleaning_fee": 165,
+      "base_price": 449,
+      "cleaning_to_base_ratio": 0.37,
+      "sub_scores": {
+        "min_nights": 50,
+        "max_nights": 85,
+        "cleaning_ratio": 80
+      },
+      "fixes": [
+        "\u26a0\ufe0f MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only)."
+      ]
+    },
+    "operational_fit": {
+      "score": 75,
+      "channels_in_review_history": [
+        "airbnb2"
+      ],
+      "is_active": true,
+      "tags": [
+        "san-diego",
+        "penthouse",
+        "1br",
+        "premium-tier",
+        "gaslamp"
+      ],
+      "sub_scores": {
+        "channel_diversification": 45,
+        "active_state": 100,
+        "tag_quality": 100
+      },
+      "fixes": [
+        "Diversify channels \u2014 only 1 active in review history."
+      ]
+    },
+    "consistency_score": {
+      "score": 78,
+      "declared_amenities_checked": [
+        "pool",
+        "kitchen",
+        "workspace"
+      ],
+      "visible_in_photos": [
+        "pool",
+        "kitchen"
+      ],
+      "missing_visual_proof": [
+        "workspace"
+      ],
+      "sub_scores": {
+        "visual_coverage_pct": 78
+      },
+      "fixes": [
+        "Photos missing for declared amenities: workspace. Visual proof builds trust."
+      ],
+      "note": "STUB \u2014 v2 uses Claude vision for true photo<>amenity verification."
+    },
+    "guest_favorite": {
+      "score": 100,
+      "guest_favorite_eligible": true,
+      "avg_rating": 4.91,
+      "review_count": 47,
+      "sub_scores": {
+        "eligibility": 100
+      },
+      "fixes": [],
+      "note": "STUB \u2014 v2 reads true badge state from Airbnb listing scrape."
+    },
+    "review_summary": {
+      "score": 88,
+      "positive_signals": [
+        "amazing",
+        "beautiful",
+        "stunning",
+        "spotless"
+      ],
+      "negative_signals": [
+        "noisy"
+      ],
+      "review_count_analyzed": 47,
+      "sub_scores": {
+        "positive_tone": 60,
+        "absence_of_negatives": 80
+      },
+      "fixes": [
+        "Recurring negative signals: noisy. Audit and resolve."
+      ],
+      "note": "STUB \u2014 v2 uses Claude for true sentiment + theme clusters."
+    },
+    "listing_overview": {
+      "score": 82,
+      "usp_signals_found": 6,
+      "segment_signals_found": 2,
+      "summary_length": 412,
+      "sub_scores": {
+        "usp_clarity": 72,
+        "segment_targeting": 50,
+        "hook_length": 100
+      },
+      "fixes": []
+    },
+    "comp_summary": {
+      "score": 75,
+      "occ_30d": 68,
+      "market_occ_30d": 65,
+      "delta_vs_market": 3.0,
+      "sub_scores": {
+        "occupancy_vs_comp": 75
+      },
+      "fixes": [],
+      "note": "STUB \u2014 v2 pulls real comp set ADR + revenue per available night."
+    },
+    "profitability_score": {
+      "score": 100,
+      "has_pnl_data": true,
+      "net_contribution": 39971,
+      "margin_pct": 66.1,
+      "period_label": "2025 FY",
+      "sub_scores": {
+        "net_contribution": 100,
+        "margin_health": 100
+      },
+      "fixes": []
+    },
+    "revenue_efficiency": {
+      "score": 70,
+      "estimated_revpar": 268.4,
+      "base_price": 449,
+      "occupancy_30d": 68,
+      "market_occupancy_30d": 65,
+      "sub_scores": {
+        "rate_strength": 70,
+        "occupancy_vs_market": 80
+      },
+      "fixes": [],
+      "note": "STUB \u2014 v2 wires true RevPAR from PMS."
+    },
+    "brand_voice_compliance": {
+      "score": 100,
+      "violations_found": 0,
+      "violation_list": [],
+      "sub_scores": {
+        "rule_compliance": 100
+      },
+      "fixes": []
+    }
+  },
+  "prioritized_fixes": [
+    {
+      "dimension": "reviews",
+      "fix": "Only 2 reviews \u2014 implement automated post-stay review prompt to lift count.",
+      "dim_score": 47,
+      "est_impact": "+$280-720/mo est.",
+      "resolved": false
+    },
+    {
+      "dimension": "reviews",
+      "fix": "Only 0 reviews in last 90d \u2014 review velocity is too low.",
+      "dim_score": 47,
+      "est_impact": "+$280-720/mo est.",
+      "resolved": false
+    },
+    {
+      "dimension": "reviews",
+      "fix": "Host response rate 50% \u2014 respond to all reviews within 48h.",
+      "dim_score": 47,
+      "est_impact": "+$280-720/mo est.",
+      "resolved": false
+    },
+    {
+      "dimension": "booking_settings",
+      "fix": "\u26a0\ufe0f MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).",
+      "dim_score": 64,
+      "est_impact": "+$340-820/mo est.",
+      "resolved": false
+    },
+    {
+      "dimension": "operational_fit",
+      "fix": "Diversify channels \u2014 only 1 active in review history.",
+      "dim_score": 75,
+      "est_impact": "+$110-280/mo est.",
+      "resolved": false
+    },
+    {
+      "dimension": "consistency_score",
+      "fix": "Photos missing for declared amenities: workspace. Visual proof builds trust.",
+      "dim_score": 78,
+      "est_impact": "+$70-160/mo est.",
+      "resolved": false
+    },
+    {
+      "dimension": "photos",
+      "fix": "Caption 9 more photos to reach 80%+ captioned (current 51%)",
+      "dim_score": 88,
+      "est_impact": "+$120-340/mo est.",
+      "resolved": false
+    },
+    {
+      "dimension": "photos",
+      "fix": "Add photos covering: amenity, exterior, gym",
+      "dim_score": 88,
+      "est_impact": "+$120-340/mo est.",
+      "resolved": false
+    },
+    {
+      "dimension": "review_summary",
+      "fix": "Recurring negative signals: noisy. Audit and resolve.",
+      "dim_score": 88,
+      "est_impact": "+$90-210/mo est.",
+      "resolved": false
+    }
+  ],
+  "weights": {
+    "photos": 0.1,
+    "title": 0.05,
+    "description": 0.08,
+    "amenities": 0.07,
+    "reviews": 0.1,
+    "pricing": 0.08,
+    "booking_settings": 0.1,
+    "operational_fit": 0.08,
+    "consistency_score": 0.04,
+    "guest_favorite": 0.04,
+    "review_summary": 0.04,
+    "listing_overview": 0.04,
+    "comp_summary": 0.04,
+    "profitability_score": 0.08,
+    "revenue_efficiency": 0.04,
+    "brand_voice_compliance": 0.02
+  },
+  "code": "SD3902",
+  "nickname": "39th-Floor Penthouse - Gaslamp",
+  "market": "San Diego",
+  "address": "200 Harbor Dr #3902, San Diego, CA",
+  "photos": [
+    "https://picsum.photos/seed/SD3902-1/640/480",
+    "https://picsum.photos/seed/SD3902-2/640/480",
+    "https://picsum.photos/seed/SD3902-3/640/480",
+    "https://picsum.photos/seed/SD3902-4/640/480",
+    "https://picsum.photos/seed/SD3902-5/640/480",
+    "https://picsum.photos/seed/SD3902-6/640/480"
+  ],
+  "pnl": {
+    "period_label": "2025 FY",
+    "revenue_gross": 60471.0,
+    "revenue_source": "PMS auto-pull (Guesty)",
+    "expenses": {
+      "rent_paid": 0,
+      "cleaning": 8400,
+      "utilities": 4800,
+      "supplies": 1800,
+      "maintenance": 2200,
+      "insurance": 1200,
+      "software": 1500,
+      "other": 600
+    },
+    "net_contribution": 39971,
+    "margin_pct": 66.1
+  },
+  "liq_version": "1.5"
+}
