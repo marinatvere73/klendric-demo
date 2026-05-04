@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara Score — ENC6591 Family 3BR Reno Home · Patio, BBQ & Near Casinos</title>
+<meta name="description" content="Vesara Score for ENC6591 (Reno NV) — real data from Guesty + PriceLabs + triple-brain consensus.">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body.light { --bg: #FAFAF9; --bg-elevated: #FFFFFF; --surface: #FFFFFF; --surface-2: #F5F5F4; --surface-3: #EAE9E5; --border: rgba(0,0,0,0.08); --border-strong: rgba(0,0,0,0.16); --text: rgba(15,15,15,0.95); --text-secondary: rgba(15,15,15,0.62); --text-tertiary: rgba(15,15,15,0.42); --accent: #047857; --accent-dim: rgba(4,120,87,0.08); }
+  body.light .nav { background: rgba(255,255,255,0.85); }
+  body.light .nav-cta { color: #FFFFFF !important; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; transition: background var(--dur-base) var(--ease); }
+  .live-banner { background: rgba(16,185,129,0.10); border-bottom: 1px solid var(--accent); padding: 8px 24px; text-align: center; font-size: 12px; color: var(--accent); }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+  .nav-cta { background: var(--accent); color: #000; padding: 8px 16px; border-radius: var(--r-md); font-weight: 600; }
+  .theme-toggle { background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text); padding: 6px 12px; border-radius: var(--r-md); font-size: 12px; cursor: pointer; margin-left: 12px; }
+
+  .header { max-width: 1100px; margin: 0 auto; padding: 48px 24px 32px; }
+  .breadcrumb { font-size: 12px; color: var(--text-tertiary); margin-bottom: 20px; }
+  .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
+  .pid { font-family: var(--font-mono); font-size: 13px; color: var(--text-tertiary); margin-bottom: 8px; letter-spacing: 0.04em; }
+  h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 12px; }
+  .meta-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .meta-tag { font-size: 12px; padding: 4px 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-full); color: var(--text-secondary); }
+
+  .note-box { max-width: 1100px; margin: 12px auto; padding: 12px 18px; background: var(--accent-dim); border: 1px solid var(--accent); border-radius: var(--r-md); color: var(--accent); font-size: 13.5px; }
+  .note-box.test { background: rgba(59,130,246,0.10); border-color: var(--info); color: var(--info); }
+
+  .hero-grid { max-width: 1100px; margin: 32px auto 0; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 800px) { .hero-grid { grid-template-columns: 1fr; } }
+  .score-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-2xl); padding: 36px; text-align: center; position: relative; overflow: hidden; }
+  .score-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at top, var(--accent-dim), transparent 70%); pointer-events: none; }
+  .score-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 12px; font-weight: 600; position: relative; }
+  .score-num { font-size: 120px; font-weight: 700; color: var(--accent); font-family: var(--font-serif); font-style: italic; line-height: 1; letter-spacing: -0.04em; position: relative; }
+  .score-grade { font-size: 24px; font-weight: 600; margin-top: 8px; position: relative; }
+  .score-detail { font-size: 13px; color: var(--text-secondary); margin-top: 12px; position: relative; }
+
+  .data-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-2xl); padding: 28px; }
+  .data-title { font-size: 13px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+  .data-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14.5px; }
+  .data-row:last-child { border-bottom: none; }
+  .data-label { color: var(--text-secondary); }
+  .data-val { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .data-val.accent { color: var(--accent); }
+  .data-val.warn { color: var(--warning); }
+  .data-val.crit { color: var(--critical); }
+
+  .occ-section { max-width: 1100px; margin: 32px auto; padding: 0 24px; }
+  .occ-row { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 24px; }
+  .occ-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 16px; }
+  @media (max-width: 700px) { .occ-stats { grid-template-columns: 1fr 1fr; } }
+  .occ-stat { text-align: center; padding: 16px; background: var(--surface-2); border-radius: var(--r-md); }
+  .occ-stat-num { font-size: 32px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; }
+  .occ-stat-label { font-size: 11px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 8px; }
+  .occ-bar { position: relative; height: 24px; background: var(--bg-elevated); border-radius: var(--r-sm); overflow: hidden; border: 1px solid var(--border); }
+  .occ-bar-current { position: absolute; top: 0; left: 0; bottom: 0; background: var(--accent); border-radius: var(--r-sm); opacity: 0.85; }
+  .occ-bar-mark-line { position: absolute; top: 0; bottom: 0; width: 2px; }
+
+  .section { max-width: 1100px; margin: 56px auto; padding: 0 24px; }
+  .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-bottom: 20px; }
+  h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 24px; }
+
+  .sub-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  @media (max-width: 800px) { .sub-grid { grid-template-columns: repeat(2, 1fr); } }
+  .sub-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 18px; text-align: center; }
+  .sub-cat { font-size: 10px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .sub-num { font-size: 28px; font-weight: 700; color: var(--accent); font-family: var(--font-serif); font-style: italic; line-height: 1; }
+  .sub-bar { margin-top: 8px; height: 4px; background: var(--surface-3); border-radius: var(--r-full); overflow: hidden; }
+  .sub-fill { height: 100%; background: var(--accent); border-radius: var(--r-full); }
+
+  .recs { display: grid; gap: 16px; }
+  .rec { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 24px; }
+  .rec:hover { border-color: var(--accent); }
+  .rec-num { display: inline-block; font-family: var(--font-mono); font-size: 11px; color: var(--accent); padding: 4px 10px; background: var(--accent-dim); border-radius: var(--r-full); margin-bottom: 10px; }
+  .rec-text { font-size: 15px; color: var(--text); line-height: 1.6; }
+
+  .insight-card { background: linear-gradient(135deg, var(--accent-dim), transparent); border: 1px solid var(--accent); border-radius: var(--r-xl); padding: 24px; }
+  .insight-card.warn { background: linear-gradient(135deg, rgba(245,158,11,0.10), transparent); border-color: var(--warning); }
+  .insight-card.crit { background: linear-gradient(135deg, rgba(239,68,68,0.10), transparent); border-color: var(--critical); }
+  .insight-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; font-weight: 600; }
+  .insight-tag.win { color: var(--accent); }
+  .insight-tag.warn { color: var(--warning); }
+  .insight-tag.crit { color: var(--critical); }
+  .insight-body { font-size: 16px; line-height: 1.65; color: var(--text); }
+
+  .footer { padding: 32px 24px; text-align: center; color: var(--text-tertiary); font-size: 12px; border-top: 1px solid var(--border); margin-top: 60px; }
+</style>
+</head>
+<body>
+
+<div class="live-banner">● Real Vesara Score · Triple-brain consensus 2026-05-04 · Live data from Guesty + PriceLabs</div>
+
+<nav class="nav">
+  <a href="index.html" class="brand">
+    <svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg>
+    <span>Vesara</span>
+  </a>
+  <div class="nav-links">
+    <a href="portfolio.html">Portfolio</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="signup.html" class="nav-cta">Claim a seat →</a>
+    <button class="theme-toggle" onclick="toggleTheme()">Light mode</button>
+  </div>
+</nav>
+
+<script>
+  (function () { var s = localStorage.getItem('vesara-theme'); if (s === 'light') document.body.classList.add('light'); })();
+  function toggleTheme() { var l = document.body.classList.toggle('light'); localStorage.setItem('vesara-theme', l ? 'light' : 'dark'); var btn = document.querySelector('.theme-toggle'); if (btn) btn.textContent = l ? 'Dark mode' : 'Light mode'; }
+  document.addEventListener('DOMContentLoaded', function () { var btn = document.querySelector('.theme-toggle'); if (btn) btn.textContent = document.body.classList.contains('light') ? 'Dark mode' : 'Light mode'; });
+</script>
+
+<header class="header">
+  <div class="breadcrumb"><a href="index.html">Vesara</a> · <a href="portfolio.html">Portfolio</a> · ENC6591</div>
+  <div class="pid">ENC6591 · Reno NV</div>
+  <h1>Family 3BR Reno Home · Patio, BBQ & Near Casinos</h1>
+  <div class="meta-tags">
+    <span class="meta-tag">3BR · House</span>
+    <span class="meta-tag">$240/night base</span>
+    <span class="meta-tag"><span style="color: var(--info);">$9 below PL rec $249</span></span>
+    <span class="meta-tag" style="color: var(--accent);">YTD $18,478</span>
+  </div>
+</header>
+
+
+
+
+<section class="hero-grid">
+  <div class="score-card">
+    <div class="score-label">▲ VESARA SCORE</div>
+    <div class="score-num">61</div>
+    <div class="score-grade">Grade C</div>
+    <div class="score-detail">Triple-brain consensus · scored against 22 dimensions</div>
+  </div>
+
+  <div class="data-card">
+    <div class="data-title">Live numbers</div>
+    <div class="data-row"><span class="data-label">Base price</span><span class="data-val">$240</span></div>
+    <div class="data-row"><span class="data-label">PriceLabs rec</span><span class="data-val">$249</span></div>
+    <div class="data-row"><span class="data-label">Occupancy 30d</span><span class="data-val accent">37% (mkt 47%)</span></div>
+    <div class="data-row"><span class="data-label">Occupancy 60d</span><span class="data-val accent">37% (mkt 40%)</span></div>
+    <div class="data-row"><span class="data-label">Revenue YTD</span><span class="data-val">$18,478</span></div>
+  </div>
+</section>
+
+<section class="occ-section">
+  <div class="section-title">▶ Where it is · Where it should be</div>
+  <div class="occ-row">
+    <div class="occ-stats">
+      <div class="occ-stat"><div class="occ-stat-num">37%</div><div class="occ-stat-label">Current 30d</div></div>
+      <div class="occ-stat"><div class="occ-stat-num" style="color: var(--text-secondary);">47%</div><div class="occ-stat-label">Market avg</div></div>
+      <div class="occ-stat"><div class="occ-stat-num" style="color: var(--info);">52%</div><div class="occ-stat-label">Vesara target</div></div>
+      <div class="occ-stat"><div class="occ-stat-num" style="color: var(--critical); font-family: var(--font-serif); font-style: italic;">15pt</div><div class="occ-stat-label">-15pt critical behind target</div></div>
+    </div>
+    <div class="occ-bar" title="Current 37% / Market 47% / Target 52%">
+      <div class="occ-bar-current" style="width: 37%"></div>
+      <div class="occ-bar-mark-line" style="left: 47%; background: var(--text-secondary);"></div>
+      <div class="occ-bar-mark-line" style="left: 52%; background: var(--info);"></div>
+    </div>
+    <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-tertiary); margin-top: 6px;"><span>0%</span><span>your bar = current · grey line = market · blue line = Vesara target</span><span>100%</span></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">▶ Sub-scores by category</div>
+  <div class="sub-grid">
+    <div class="sub-card"><div class="sub-cat">Pricing</div><div class="sub-num">73</div><div class="sub-bar"><div class="sub-fill" style="width: 73%"></div></div></div>
+    <div class="sub-card"><div class="sub-cat">Listing</div><div class="sub-num">71</div><div class="sub-bar"><div class="sub-fill" style="width: 71%"></div></div></div>
+    <div class="sub-card"><div class="sub-cat">Reviews</div><div class="sub-num">68</div><div class="sub-bar"><div class="sub-fill" style="width: 68%"></div></div></div>
+    <div class="sub-card"><div class="sub-cat">Channels</div><div class="sub-num">72</div><div class="sub-bar"><div class="sub-fill" style="width: 72%"></div></div></div>
+    <div class="sub-card"><div class="sub-cat">Operations</div><div class="sub-num">52</div><div class="sub-bar"><div class="sub-fill" style="width: 52%"></div></div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">▶ Top 3 fixes (consensus)</div>
+  <h2>What moves ENC6591 from C to next tier.</h2>
+  <div class="recs">
+    <div class="rec"><span class="rec-num">FIX 01</span><div class="rec-text">Reduce base from $240 to $229-239 short term and increase gap-filler/last-minute discounts; occupancy at 37% vs 47% market is too soft.</div></div>
+    <div class="rec"><span class="rec-num">FIX 02</span><div class="rec-text">Rework family positioning with sharper merchandising: patio, BBQ, parking, sleeping layout, kid suitability.</div></div>
+    <div class="rec"><span class="rec-num">FIX 03</span><div class="rec-text">Verify house-rule friction and local compliance disclosures for a 3BR house; excessive deposits, chore lists, or checkout burden can hurt conversion.</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="insight-card">
+    <div class="insight-tag win">▲ Where it wins</div>
+    <div class="insight-body">3BR house format has stronger absolute revenue potential than the 1BR set if conversion is fixed.</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="insight-card warn">
+    <div class="insight-tag warn">⚠ Biggest concern</div>
+    <div class="insight-body">Underperforming market occupancy despite only modest overpricing suggests weak positioning or guest-friction issues.</div>
+  </div>
+</section>
+
+<footer class="footer">
+  Real data from Guesty + PriceLabs · ChatGPT (gpt-5.4 thinking) triple-brain analysis · 2026-05-04<br>
+  This is the same scorecard every Vesara customer gets in 60 seconds after pasting their listing URL.<br>
+  ← <a href="portfolio.html" style="color: var(--accent);">Back to full portfolio</a>
+</footer>
+
+</body>
+</html>
