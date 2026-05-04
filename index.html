@@ -3,179 +3,415 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Vesara — STR Listing Intelligence | Live Product Preview</title>
-  <meta name="description" content="Vesara scores short-term-rental listings across 22 dimensions including profitability. This is the live product preview that updates with every push.">
+  <title>Vesara — The AI Asset Manager for Vacation Rentals</title>
+  <meta name="description" content="See your portfolio with clarity. Beat your market. Keep your owners forever. Built by an operator running 28 properties across 3 markets.">
   <meta name="robots" content="noindex,nofollow">
-  <meta property="og:title" content="Vesara — Live Product Preview">
-  <meta property="og:description" content="Built by operators, for operators. Score 22 dimensions including profitability.">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif; }
-    .gradient-bg { background: radial-gradient(ellipse at top, #1e293b 0%, #0f172a 50%, #020617 100%); }
-    .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.06); }
-    .grade-A { color: #34d399; }
-    .grade-B { color: #60a5fa; }
-    .grade-C { color: #fbbf24; }
-    .grade-D { color: #fb923c; }
-    .grade-F { color: #f87171; }
-    .ticker { animation: pulse 2.5s ease-in-out infinite; }
-    @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: 0.5 } }
-  </style>
+  <meta property="og:title" content="Vesara — The AI Asset Manager for Vacation Rentals">
+  <meta property="og:description" content="See your portfolio with clarity. Beat your market. Keep your owners forever.">
+  <meta name="theme-color" content="#050505">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="design-system.css">
 </head>
-<body class="gradient-bg text-slate-100 min-h-screen">
-  <!-- Top status bar -->
-  <div class="border-b border-slate-800 bg-slate-950/60">
-    <div class="max-w-6xl mx-auto px-6 py-2 flex items-center justify-between text-xs text-slate-400">
-      <div class="flex items-center gap-2">
-        <span class="ticker inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
-        <span>Live preview &middot; auto-deployed from <code class="text-slate-300">main</code> branch</span>
-      </div>
-      <div>Last build: <span id="builtAt">2026-05-03</span></div>
-    </div>
-  </div>
+<body>
+  <div class="progress-bar" id="progressBar"></div>
 
-  <!-- Hero -->
-  <header class="max-w-6xl mx-auto px-6 pt-16 pb-12">
-    <div class="flex items-center gap-3 mb-6">
-      <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center font-black text-slate-900">K</div>
-      <div class="text-xl font-semibold tracking-tight">Vesara</div>
-      <span class="text-xs px-2 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 ml-2">PRODUCT PREVIEW</span>
-    </div>
-    <h1 class="text-5xl md:text-6xl font-black tracking-tight leading-[1.05] mb-6">
-      Every listing. Every metric.<br>
-      <span class="bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent">Every dollar.</span>
-    </h1>
-    <p class="text-xl text-slate-300 max-w-2xl mb-8">
-      The only short-term-rental listing optimizer that scores <strong class="text-white">22 dimensions</strong>
-      including profitability. Built by operators, for operators.
-    </p>
-    <div class="flex flex-wrap gap-3">
-      <a href="#demos" class="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-amber-500 text-slate-900 font-semibold hover:bg-amber-400 transition">
-        See the live demo &rarr;
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="brand">
+        <div class="brand-mark">V</div>
+        <span>Vesara</span>
       </a>
-      <a href="marketing.html" class="inline-flex items-center gap-2 px-5 py-3 rounded-lg glass text-slate-200 font-medium hover:bg-white/5 transition">
-        View marketing one-pager
-      </a>
+      <div class="nav-links">
+        <a href="#product" class="nav-link">Product</a>
+        <a href="#demos" class="nav-link">Demos</a>
+        <a href="#roadmap" class="nav-link">Roadmap</a>
+        <a href="#demos" class="btn btn-primary">Try the Demo <span class="arrow">&rarr;</span></a>
+      </div>
     </div>
-  </header>
+  </nav>
 
-  <!-- Stats strip -->
-  <section class="max-w-6xl mx-auto px-6 pb-16">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="glass rounded-xl p-5">
-        <div class="text-3xl font-bold text-white">22</div>
-        <div class="text-xs text-slate-400 mt-1">scoring dimensions</div>
-      </div>
-      <div class="glass rounded-xl p-5">
-        <div class="text-3xl font-bold text-white">5</div>
-        <div class="text-xs text-slate-400 mt-1">live property scorecards</div>
-      </div>
-      <div class="glass rounded-xl p-5">
-        <div class="text-3xl font-bold text-white">2</div>
-        <div class="text-xs text-slate-400 mt-1">markets · Reno + San Diego</div>
-      </div>
-      <div class="glass rounded-xl p-5">
-        <div class="text-3xl font-bold text-white">1</div>
-        <div class="text-xs text-slate-400 mt-1">Airbnb URL demo (any link)</div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          <span>Live preview &middot; auto-deployed from <span class="mono" style="color:var(--text)">main</span></span>
+        </div>
+        <h1 class="display-1">
+          <span class="hero-h1-grad">The AI Asset Manager</span><br>
+          <span class="hero-h1-accent">for vacation rentals.</span>
+        </h1>
+        <p class="lede">
+          See your portfolio with clarity. Beat your market. Keep your owners forever.
+          One platform replaces the spreadsheet stack PMs hate.
+        </p>
+        <div class="hero-cta">
+          <a href="#demos" class="btn btn-accent btn-lg">
+            Try the Demo <span class="arrow">&rarr;</span>
+          </a>
+          <a href="#product" class="btn btn-ghost btn-lg">How it works</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Demo cards -->
-  <section id="demos" class="max-w-6xl mx-auto px-6 pb-16">
-    <div class="flex items-end justify-between mb-6 border-b border-slate-800 pb-4">
-      <div>
-        <h2 class="text-2xl font-bold text-white">Live demos</h2>
-        <p class="text-slate-400 text-sm mt-1">Real scorecards from a real portfolio. Click any tile to see the full report.</p>
-      </div>
-      <a href="runs/2026-05-03/" class="text-amber-400 hover:text-amber-300 text-sm font-medium">
-        Portfolio dashboard &rarr;
-      </a>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
-      <a href="runs/2026-05-03/" class="block glass rounded-xl p-6 hover:bg-white/5 transition group">
-        <div class="text-xs text-amber-400 font-medium mb-2">PORTFOLIO ROLLUP</div>
-        <div class="text-lg font-bold text-white mb-1">All 5 properties</div>
-        <div class="text-sm text-slate-400 mb-4">Side-by-side dimension scores, top fixes, distribution.</div>
-        <div class="text-2xl font-bold grade-C">Avg 73 · C</div>
-        <div class="text-xs text-slate-500 mt-3 group-hover:text-amber-400">Open dashboard &rarr;</div>
-      </a>
-
-      <a href="runs/2026-05-03/property/RID3403.html" class="block glass rounded-xl p-6 hover:bg-white/5 transition group">
-        <div class="text-xs text-emerald-400 font-medium mb-2">TOP PERFORMER</div>
-        <div class="text-lg font-bold text-white mb-1">Ridge Mountain Modern</div>
-        <div class="text-sm text-slate-400 mb-4">Reno/Sparks · RID3403</div>
-        <div class="text-2xl font-bold grade-A">92 · A</div>
-        <div class="text-xs text-slate-500 mt-3 group-hover:text-amber-400">View scorecard &rarr;</div>
-      </a>
-
-      <a href="runs/2026-05-03/property/SD3902.html" class="block glass rounded-xl p-6 hover:bg-white/5 transition group">
-        <div class="text-xs text-blue-400 font-medium mb-2">FLAGSHIP</div>
-        <div class="text-lg font-bold text-white mb-1">39th-Floor Penthouse</div>
-        <div class="text-sm text-slate-400 mb-4">San Diego · SD3902</div>
-        <div class="text-2xl font-bold grade-B">80 · B</div>
-        <div class="text-xs text-slate-500 mt-3 group-hover:text-amber-400">View scorecard &rarr;</div>
-      </a>
-
-      <a href="runs/2026-05-03/property/QUA1990.html" class="block glass rounded-xl p-6 hover:bg-white/5 transition group">
-        <div class="text-xs text-yellow-400 font-medium mb-2">MID-TIER</div>
-        <div class="text-lg font-bold text-white mb-1">Quail Hollow Reno</div>
-        <div class="text-sm text-slate-400 mb-4">Reno/Sparks · QUA1990</div>
-        <div class="text-2xl font-bold grade-C">78 · C</div>
-        <div class="text-xs text-slate-500 mt-3 group-hover:text-amber-400">View scorecard &rarr;</div>
-      </a>
-
-      <a href="runs/2026-05-03/property/SD1303.html" class="block glass rounded-xl p-6 hover:bg-white/5 transition group">
-        <div class="text-xs text-orange-400 font-medium mb-2">NEEDS WORK</div>
-        <div class="text-lg font-bold text-white mb-1">Marina Bay Suite</div>
-        <div class="text-sm text-slate-400 mb-4">San Diego · SD1303</div>
-        <div class="text-2xl font-bold grade-D">69 · D</div>
-        <div class="text-xs text-slate-500 mt-3 group-hover:text-amber-400">View scorecard &rarr;</div>
-      </a>
-
-      <a href="runs/2026-05-03/property/ALX2434.html" class="block glass rounded-xl p-6 hover:bg-white/5 transition group">
-        <div class="text-xs text-red-400 font-medium mb-2">DELIST RISK</div>
-        <div class="text-lg font-bold text-white mb-1">Alexander Lakefront</div>
-        <div class="text-sm text-slate-400 mb-4">Reno/Sparks · ALX2434</div>
-        <div class="text-2xl font-bold grade-F">46 · F</div>
-        <div class="text-xs text-slate-500 mt-3 group-hover:text-amber-400">View scorecard &rarr;</div>
-      </a>
-
-    </div>
-
-    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-      <a href="runs/demo-airbnb-1334271564949136409/" class="block glass rounded-xl p-6 hover:bg-white/5 transition group border border-amber-500/20">
-        <div class="text-xs text-amber-400 font-medium mb-2">AIRBNB URL DEMO</div>
-        <div class="text-lg font-bold text-white mb-1">Any Airbnb listing &rarr; full scorecard</div>
-        <div class="text-sm text-slate-400 mb-4">Paste an Airbnb URL, get a 22-dimension report. Live working demo.</div>
-        <div class="text-2xl font-bold text-amber-400">Try it &rarr;</div>
-      </a>
-      <div class="glass rounded-xl p-6">
-        <div class="text-xs text-slate-400 font-medium mb-2">UPDATE CADENCE</div>
-        <div class="text-lg font-bold text-white mb-1">Every push to main rebuilds this site</div>
-        <div class="text-sm text-slate-400">Bookmark this URL. As the team ships briefs 13-20 (pricing overlay, search visibility, owner portal), the demos here update automatically.</div>
+  <!-- PROOF STRIP -->
+  <section class="proof-strip">
+    <div class="proof-inner">
+      <div class="proof-text">
+        Built by an operator running <strong style="color:var(--text)">28 properties</strong> across <strong style="color:var(--text)">3 markets</strong> &mdash; not a team that read about it.
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="border-t border-slate-800 mt-16">
-    <div class="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-sm text-slate-500">
-      <div>
-        Vesara is a product preview. Branding, naming, and scoring methodology are subject to change.
+  <!-- PRODUCT / FEATURES -->
+  <section class="features section" id="product">
+    <div class="container">
+      <div class="sec-head">
+        <div class="eyebrow">The Platform</div>
+        <h2 class="h1">Three problems. One platform.</h2>
+        <p>PriceLabs prices. AirDNA reports. We do everything in between &mdash; the part operators actually live in.</p>
       </div>
-      <div class="flex gap-4">
-        <a href="marketing.html" class="hover:text-amber-400">Marketing one-pager</a>
-        <a href="runs/2026-05-03/" class="hover:text-amber-400">Portfolio</a>
+      <div class="grid grid-3">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16l4-8 4 4 6-10"/></svg>
+          </div>
+          <h3 class="feature-title">22-Dimension Vesara Score</h3>
+          <p class="feature-desc">Every listing scored across photos, copy, pricing, profitability, reviews, and 17 more dimensions. One number tells you what to fix first.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 6l3 4M16 6l-3 4M14 14l3 3"/></svg>
+          </div>
+          <h3 class="feature-title">Triple-Brain AI Consensus</h3>
+          <p class="feature-desc">Three frontier models debate every recommendation. Disagreements surface. Confidence stays honest. No more black-box pricing changes you can't explain to owners.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <h3 class="feature-title">Owner Portal That Locks Them In</h3>
+          <p class="feature-desc">Owners stop calling. They log in, see truth, and stay forever. The single biggest driver of PM lifetime value &mdash; and the thing nobody else builds.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMOS -->
+  <section class="section" id="demos" style="padding-top:0">
+    <div class="container">
+      <div class="sec-head">
+        <div class="eyebrow">Live Demos</div>
+        <h2 class="h1">Real portfolio. Real scorecards.</h2>
+        <p>Five properties from the operator who built this. Click any tile.</p>
+      </div>
+
+      <div class="grid grid-3">
+
+        <!-- Portfolio rollup -->
+        <a href="runs/2026-05-03/" class="card card-link card-glow prop-card">
+          <div class="prop-card-img" style="background:linear-gradient(135deg,#0f1f1a 0%,#0a0a0a 100%);display:flex;align-items:center;justify-content:center">
+            <span class="prop-badge" style="background:var(--accent);color:#000">Portfolio Rollup</span>
+            <div class="prop-score grade-C">
+              <div class="prop-score-num">73</div>
+              <div class="prop-score-grade">AVG · C</div>
+            </div>
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"><path d="M3 3v18h18M7 14l3-3 3 3 5-5"/></svg>
+          </div>
+          <h3 class="prop-title">All 5 Properties</h3>
+          <p class="prop-meta">Side-by-side dimension scores &middot; top fixes &middot; distribution</p>
+          <div class="prop-metric">
+            <span class="text-tertiary" style="font-size:12px">22 dimensions</span>
+            <span class="prop-cta">Open dashboard &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Top performer -->
+        <a href="runs/2026-05-03/property/RID3403.html" class="card card-link prop-card">
+          <div class="prop-card-img" style="background:linear-gradient(135deg,#1a3a2e 0%,#0a1f15 100%);display:flex;align-items:center;justify-content:center">
+            <span class="prop-badge">Top Performer</span>
+            <div class="prop-score grade-A">
+              <div class="prop-score-num">92</div>
+              <div class="prop-score-grade">A</div>
+            </div>
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="rgba(16,185,129,0.4)" stroke-width="1.5"><path d="M2 22l5-9 5 5 5-12 5 7"/></svg>
+          </div>
+          <h3 class="prop-title">Ridge Mountain Modern</h3>
+          <p class="prop-meta">Reno/Sparks &middot; <span class="mono">RID3403</span></p>
+          <div class="prop-metric">
+            <span class="text-tertiary" style="font-size:12px">+$1,847/mo lift potential</span>
+            <span class="prop-cta">View scorecard &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Flagship -->
+        <a href="runs/2026-05-03/property/SD3902.html" class="card card-link prop-card">
+          <div class="prop-card-img" style="background:linear-gradient(135deg,#1a2845 0%,#0a1530 100%);display:flex;align-items:center;justify-content:center">
+            <span class="prop-badge">Flagship</span>
+            <div class="prop-score grade-B">
+              <div class="prop-score-num">80</div>
+              <div class="prop-score-grade">B</div>
+            </div>
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="rgba(59,130,246,0.4)" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="1"/><line x1="9" y1="6" x2="9" y2="6"/><line x1="15" y1="6" x2="15" y2="6"/><line x1="9" y1="10" x2="9" y2="10"/></svg>
+          </div>
+          <h3 class="prop-title">39th-Floor Penthouse</h3>
+          <p class="prop-meta">San Diego &middot; <span class="mono">SD3902</span></p>
+          <div class="prop-metric">
+            <span class="text-tertiary" style="font-size:12px">$449 floor &middot; luxury tier</span>
+            <span class="prop-cta">View scorecard &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Mid-tier -->
+        <a href="runs/2026-05-03/property/QUA1990.html" class="card card-link prop-card">
+          <div class="prop-card-img" style="background:linear-gradient(135deg,#3a2f1a 0%,#1f1810 100%);display:flex;align-items:center;justify-content:center">
+            <span class="prop-badge">Mid-Tier</span>
+            <div class="prop-score grade-C">
+              <div class="prop-score-num">78</div>
+              <div class="prop-score-grade">C</div>
+            </div>
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="rgba(245,158,11,0.4)" stroke-width="1.5"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
+          </div>
+          <h3 class="prop-title">Quail Hollow Reno</h3>
+          <p class="prop-meta">Reno/Sparks &middot; <span class="mono">QUA1990</span></p>
+          <div class="prop-metric">
+            <span class="text-tertiary" style="font-size:12px">7 fixes available</span>
+            <span class="prop-cta">View scorecard &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Needs work -->
+        <a href="runs/2026-05-03/property/SD1303.html" class="card card-link prop-card">
+          <div class="prop-card-img" style="background:linear-gradient(135deg,#3a2415 0%,#1f1208 100%);display:flex;align-items:center;justify-content:center">
+            <span class="prop-badge">Needs Work</span>
+            <div class="prop-score grade-D">
+              <div class="prop-score-num">69</div>
+              <div class="prop-score-grade">D</div>
+            </div>
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="rgba(249,115,22,0.4)" stroke-width="1.5"><path d="M12 2L2 22h20L12 2z M12 9v6 M12 18v.01"/></svg>
+          </div>
+          <h3 class="prop-title">Marina Bay Suite</h3>
+          <p class="prop-meta">San Diego &middot; <span class="mono">SD1303</span></p>
+          <div class="prop-metric">
+            <span class="text-tertiary" style="font-size:12px">Photo + copy gaps</span>
+            <span class="prop-cta">View scorecard &rarr;</span>
+          </div>
+        </a>
+
+        <!-- Delist risk -->
+        <a href="runs/2026-05-03/property/ALX2434.html" class="card card-link prop-card">
+          <div class="prop-card-img" style="background:linear-gradient(135deg,#3a1818 0%,#1f0a0a 100%);display:flex;align-items:center;justify-content:center">
+            <span class="prop-badge" style="background:var(--critical);color:#fff">Delist Risk</span>
+            <div class="prop-score grade-F">
+              <div class="prop-score-num">46</div>
+              <div class="prop-score-grade">F</div>
+            </div>
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="rgba(239,68,68,0.4)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          </div>
+          <h3 class="prop-title">Alexander Lakefront</h3>
+          <p class="prop-meta">Reno/Sparks &middot; <span class="mono">ALX2434</span></p>
+          <div class="prop-metric">
+            <span class="text-tertiary" style="font-size:12px">Critical &middot; intervention required</span>
+            <span class="prop-cta">View scorecard &rarr;</span>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Airbnb URL demo -->
+      <div class="grid grid-2 mt-6" style="margin-top:var(--s-5)">
+        <a href="runs/demo-airbnb-1334271564949136409/" class="card card-link" style="border-color:rgba(16,185,129,0.32);background:linear-gradient(135deg,rgba(16,185,129,0.06),transparent)">
+          <div class="eyebrow text-accent mb-3">Airbnb URL Demo</div>
+          <h3 class="h3 mb-2">Paste any Airbnb URL &rarr; full scorecard</h3>
+          <p class="text-secondary mb-4" style="font-size:14px">Drop in any listing URL. Get a 22-dimension report, prioritized fixes, and dollar-impact estimates. Live working demo.</p>
+          <div class="prop-cta">Try it &rarr;</div>
+        </a>
+        <div class="card">
+          <div class="eyebrow text-tertiary mb-3">Update Cadence</div>
+          <h3 class="h3 mb-2">Every push rebuilds this site</h3>
+          <p class="text-secondary" style="font-size:14px">Bookmark this URL. As we ship the next 12 features &mdash; pricing overlay, search visibility, owner portal &mdash; the demos here update automatically. No login. No friction.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section class="roadmap" id="roadmap">
+    <div class="container">
+      <div class="sec-head">
+        <div class="eyebrow">Roadmap</div>
+        <h2 class="h1">Twelve features shipping.</h2>
+        <p>Each one is a moat. Each one closes a gap nobody else has even noticed.</p>
+      </div>
+    </div>
+    <div class="container" style="position:relative">
+      <div class="roadmap-scroll">
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 1 &middot; Live</div>
+          <h4 class="roadmap-title">22-Dim Scoring</h4>
+          <p class="roadmap-desc">Every listing scored. Letter grade. Prioritized fixes with dollar impact.</p>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 1 &middot; Live</div>
+          <h4 class="roadmap-title">Triple-Brain AI</h4>
+          <p class="roadmap-desc">Three models debate. Consensus surfaces. Confidence stays honest.</p>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 2 &middot; Q1</div>
+          <h4 class="roadmap-title">Owner Portal</h4>
+          <p class="roadmap-desc">Owners log in, see truth, stop calling. The retention engine.</p>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 2 &middot; Q1</div>
+          <h4 class="roadmap-title">AI Coach</h4>
+          <p class="roadmap-desc">Daily prompts: what to fix today, what to ignore, what to celebrate.</p>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 2 &middot; Q1</div>
+          <h4 class="roadmap-title">Lift Score</h4>
+          <p class="roadmap-desc">Predicted revenue lift per fix. Quantify before you act.</p>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 3 &middot; Q2</div>
+          <h4 class="roadmap-title">Anti-PriceLabs Migration</h4>
+          <p class="roadmap-desc">One-click switch. Keep the good. Lose the friction.</p>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 3 &middot; Q2</div>
+          <h4 class="roadmap-title">Owner Defection ML</h4>
+          <p class="roadmap-desc">Predict which owners will leave 60-90 days out. Save them.</p>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 3 &middot; Q2</div>
+          <h4 class="roadmap-title">Vendor Marketplace</h4>
+          <p class="roadmap-desc">Vetted cleaners, photographers, inspectors. Cost benchmarks built in.</p>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 4 &middot; H2</div>
+          <h4 class="roadmap-title">Vesara Capital</h4>
+          <p class="roadmap-desc">Fund the listings we score A. Operator-LP alignment.</p>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 4 &middot; H2</div>
+          <h4 class="roadmap-title">Predictive Failure</h4>
+          <p class="roadmap-desc">Property risk scores. Catch the cascade before it starts.</p>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 4 &middot; H2</div>
+          <h4 class="roadmap-title">Cohort LTV</h4>
+          <p class="roadmap-desc">Lifetime value per acquisition channel. Stop guessing where to spend.</p>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-phase">Phase 4 &middot; H2</div>
+          <h4 class="roadmap-title">Insurance Gap Scan</h4>
+          <p class="roadmap-desc">Every property audited. Every uncovered risk surfaced. Owners thank you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-cols">
+        <div class="footer-brand">
+          <a href="#" class="brand">
+            <div class="brand-mark">V</div>
+            <span>Vesara</span>
+          </a>
+          <p>The AI Asset Manager for vacation rentals. A LussoStay venture &mdash; built by an operator running 28 properties across 3 markets.</p>
+          <div style="margin-top:var(--s-4)">
+            <span class="founders-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+              Founders' Flock &middot; first 100 @ $99/mo locked forever
+            </span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#demos">Demos</a></li>
+            <li><a href="#product">Features</a></li>
+            <li><a href="#roadmap">Roadmap</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Demos</h4>
+          <ul>
+            <li><a href="runs/2026-05-03/">Portfolio</a></li>
+            <li><a href="runs/2026-05-03/property/RID3403.html">Top Performer</a></li>
+            <li><a href="runs/2026-05-03/property/ALX2434.html">Delist Risk</a></li>
+            <li><a href="runs/demo-airbnb-1334271564949136409/">Airbnb URL Demo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="marketing.html">One-pager</a></li>
+            <li><a href="https://github.com/marinatvere73/klendric-demo" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; <span id="yr"></span> Vesara &middot; A LussoStay venture &middot; Building in public</div>
+        <div class="mono" style="font-size:11px">v0.1 &middot; <span id="bt"></span></div>
       </div>
     </div>
   </footer>
 
   <script>
-    // Set built-at time from current date
-    document.getElementById('builtAt').textContent = new Date().toISOString().slice(0, 10);
+    // Year + build time
+    document.getElementById('yr').textContent = new Date().getFullYear();
+    document.getElementById('bt').textContent = new Date().toISOString().slice(0,10);
+
+    // Sticky nav border on scroll
+    const nav = document.getElementById('nav');
+    const progress = document.getElementById('progressBar');
+    function onScroll() {
+      const y = window.scrollY;
+      nav.classList.toggle('scrolled', y > 8);
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.width = Math.min(100, (y / h) * 100) + '%';
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Easter egg: press "k" for command palette stub, "?" for shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '?' && !e.target.matches('input,textarea')) {
+        alert('Vesara shortcuts:\n\nk — open command palette (coming soon)\nesc — close any modal\n? — this menu');
+      }
+    });
+
+    // Animated number reveal on stats
+    const observers = new Map();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.dataset.counted) {
+          entry.target.dataset.counted = '1';
+          const target = parseInt(entry.target.dataset.target, 10);
+          const dur = 1200;
+          const start = performance.now();
+          function tick(t) {
+            const p = Math.min(1, (t - start) / dur);
+            const eased = 1 - Math.pow(1 - p, 3);
+            entry.target.textContent = Math.round(target * eased);
+            if (p < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+        }
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('[data-count]').forEach(el => io.observe(el));
   </script>
 </body>
 </html>
