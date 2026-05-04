@@ -9,7 +9,43 @@
 <link rel="icon" href="favicon.ico">
 <link rel="stylesheet" href="design-system.css">
 <style>
-  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; }
+  /* ====================================================
+     LIGHT THEME — toggle via .light on <body>
+     Inverts only the surfaces + text. Accent stays emerald.
+     ==================================================== */
+  body.light {
+    --bg: #FAFAF9;
+    --bg-elevated: #FFFFFF;
+    --surface: #FFFFFF;
+    --surface-2: #F5F5F4;
+    --surface-3: #EAE9E5;
+    --border: rgba(0, 0, 0, 0.08);
+    --border-strong: rgba(0, 0, 0, 0.16);
+    --border-focus: rgba(0, 0, 0, 0.32);
+    --text: rgba(15, 15, 15, 0.95);
+    --text-secondary: rgba(15, 15, 15, 0.62);
+    --text-tertiary: rgba(15, 15, 15, 0.42);
+    --text-muted: rgba(15, 15, 15, 0.55);
+    --accent: #047857;            /* darker emerald for AA contrast on white */
+    --accent-hover: #059669;
+    --accent-dim: rgba(4, 120, 87, 0.08);
+    --accent-glow: rgba(4, 120, 87, 0.16);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.10);
+  }
+  body.light .nav { background: rgba(255, 255, 255, 0.85); }
+  body.light .live-banner { background: rgba(4, 120, 87, 0.06); color: var(--accent); }
+  body.light .meta-tag.airbnb { background: rgba(255, 90, 95, 0.06); color: #c93237; border-color: rgba(255, 90, 95, 0.25); }
+  body.light .score-card::before { background: radial-gradient(circle at top, rgba(4, 120, 87, 0.06), transparent 70%); }
+  body.light .nav-cta { color: #FFFFFF !important; }
+  body.light .btn-primary { color: #FFFFFF !important; }
+
+  .theme-toggle { background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text); padding: 6px 12px; border-radius: var(--r-md); font-size: 12px; font-family: var(--font-sans); cursor: pointer; margin-left: 12px; transition: background var(--dur-fast); display: inline-flex; align-items: center; gap: 6px; }
+  .theme-toggle:hover { background: var(--surface-3); }
+  .theme-toggle .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; transition: background var(--dur-base) var(--ease), color var(--dur-base) var(--ease); }
   .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
   .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
   .brand svg { width: 22px; height: 22px; }
@@ -109,8 +145,37 @@
 
 <nav class="nav">
   <a href="index.html" class="brand"><svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg><span>Vesara</span></a>
-  <div class="nav-links"><a href="dashboard.html">Dashboard</a><a href="how-it-works.html">How it works</a><a href="pricing.html">Pricing</a><a href="signup.html" class="nav-cta">Claim a seat →</a></div>
+  <div class="nav-links">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="how-it-works.html">How it works</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="signup.html" class="nav-cta">Claim a seat →</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light / dark theme">
+      <span class="dot" id="themeDot"></span>
+      <span id="themeLabel">Light mode</span>
+    </button>
+  </div>
 </nav>
+
+<script>
+  // Theme toggle — persists in localStorage. Default = dark.
+  (function () {
+    var saved = localStorage.getItem('vesara-theme');
+    if (saved === 'light') { document.body.classList.add('light'); }
+  })();
+  function toggleTheme() {
+    var b = document.body;
+    var isLight = b.classList.toggle('light');
+    localStorage.setItem('vesara-theme', isLight ? 'light' : 'dark');
+    var label = document.getElementById('themeLabel');
+    if (label) { label.textContent = isLight ? 'Dark mode' : 'Light mode'; }
+  }
+  // On load, sync label with current theme
+  document.addEventListener('DOMContentLoaded', function () {
+    var label = document.getElementById('themeLabel');
+    if (label) { label.textContent = document.body.classList.contains('light') ? 'Dark mode' : 'Light mode'; }
+  });
+</script>
 
 <header class="header">
   <div class="breadcrumb"><a href="index.html">Vesara</a> · Live test · Property scorecard</div>

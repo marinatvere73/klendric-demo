@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara — Live Dogfood Proof (LussoStay Pilot)</title>
+<meta name="description" content="Vesara's first customer is its own founder's portfolio. Every recommendation logged. Every outcome measured. Every miss published. Public proof.">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body.light { --bg: #FAFAF9; --bg-elevated: #FFFFFF; --surface: #FFFFFF; --surface-2: #F5F5F4; --surface-3: #EAE9E5; --border: rgba(0,0,0,0.08); --border-strong: rgba(0,0,0,0.16); --text: rgba(15,15,15,0.95); --text-secondary: rgba(15,15,15,0.62); --text-tertiary: rgba(15,15,15,0.42); --accent: #047857; --accent-hover: #059669; --accent-dim: rgba(4,120,87,0.08); --accent-glow: rgba(4,120,87,0.16); }
+  body.light .nav { background: rgba(255,255,255,0.85); }
+  body.light .live-banner { background: rgba(4,120,87,0.06); }
+  body.light .nav-cta, body.light .btn-primary { color: #FFFFFF !important; }
+
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; transition: background var(--dur-base) var(--ease), color var(--dur-base) var(--ease); }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+  .nav-cta { background: var(--accent); color: #000; padding: 8px 16px; border-radius: var(--r-md); font-weight: 600; }
+
+  .live-banner { background: rgba(16,185,129,0.10); border-bottom: 1px solid var(--accent); padding: 8px 24px; text-align: center; font-size: 12px; color: var(--accent); }
+
+  .theme-toggle { background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text); padding: 6px 12px; border-radius: var(--r-md); font-size: 12px; cursor: pointer; margin-left: 12px; display: inline-flex; align-items: center; gap: 6px; }
+  .theme-toggle .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+
+  .hero { max-width: 980px; margin: 0 auto; padding: 80px 24px 40px; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--accent); background: var(--accent-dim); color: var(--accent); border-radius: var(--r-full); font-size: 12px; margin-bottom: 24px; }
+  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: vPulse 1.8s infinite; }
+  @keyframes vPulse { 0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); } 50% { box-shadow: 0 0 0 8px transparent; } }
+  h1 { font-size: clamp(40px, 6vw, 64px); font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 20px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .lede { font-size: 19px; color: var(--text-secondary); max-width: 720px; line-height: 1.55; }
+
+  .stats-row { max-width: 1100px; margin: 48px auto 0; padding: 0 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 24px; text-align: center; }
+  .stat-num { font-size: 36px; font-weight: 700; color: var(--accent); font-family: var(--font-serif); font-style: italic; line-height: 1; letter-spacing: -0.02em; }
+  .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-top: 8px; }
+  .stat-sub { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+
+  .section { max-width: 1100px; margin: 80px auto; padding: 0 24px; }
+  .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-bottom: 24px; }
+  h2 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 24px; }
+
+  .principle { display: grid; grid-template-columns: 32px 1fr; gap: 16px; padding: 20px; background: var(--surface); border-left: 3px solid var(--accent); border-radius: 0 var(--r-md) var(--r-md) 0; margin-bottom: 12px; }
+  .p-icon { color: var(--accent); font-size: 22px; line-height: 1; }
+  .p-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .p-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+  .cadence-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .cadence { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 24px; }
+  .c-tier { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 600; margin-bottom: 8px; }
+  .c-name { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+  .c-time { font-size: 12px; color: var(--text-tertiary); margin-bottom: 12px; }
+  .c-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+  .table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; }
+  .table th { text-align: left; padding: 14px 18px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); background: var(--surface-2); border-bottom: 1px solid var(--border); }
+  .table td { padding: 14px 18px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+  .table tr:last-child td { border-bottom: none; }
+  .table .status-impl { color: var(--accent); font-weight: 600; }
+  .table .status-pending { color: var(--warning); font-weight: 600; }
+  .table .pid { font-family: var(--font-mono); font-size: 12px; }
+
+  .commit-box { background: var(--surface); border: 1px solid var(--accent); border-radius: var(--r-xl); padding: 32px; margin: 48px 0; }
+  .commit-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 12px; font-weight: 600; }
+  .commit-text { font-size: 17px; line-height: 1.6; color: var(--text); }
+  .commit-text strong { color: var(--accent); }
+
+  .footer { padding: 48px 24px; text-align: center; color: var(--text-tertiary); font-size: 13px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<div class="live-banner">● LIVE PILOT · LussoStay-on-Vesara · started 2026-05-04 · updated continuously</div>
+
+<nav class="nav">
+  <a href="index.html" class="brand"><svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg><span>Vesara · Proof</span></a>
+  <div class="nav-links">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="score-wat340.html">Sample score</a>
+    <a href="founder.html">Founder</a>
+    <a href="signup.html" class="nav-cta">Claim a seat →</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <span class="dot"></span><span id="themeLabel">Light mode</span>
+    </button>
+  </div>
+</nav>
+
+<script>
+  (function () { var s = localStorage.getItem('vesara-theme'); if (s === 'light') document.body.classList.add('light'); })();
+  function toggleTheme() { var b = document.body, l = b.classList.toggle('light'); localStorage.setItem('vesara-theme', l ? 'light' : 'dark'); document.getElementById('themeLabel').textContent = l ? 'Dark mode' : 'Light mode'; }
+  document.addEventListener('DOMContentLoaded', function () { document.getElementById('themeLabel').textContent = document.body.classList.contains('light') ? 'Dark mode' : 'Light mode'; });
+</script>
+
+<section class="hero">
+  <span class="pill"><span class="pulse"></span> Public dogfood log</span>
+  <h1>Our first customer is <span class="accent">our founder.</span></h1>
+  <p class="lede">Marina runs Vesara on her own 27-property LussoStay portfolio every day. Every recommendation gets logged. Every implementation timestamped. Every outcome measured. Every miss published. This page is updated continuously — no marketing veneer, no cherry-picking, no silent failures.</p>
+</section>
+
+<div class="stats-row">
+  <div class="stat">
+    <div class="stat-num">27</div>
+    <div class="stat-label">Properties on pilot</div>
+    <div class="stat-sub">LussoStay portfolio</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">9</div>
+    <div class="stat-label">Recs surfaced Day 1</div>
+    <div class="stat-sub">across 6 categories</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">2</div>
+    <div class="stat-label">Recs implemented</div>
+    <div class="stat-sub">SD3902 compliance + flexibility</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">36</div>
+    <div class="stat-label">PriceLabs writes executed</div>
+    <div class="stat-sub">all preserve floors + prices</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">$0</div>
+    <div class="stat-label">Lift Score (measurement open)</div>
+    <div class="stat-sub">7-day window not closed yet</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">~$3,200</div>
+    <div class="stat-label">Predicted lift in flight</div>
+    <div class="stat-sub">to be measured at 30d</div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-title">▶ The 5 audit principles (binding on every claim)</div>
+  <h2>Why this isn't marketing.</h2>
+  <div class="principle">
+    <span class="p-icon">●</span>
+    <div>
+      <div class="p-title">Every rec is logged before implementation</div>
+      <div class="p-desc">Recommendation, confidence score, predicted impact — committed to git before the change goes live. Lock-in beats hindsight bias.</div>
+    </div>
+  </div>
+  <div class="principle">
+    <span class="p-icon">●</span>
+    <div>
+      <div class="p-title">Every outcome is measured against a counterfactual</div>
+      <div class="p-desc">A "lift" claim requires showing what would have happened without the rec. Trailing-30-day baseline per property. No baseline = no claim.</div>
+    </div>
+  </div>
+  <div class="principle">
+    <span class="p-icon">●</span>
+    <div>
+      <div class="p-title">Misses get the same airtime as wins</div>
+      <div class="p-desc">Honest counter-data section in every monthly stakeholder pack. If a Vesara rec backfired, it gets published. Trust is built on the misses, not the wins.</div>
+    </div>
+  </div>
+  <div class="principle">
+    <span class="p-icon">●</span>
+    <div>
+      <div class="p-title">Recommendation accuracy is computed quarterly</div>
+      <div class="p-desc">Aggregate `actual / predicted` across all measured recs. Target ≥75% by Q3 2026. Below 60% means we adjust the triple-brain prompts. Above 90% means we're sandbagging predictions.</div>
+    </div>
+  </div>
+  <div class="principle">
+    <span class="p-icon">●</span>
+    <div>
+      <div class="p-title">All artifacts are version-controlled</div>
+      <div class="p-desc">Audit logs, weekly reports, monthly packs, QBRs — committed to a public git repo. Stakeholders can verify nothing was retroactively edited.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">▶ The cadence we operate on</div>
+  <h2>Daily, weekly, biweekly, monthly, quarterly.</h2>
+  <div class="cadence-grid">
+    <div class="cadence">
+      <div class="c-tier">Daily</div>
+      <div class="c-name">15 min · Marina + AI Coach</div>
+      <div class="c-time">8:00 AM PT</div>
+      <div class="c-desc">Vesara dashboard auto-refreshes overnight. AI Coach surfaces top 5 recs ranked by impact × confidence. Marina triages: AUTO-APPROVE / REVIEW / DEFER. Auto-approved recs push immediately via PriceLabs/Guesty MCP. Marina time: 5-10 min.</div>
+    </div>
+    <div class="cadence">
+      <div class="c-tier">Weekly</div>
+      <div class="c-name">30 min · Monday 9 AM PT</div>
+      <div class="c-time">Generated each Monday</div>
+      <div class="c-desc">Lift Report computes week-over-week trajectory, top 3 wins + top 3 misses, accuracy by category. Course-corrections logged. Posted to Founders' Flock Slack when public.</div>
+    </div>
+    <div class="cadence">
+      <div class="c-tier">Biweekly</div>
+      <div class="c-name">60 min · Every other Friday</div>
+      <div class="c-time">Owner variance + portfolio sweep</div>
+      <div class="c-desc">Owner-facing variance memos drafted. Cross-portfolio audit pattern (like the SD3902 fix) re-run on all 27 properties. Vesara product backlog reviewed.</div>
+    </div>
+    <div class="cadence">
+      <div class="c-tier">Monthly</div>
+      <div class="c-name">90 min · Last Monday</div>
+      <div class="c-time">Stakeholder Proof Pack</div>
+      <div class="c-desc">4-tier distribution: Investors get full pack. PM owners get their property-specific extract. Founders' Flock cohort gets anonymized aggregate. LussoStay team gets ops review.</div>
+    </div>
+    <div class="cadence">
+      <div class="c-tier">Quarterly</div>
+      <div class="c-name">1 day · End of quarter</div>
+      <div class="c-time">QBR + product roadmap</div>
+      <div class="c-desc">Full Quarterly Business Review with cumulative Lift, recommendation accuracy, NRR impact, owner satisfaction lift, product features shipped from pattern-mining log, Founders' Flock vote results.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">▶ Day-1 audit log (live · click any row in source)</div>
+  <h2>Every recommendation, every status.</h2>
+  <table class="table">
+    <thead>
+      <tr><th>Rec ID</th><th>Property</th><th>Category</th><th>Description</th><th>Confidence</th><th>Predicted impact</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="pid">REC-20260504-001</td>
+        <td>SD3902</td>
+        <td>compliance</td>
+        <td>Min-stay rule violations on Memorial Day + SD Pride windows fixed</td>
+        <td>0.99</td>
+        <td>$1,200-2,400/yr avoided loss</td>
+        <td class="status-impl">IMPLEMENTED</td>
+      </tr>
+      <tr>
+        <td class="pid">REC-20260504-002</td>
+        <td>SD3902</td>
+        <td>pricing</td>
+        <td>June min_stay 4 → 2 (gap-night capture, Marina traveling)</td>
+        <td>1.00</td>
+        <td>$400-1,200/mo</td>
+        <td class="status-impl">IMPLEMENTED</td>
+      </tr>
+      <tr>
+        <td class="pid">REC-20260504-003</td>
+        <td>WAT340</td>
+        <td>ops</td>
+        <td>Self-check-in arrival flow (visual guide + post-arrival ping)</td>
+        <td>0.92</td>
+        <td>$120-220/mo</td>
+        <td class="status-pending">REVIEW</td>
+      </tr>
+      <tr>
+        <td class="pid">REC-20260504-004</td>
+        <td>WAT340</td>
+        <td>listing</td>
+        <td>Value perception fix without ADR cut (fee restructure + bundling)</td>
+        <td>0.85</td>
+        <td>$180-700/mo</td>
+        <td class="status-pending">REVIEW</td>
+      </tr>
+      <tr>
+        <td class="pid">REC-20260504-005</td>
+        <td>WAT340</td>
+        <td>ops</td>
+        <td>Push review response rate 75% → 100%</td>
+        <td>0.84</td>
+        <td>$80-180/mo</td>
+        <td class="status-pending">REVIEW</td>
+      </tr>
+      <tr>
+        <td class="pid">REC-20260504-006</td>
+        <td>QUA1990</td>
+        <td>diagnostic</td>
+        <td>Occupancy collapse (17% vs 45% market) — full diagnostic before pricing intervention</td>
+        <td>0.88</td>
+        <td>$1,000-1,800/mo recovery</td>
+        <td class="status-pending">REVIEW</td>
+      </tr>
+      <tr>
+        <td class="pid">REC-20260504-007</td>
+        <td>RID3403</td>
+        <td>pricing</td>
+        <td>Base $324 → ~$280 (PriceLabs rec $253) — booking pace recovery</td>
+        <td>0.86</td>
+        <td>$1,200/mo</td>
+        <td class="status-pending">REVIEW</td>
+      </tr>
+      <tr>
+        <td class="pid">REC-20260504-008</td>
+        <td>ALX1734 + TAN5445 + SD1303</td>
+        <td>pricing</td>
+        <td>+8% ADR test (all 3 at 100% occupancy with market 27-47%)</td>
+        <td>0.83</td>
+        <td>$400-800/mo</td>
+        <td class="status-pending">REVIEW</td>
+      </tr>
+      <tr>
+        <td class="pid">REC-20260504-009</td>
+        <td>Portfolio (27)</td>
+        <td>compliance</td>
+        <td>Run SD3902 audit pattern across full portfolio (CEO-rule violations)</td>
+        <td>0.95</td>
+        <td>$5K-15K/yr recovered</td>
+        <td class="status-pending">REVIEW</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size: 13px; color: var(--text-tertiary); margin-top: 16px;">Source: <code>Vesara/operations/lussostay-vesara-pilot/01_recommendation_audit_log.md</code> in the public git repo. Updated continuously.</p>
+</section>
+
+<section class="section">
+  <div class="commit-box">
+    <div class="commit-tag">Marina's commitment</div>
+    <div class="commit-text">Every Vesara recommendation made to LussoStay gets logged before implementation. Every outcome gets measured against a counterfactual baseline. Every miss gets published with the wins. <strong>If our recommendation accuracy drops below 60%, we publish that. If it stays above 75%, we publish that. The data is the product.</strong></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">▶ What's in the public repo</div>
+  <h2>Every artifact, version-controlled.</h2>
+  <ul style="font-size: 16px; color: var(--text-secondary); line-height: 1.85; padding-left: 22px;">
+    <li><code>Vesara/operations/lussostay-vesara-pilot/00_daily_operating_cadence.md</code> — the daily routine + auto-approval rules</li>
+    <li><code>Vesara/operations/lussostay-vesara-pilot/01_recommendation_audit_log.md</code> — running log of every rec + outcome</li>
+    <li><code>Vesara/operations/lussostay-vesara-pilot/02_weekly_lift_report_template.md</code> — weekly Monday report</li>
+    <li><code>Vesara/operations/lussostay-vesara-pilot/03_biweekly_review_template.md</code> — biweekly Friday review</li>
+    <li><code>Vesara/operations/stakeholder-proof/04_monthly_stakeholder_proof_pack_template.md</code> — monthly investor + owner pack</li>
+    <li><code>Vesara/operations/stakeholder-proof/05_quarterly_business_review_template.md</code> — full QBR</li>
+    <li><code>Vesara/research/lussostay_pattern_mining_log.md</code> — every pattern observed → Vesara feature spec</li>
+  </ul>
+</section>
+
+<footer class="footer">
+  Last updated: 2026-05-04 · Pilot Day 1 · Updated continuously · Built with real data, no marketing varnish<br>
+  Stakeholder questions: <a href="mailto:marina@vesara.ai" style="color: var(--accent);">marina@vesara.ai</a>
+</footer>
+
+</body>
+</html>
