@@ -99,6 +99,23 @@
   .resolved-stamp strong { color: var(--accent); }
   .resolved-stamp .by { font-family: var(--font-mono); }
 
+  .audit-tag-row { display: flex; gap: 8px; align-items: center; margin-top: 8px; padding: 8px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-md); font-size: 11.5px; flex-wrap: wrap; }
+  .audit-tag-label { color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; font-size: 10px; }
+  .audit-tag-select { padding: 4px 8px; background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text); border-radius: var(--r-sm); font-size: 11px; font-family: inherit; }
+  .audit-assignee { padding: 4px 8px; background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text); border-radius: var(--r-sm); font-size: 11px; font-family: var(--font-mono); width: 80px; }
+  .audit-badge { padding: 3px 8px; border-radius: var(--r-full); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+  .audit-badge.needs_audit { background: rgba(245,158,11,0.18); color: var(--warning); border: 1px solid var(--warning); }
+  .audit-badge.sent_to_audit { background: rgba(59,130,246,0.18); color: var(--info); border: 1px solid var(--info); }
+  .audit-badge.audit_complete { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent); }
+
+  .offboarding-banner { background: linear-gradient(90deg, rgba(245,158,11,0.18), rgba(245,158,11,0.06)); border: 1px solid var(--warning); border-radius: var(--r-md); padding: 12px 16px; margin: 16px 24px 0; display: flex; align-items: center; gap: 12px; }
+  .offboarding-icon { font-size: 18px; }
+  .offboarding-text { flex: 1; font-size: 13px; color: var(--warning); }
+  .offboarding-text strong { color: var(--warning); }
+
+  .blocked-by { background: rgba(239,68,68,0.10); border: 1px solid var(--critical); border-radius: var(--r-md); padding: 8px 12px; margin-top: 8px; font-size: 12px; color: var(--critical); }
+  .blocked-by strong { color: var(--critical); }
+
   .footer { padding: 32px 24px; text-align: center; color: var(--text-tertiary); font-size: 12px; border-top: 1px solid var(--border); margin-top: 60px; }
 </style>
 </head>
@@ -130,7 +147,8 @@
   <div class="meta"><div class="meta-label">Resolved</div><div class="meta-num" id="metaResolved">0</div><div class="meta-sub">complete ✓</div></div>
   <div class="meta"><div class="meta-label">In progress</div><div class="meta-num" id="metaProgress">0</div><div class="meta-sub">someone working</div></div>
   <div class="meta"><div class="meta-label">Pending</div><div class="meta-num" id="metaPending">0</div><div class="meta-sub">unclaimed</div></div>
-  <div class="meta"><div class="meta-label">Predicted lift</div><div class="meta-num" id="metaLift">$0</div><div class="meta-sub">when all resolved</div></div>
+  <div class="meta"><div class="meta-label">Needs audit</div><div class="meta-num" id="metaAudit" style="color: var(--warning);">0</div><div class="meta-sub">verify first</div></div>
+  <div class="meta"><div class="meta-label">Offboarding</div><div class="meta-num" id="metaOff" style="color: var(--warning);">0</div><div class="meta-sub">excluded</div></div>
 </div>
 
 <div class="controls">
@@ -140,6 +158,8 @@
   <button class="filter-pill" data-filter="progress" onclick="setFilter('progress', this)">In progress</button>
   <button class="filter-pill" data-filter="resolved" onclick="setFilter('resolved', this)">Resolved</button>
   <button class="filter-pill" data-filter="critical" onclick="setFilter('critical', this)">⚠ Critical only</button>
+  <button class="filter-pill" data-filter="needs_audit" onclick="setFilter('needs_audit', this)">⚠ Needs audit</button>
+  <button class="filter-pill" data-filter="offboarding" onclick="setFilter('offboarding', this)">↘ Offboarding</button>
 </div>
 
 <div class="properties" id="propertiesContainer"></div>
@@ -170,17 +190,18 @@
       { id: 'QUA1990-1', cat: 'diagnostic', title: '🚨 Occupancy collapse — full diagnostic before pricing', desc: '17% vs 45% market = 28pt gap. Triple-brain diagnostic before blunt discount: photos / copy / channel mix / pricing / regulatory.', conf: 0.88, critical: true, status: 'pending', goalMin: '25% occ', goalAwesome: '40% occ', goalAmazing: 'Match market 45%+' },
       { id: 'QUA1990-2', cat: 'pricing', title: 'PriceLabs rec $335 vs current $340 — minor', desc: 'Pricing is NOT the main driver — diagnostic first', conf: 0.65, status: 'pending', goalMin: 'Apply $335', goalAwesome: 'Test elasticity', goalAmazing: 'Optimize to RevPAR max' },
     ]},
-    { code: 'RID3403', name: '4BR Reno · Game Room, BBQ, Trampoline', market: 'Reno', bedrooms: 4, basePrice: 324, occ30: 53, marketOcc: 46, score: 64, recs: [
-      { id: 'RID3403-1', cat: 'pricing', title: '🚨 Base $324 vs PriceLabs rec $253 (-22%)', desc: 'Booking pace sliding. Drop to $275-285 range as initial test, monitor 7d response.', conf: 0.86, critical: true, status: 'pending', goalMin: 'Drop to $295', goalAwesome: '+$800/mo recovery', goalAmazing: '+$1,500/mo' },
+    { code: 'RID3403', name: '4BR Reno · Game Room, BBQ, Trampoline', market: 'Reno', bedrooms: 4, basePrice: 324, occ30: 53, marketOcc: 46, score: 64, offboarding: 'unverified', offboardDate: '2026-04-23?', recs: [
+      { id: 'RID3403-AUDIT', cat: 'audit', title: '⚠ NEEDS AUDIT — verify offboarding status before any pricing action', desc: 'Historical-properties ledger shows RID3403 was offboarded 2026-04-23. PriceLabs occupancy 53%/53%/43% does NOT match an offboarded property pattern (those typically show 100% via blocked calendar). Either: (a) offboarding is in progress with partial blocks, (b) ledger entry is wrong, or (c) property was un-offboarded. Verify with Jessica or Marina before pushing the original $324→$280 pricing rec below.', conf: 0.95, critical: true, status: 'pending', auditTag: 'needs_audit', goalMin: 'Status confirmed', goalAwesome: 'Active or excluded — clear path', goalAmazing: 'Owner re-engagement if applicable' },
+      { id: 'RID3403-1', cat: 'pricing', title: '🚨 Base $324 vs PriceLabs rec $253 (-22%) — BLOCKED pending audit', desc: 'Booking pace sliding. Drop to $275-285 range as initial test, monitor 7d response. BLOCKED until offboarding status verified (above).', conf: 0.86, critical: true, status: 'pending', auditTag: 'needs_audit', blockedBy: 'RID3403-AUDIT', goalMin: 'Drop to $295', goalAwesome: '+$800/mo recovery', goalAmazing: '+$1,500/mo' },
     ]},
     { code: 'ALX1734', name: 'Chic 1BR Reno · Heated Pool, Spa, Sauna', market: 'Reno', bedrooms: 1, basePrice: 159, occ30: 100, marketOcc: 47, score: 75, recs: [
-      { id: 'ALX1734-1', cat: 'pricing', title: '🚨 100% occ vs 47% market — underpriced', desc: '+8% ADR test (one-week trial). Conservative because weekend rates more elastic. PriceLabs rec $135 (LOWER than current — outlier signal worth investigating).', conf: 0.83, critical: true, status: 'pending', goalMin: '+5% ADR no occ drop', goalAwesome: '+8% ADR + 95% occ', goalAmazing: '+12% ADR + 90% occ' },
+      { id: 'ALX1734-1', cat: 'pricing', title: '+5% ADR test running — 14-day trial active May 5-18', desc: 'PriceLabs +5% percent override pushed across May 5-18 (14 dates) at 2026-05-04 14:43. Property is NOT offboarding (verified). Measurement window opens 2026-05-12 (7d outcome). Predicted impact: +$80-120/mo if occupancy holds at 90%+. Initial test, will iterate based on response.', conf: 0.83, critical: false, status: 'progress', resolvedBy: 'AI', resolvedComment: 'Test live. 7d measurement window opens 2026-05-12.', auditTag: 'audit_complete', goalMin: '+5% ADR no occ drop', goalAwesome: '+8% sustained + 95% occ', goalAmazing: '+12% + 90% occ' },
     ]},
-    { code: 'TAN5445', name: '3BR Mountain View · Swim Spa, Mini Golf', market: 'Reno', bedrooms: 3, basePrice: 349, occ30: 100, marketOcc: 43, score: 80, recs: [
-      { id: 'TAN5445-1', cat: 'pricing', title: '🚨 100% occ 60d vs 32% market — underpriced', desc: 'Highest underpriced signal in portfolio. +10% ADR test recommended. PriceLabs rec $335.', conf: 0.85, critical: true, status: 'pending', goalMin: '+5% ADR', goalAwesome: '+10% + 95% occ', goalAmazing: '+15% + 88% occ' },
+    { code: 'TAN5445', name: '3BR Mountain View · Swim Spa, Mini Golf', market: 'Reno', bedrooms: 3, basePrice: 349, occ30: 100, marketOcc: 43, score: null, offboarding: true, offboardDate: '2026-04-28', recs: [
+      { id: 'TAN5445-OFFBOARD', cat: 'audit', title: 'OFFBOARDING — owner blocked calendar', desc: 'Property offboarding as of 2026-04-28. PriceLabs 100% occupancy is FALSE signal (blocked dates, not demand). Excluded from pricing recommendations going forward. Vesara made an incorrect +5% ADR rec on this property at 2026-05-04 14:43; reverted within 6 minutes after Marina caught it. Pattern #013 added to mining log.', conf: 1.0, critical: false, status: 'resolved', resolvedBy: 'AI+MT', resolvedComment: 'PriceLabs +5% test reverted. min_price floors restored.', auditTag: 'audit_complete', auditAssignee: 'Jessica', goalMin: 'Excluded from pricing engine', goalAwesome: 'Cleanly handed to next operator', goalAmazing: 'Owner returns to Vesara post-rebrand' },
     ]},
-    { code: 'SD1303', name: 'Downtown SD 1BR · Queen, Pool, Sauna', market: 'San Diego', bedrooms: 1, basePrice: 340, occ30: 100, marketOcc: 27, score: 79, recs: [
-      { id: 'SD1303-1', cat: 'pricing', title: '🚨 100% occ vs 27% market — massively underpriced', desc: '+12% ADR test. Market is at 27% — we are 3.7x market occupancy at our current rate.', conf: 0.88, critical: true, status: 'pending', goalMin: '+5% ADR', goalAwesome: '+12% + 95% occ', goalAmazing: '+18% + 88% occ' },
+    { code: 'SD1303', name: 'Downtown SD 1BR · Queen, Pool, Sauna', market: 'San Diego', bedrooms: 1, basePrice: 340, occ30: 100, marketOcc: 27, score: null, offboarding: true, offboardDate: '2026-04-28', recs: [
+      { id: 'SD1303-OFFBOARD', cat: 'audit', title: 'OFFBOARDING — owner blocked calendar', desc: 'Property offboarding as of 2026-04-28. PriceLabs 100% occupancy is FALSE signal (blocked dates, not demand). Excluded from pricing recommendations going forward. Vesara incorrect +5% test from 2026-05-04 14:43 fully reverted within 6 minutes.', conf: 1.0, critical: false, status: 'resolved', resolvedBy: 'AI+MT', resolvedComment: 'PriceLabs +5% test fully reverted (14 dates deleted).', auditTag: 'audit_complete', auditAssignee: 'Jessica', goalMin: 'Excluded from pricing engine', goalAwesome: 'Clean handoff', goalAmazing: 'Owner returns post-rebrand' },
     ]},
     { code: 'ALX3131', name: 'Serene 1BR · Sauna, Pool, Yoga Studio', market: 'Reno', bedrooms: 1, basePrice: 189, occ30: 90, marketOcc: 47, score: 73, recs: [
       { id: 'ALX3131-1', cat: 'pricing', title: '90% occ vs 47% market — underpriced', desc: '+5% ADR test', conf: 0.78, status: 'pending', goalMin: '+3% ADR', goalAwesome: '+5% + 88% occ', goalAmazing: '+8% + 82% occ' },
@@ -255,7 +276,7 @@
   // ============================================================
   //   STATE — localStorage persistence
   // ============================================================
-  const STATE_KEY = 'vesara-portfolio-state-v1';
+  const STATE_KEY = 'vesara-portfolio-state-v2';
   function loadState() {
     try { return JSON.parse(localStorage.getItem(STATE_KEY) || '{}'); } catch { return {}; }
   }
@@ -265,8 +286,40 @@
   // Apply persisted state to PORTFOLIO recs
   PORTFOLIO.forEach(p => p.recs.forEach(r => {
     const s = state[r.id];
-    if (s) { r.status = s.status; r.resolvedBy = s.resolvedBy; r.resolvedComment = s.resolvedComment; r.resolvedAt = s.resolvedAt; }
+    if (s) {
+      if (s.status !== undefined) r.status = s.status;
+      if (s.resolvedBy !== undefined) r.resolvedBy = s.resolvedBy;
+      if (s.resolvedComment !== undefined) r.resolvedComment = s.resolvedComment;
+      if (s.resolvedAt !== undefined) r.resolvedAt = s.resolvedAt;
+      if (s.auditTag !== undefined) r.auditTag = s.auditTag;
+      if (s.auditAssignee !== undefined) r.auditAssignee = s.auditAssignee;
+    }
   }));
+
+  // Update an audit tag for a rec
+  function setAuditTag(recId, tag) {
+    const rec = findRec(recId);
+    if (!rec) return;
+    rec.auditTag = tag || null;
+    saveAuditState(recId, rec);
+    renderProperties(); refreshMeta();
+  }
+  function setAuditAssignee(recId, val) {
+    const rec = findRec(recId);
+    if (!rec) return;
+    rec.auditAssignee = val.toUpperCase().trim() || null;
+    saveAuditState(recId, rec);
+  }
+  function saveAuditState(recId, rec) {
+    state[recId] = state[recId] || {};
+    state[recId].auditTag = rec.auditTag;
+    state[recId].auditAssignee = rec.auditAssignee;
+    state[recId].status = rec.status;
+    state[recId].resolvedBy = rec.resolvedBy;
+    state[recId].resolvedComment = rec.resolvedComment;
+    state[recId].resolvedAt = rec.resolvedAt;
+    saveState();
+  }
 
   // ============================================================
   //   USER INITIALS
@@ -320,7 +373,11 @@
     } else {
       rec.resolvedBy = null; rec.resolvedComment = null; rec.resolvedAt = null;
     }
-    state[recId] = { status: rec.status, resolvedBy: rec.resolvedBy, resolvedComment: rec.resolvedComment, resolvedAt: rec.resolvedAt };
+    state[recId] = state[recId] || {};
+    state[recId].status = rec.status;
+    state[recId].resolvedBy = rec.resolvedBy;
+    state[recId].resolvedComment = rec.resolvedComment;
+    state[recId].resolvedAt = rec.resolvedAt;
     saveState();
     renderProperties();
     refreshMeta();
@@ -347,17 +404,23 @@
   //   RENDER
   // ============================================================
   function refreshMeta() {
-    let total = 0, resolved = 0, progress = 0, pending = 0;
-    PORTFOLIO.forEach(p => p.recs.forEach(r => {
-      total++;
-      if (r.status === 'resolved') resolved++;
-      else if (r.status === 'progress') progress++;
-      else pending++;
-    }));
+    let total = 0, resolved = 0, progress = 0, pending = 0, audit = 0, off = 0;
+    PORTFOLIO.forEach(p => {
+      if (p.offboarding) off++;
+      p.recs.forEach(r => {
+        total++;
+        if (r.status === 'resolved') resolved++;
+        else if (r.status === 'progress') progress++;
+        else pending++;
+        if (r.auditTag === 'needs_audit') audit++;
+      });
+    });
     document.getElementById('metaTotal').textContent = total;
     document.getElementById('metaResolved').textContent = resolved;
     document.getElementById('metaProgress').textContent = progress;
     document.getElementById('metaPending').textContent = pending;
+    document.getElementById('metaAudit').textContent = audit;
+    document.getElementById('metaOff').textContent = off;
   }
 
   function renderProperties() {
@@ -374,6 +437,8 @@
       // Status filter
       if (currentFilter === 'all') return true;
       if (currentFilter === 'critical') return p.recs.some(r => r.critical);
+      if (currentFilter === 'needs_audit') return p.recs.some(r => r.auditTag === 'needs_audit');
+      if (currentFilter === 'offboarding') return p.offboarding;
       return p.recs.some(r => r.status === currentFilter || (currentFilter === 'pending' && !r.status));
     });
 
@@ -383,19 +448,30 @@
       const pct = total ? Math.round(done/total*100) : 0;
 
       const card = document.createElement('div');
-      card.className = 'prop-card';
+      card.className = 'prop-card' + (p.offboarding ? ' offboarding' : '');
+      const offboardBanner = p.offboarding === true ? `
+        <div class="offboarding-banner">
+          <span class="offboarding-icon">↘</span>
+          <div class="offboarding-text"><strong>OFFBOARDING</strong> — owner blocked calendar as of ${p.offboardDate}. Excluded from pricing recommendations. PriceLabs occupancy is FALSE signal here.</div>
+        </div>
+      ` : (p.offboarding === 'unverified' ? `
+        <div class="offboarding-banner" style="background: linear-gradient(90deg, rgba(239,68,68,0.18), rgba(239,68,68,0.06)); border-color: var(--critical);">
+          <span class="offboarding-icon">⚠</span>
+          <div class="offboarding-text" style="color: var(--critical);"><strong>OFFBOARDING STATUS UNVERIFIED</strong> — historical ledger says ${p.offboardDate}. Requires audit before any pricing action.</div>
+        </div>
+      ` : '');
       card.innerHTML = `
         <div class="prop-header" onclick="this.parentElement.classList.toggle('open')">
-          <div class="prop-grade grade-${p.grade}">${p.grade}</div>
+          <div class="prop-grade grade-${p.grade}">${p.score === null ? '—' : p.grade}</div>
           <div class="prop-info">
-            <div class="pid">${p.code}</div>
+            <div class="pid">${p.code}${p.offboarding ? ' · OFFBOARDING' : ''}</div>
             <div class="name">${p.name}</div>
             <div class="meta">
               <span>${p.market}</span>
               <span>${p.bedrooms}BR</span>
               <span>$${p.basePrice}/night</span>
               <span>occ ${p.occ30}% (mkt ${p.marketOcc}%)</span>
-              <span>Score ${p.score}/100</span>
+              <span>${p.score === null ? 'Score N/A (offboarding)' : 'Score ' + p.score + '/100'}</span>
             </div>
           </div>
           <div class="prop-progress">
@@ -404,6 +480,7 @@
           </div>
           <div class="prop-toggle">›</div>
         </div>
+        ${offboardBanner}
         <div class="recs-block">
           ${p.recs.map(r => renderRec(r)).join('')}
         </div>
@@ -414,11 +491,14 @@
 
   function renderRec(r) {
     const isResolved = r.status === 'resolved';
+    const isProgress = r.status === 'progress';
+    const auditTagBadge = r.auditTag ? `<span class="audit-badge ${r.auditTag}">${r.auditTag.replace('_', ' ')}${r.auditAssignee ? ' · ' + r.auditAssignee : ''}</span>` : '';
+    const blockedNote = r.blockedBy ? `<div class="blocked-by">🚫 <strong>Blocked by ${r.blockedBy}</strong> — resolve the audit first before acting on this rec.</div>` : '';
     return `
       <div class="rec-item ${isResolved ? 'resolved' : ''}">
         <div class="rec-top">
           <div>
-            <div class="rec-cat">${r.cat}${r.critical ? ' · ⚠ CRITICAL' : ''}</div>
+            <div class="rec-cat">${r.cat}${r.critical ? ' · ⚠ CRITICAL' : ''} ${auditTagBadge}</div>
             <div class="rec-title">${r.title}</div>
           </div>
           <div class="rec-conf">conf <strong>${r.conf}</strong></div>
@@ -429,10 +509,32 @@
           <div class="goal"><div class="goal-tier awesome">★ AWESOME</div><div class="goal-val">${r.goalAwesome || '—'}</div><div class="goal-desc">target</div></div>
           <div class="goal"><div class="goal-tier amazing">✦ AMAZING</div><div class="goal-val">${r.goalAmazing || '—'}</div><div class="goal-desc">stretch</div></div>
         </div>
+        ${blockedNote}
+        <div class="audit-tag-row">
+          <span class="audit-tag-label">Audit:</span>
+          <select class="audit-tag-select" onchange="setAuditTag('${r.id}', this.value)">
+            <option value="" ${!r.auditTag ? 'selected' : ''}>— none —</option>
+            <option value="needs_audit" ${r.auditTag === 'needs_audit' ? 'selected' : ''}>⚠ needs audit</option>
+            <option value="sent_to_audit" ${r.auditTag === 'sent_to_audit' ? 'selected' : ''}>→ sent to audit</option>
+            <option value="audit_complete" ${r.auditTag === 'audit_complete' ? 'selected' : ''}>✓ audit complete</option>
+          </select>
+          <input type="text" class="audit-assignee" placeholder="Assignee" value="${r.auditAssignee || ''}" oninput="setAuditAssignee('${r.id}', this.value)" />
+          ${r.auditTag === 'needs_audit' ? '<span style="color: var(--warning); font-size: 11px;">→ assign someone</span>' : ''}
+        </div>
         ${isResolved ? `
-          <div class="resolved-stamp">✓ <strong>Resolved</strong> by <span class="by">${r.resolvedBy || '—'}</span> at ${r.resolvedAt || '—'}<br>${r.resolvedComment ? '<em>"' + r.resolvedComment + '"</em>' : ''}</div>
+          <div class="resolved-stamp">✓ <strong>Resolved</strong> by <span class="by">${r.resolvedBy || '—'}</span> at ${r.resolvedAt || '—'}${r.resolvedComment ? '<br><em>"' + r.resolvedComment + '"</em>' : ''}</div>
           <div class="rec-resolve">
             <button onclick="setRecStatus('${r.id}','pending')">↺ Reopen</button>
+          </div>
+        ` : isProgress ? `
+          <div class="resolved-stamp" style="background: rgba(59,130,246,0.10); border-color: var(--info);"><span style="color: var(--info);">▸ <strong>In progress</strong></span> by <span class="by">${r.resolvedBy || '—'}</span>${r.resolvedComment ? '<br><em>"' + r.resolvedComment + '"</em>' : ''}</div>
+          <div class="rec-resolve">
+            <select onchange="setRecStatus('${r.id}', this.value); this.value=''">
+              <option value="">Update…</option>
+              <option value="resolved">✓ Mark resolved</option>
+              <option value="pending">↺ Reopen pending</option>
+            </select>
+            <input type="text" class="comment" data-comment="${r.id}" placeholder="Comment (saved on Resolve)" />
           </div>
         ` : `
           <div class="rec-resolve">
