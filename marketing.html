@@ -1,115 +1,282 @@
 <!doctype html>
 <html lang="en">
 <head>
-
-  <meta name="robots" content="noindex,nofollow">  <meta charset="utf-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Vesara — Every listing. Every metric. Every dollar. | STR Listing Optimizer + Profitability Platform</title>
-  <meta name="description" content="Vesara is the only listing intelligence platform that scores 22 dimensions including profitability. Built by operators, for operators. 14-day free trial, no credit card.">
-    <meta property="og:title" content="Vesara — Every listing. Every metric. Every dollar.">
-  <meta property="og:description" content="The only short-term-rental listing optimizer that grades 22 dimensions including profitability. 14-day free trial, no credit card.">
+  <title>Vesara — Every listing. Every metric. Every dollar.</title>
+  <meta name="description" content="Vesara is the only short-term rental intelligence platform that scores 22 dimensions including profitability. Built by an operator who lives in this business daily.">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#050505">
+
+  <link rel="icon" type="image/svg+xml" href="vesara-logo-mark-accent.svg">
+  <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <!-- Canonical + social -->
+  <link rel="canonical" href="https://marinatvere73.github.io/klendric-demo/marketing.html">
+  <meta property="og:title" content="Vesara — Every listing. Every metric. Every dollar.">
+  <meta property="og:description" content="The AI Asset Manager for vacation rentals. 22-dimension scoring, profit impact in dollars, owner portal that locks them in.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://marinatvere73.github.io/klendric-demo/marketing.html">
+  <meta property="og:image" content="https://marinatvere73.github.io/klendric-demo/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Vesara — Every listing. Every metric. Every dollar.">
+  <meta name="twitter:description" content="The AI Asset Manager for vacation rentals.">
+  <meta name="twitter:image" content="https://marinatvere73.github.io/klendric-demo/og-image.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: { extend: {
-        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
-        colors: {
-          ink: { 950: '#0a0a0f', 900: '#101018', 800: '#1a1a26' },
-          accent: { 500: '#7c3aed', 400: '#a78bfa', 300: '#c4b5fd' },
-          gold: { 500: '#facc15', 600: '#eab308' },
-        }
-      } }
-    };
-  </script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="design-system.css">
   <style>
-    body { font-family: 'Inter', system-ui, sans-serif; }
-    .gradient-text { background: linear-gradient(135deg, #a78bfa 0%, #c4b5fd 50%, #facc15 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .gradient-bg { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); }
-    .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-    .grade-A { background: #10b981; }
-    .grade-B { background: #3b82f6; }
-    .grade-C { background: #eab308; }
-    .grade-D { background: #f97316; }
-    .grade-F { background: #ef4444; }
+    /* Marketing-page specific extensions */
+    .pitch-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
+      gap: var(--s-7);
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .pitch-grid { grid-template-columns: 1fr; gap: var(--s-6); }
+    }
+    .pitch-card {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--r-xl);
+      padding: var(--s-6);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+    .pitch-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(120% 80% at 100% 0%, rgba(16,185,129,0.10), transparent 60%);
+      pointer-events: none;
+    }
+    .pitch-card-head {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: var(--s-4); position: relative;
+    }
+    .pitch-score-num {
+      font-size: 56px; font-weight: 700; letter-spacing: -0.03em; line-height: 1;
+      background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .pitch-score-num small { font-size: 22px; color: var(--text-tertiary); -webkit-text-fill-color: var(--text-tertiary); }
+    .pitch-grade {
+      display: inline-block; margin-top: 4px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--grade-b);
+    }
+    .dim-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-2);
+      margin-bottom: var(--s-4); position: relative;
+    }
+    .dim-cell { text-align: center; }
+    .dim-letter {
+      display: block; padding: 8px 0; border-radius: var(--r-sm);
+      font-size: 12px; font-weight: 700; color: #000;
+    }
+    .dim-letter.a { background: var(--grade-a); }
+    .dim-letter.b { background: var(--grade-b); color: #fff; }
+    .dim-letter.c { background: var(--grade-c); }
+    .dim-letter.d { background: var(--grade-d); color: #fff; }
+    .dim-letter.f { background: var(--grade-f); color: #fff; }
+    .dim-label {
+      display: block; margin-top: 4px;
+      font-size: 10px; color: var(--text-tertiary); letter-spacing: 0.04em;
+    }
+    .pitch-pl {
+      border-top: 1px solid var(--border); padding-top: var(--s-4);
+      position: relative;
+    }
+    .pitch-pl-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: var(--s-2);
+    }
+    .pitch-pl-num {
+      font-size: 28px; font-weight: 700; color: var(--accent);
+      letter-spacing: -0.02em; font-family: var(--font-sans);
+      font-feature-settings: 'tnum';
+    }
+    .pitch-pl-meta {
+      display: flex; justify-content: space-between;
+      font-size: 12px; color: var(--text-tertiary);
+    }
+    .pitch-pl-meta .lift { color: var(--accent); }
+
+    /* Differentiator strip */
+    .diff-strip {
+      background: var(--bg-elevated);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: var(--s-9) 0;
+    }
+    .diff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); }
+    @media (max-width: 900px) { .diff-grid { grid-template-columns: 1fr; } }
+    .diff-card {
+      padding: var(--s-6);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+    }
+    .diff-num {
+      font-size: 40px; font-weight: 700; letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--accent) 0%, #34D399 50%, #6EE7B7 100%);
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: var(--s-3);
+      line-height: 1;
+    }
+    .diff-title { font-size: 16px; font-weight: 600; margin: 0 0 var(--s-2); }
+    .diff-desc { font-size: 14px; color: var(--text-secondary); margin: 0; line-height: 1.6; }
+
+    /* How it works */
+    .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-5); }
+    @media (max-width: 900px) { .steps-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .steps-grid { grid-template-columns: 1fr; } }
+    .step-num {
+      width: 36px; height: 36px;
+      border-radius: var(--r-md);
+      background: linear-gradient(135deg, var(--accent), #059669);
+      color: #000;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 14px;
+      box-shadow: 0 0 16px var(--accent-glow);
+      margin-bottom: var(--s-3);
+    }
+    .step-title { font-size: 16px; font-weight: 600; margin: 0 0 var(--s-2); letter-spacing: -0.01em; }
+    .step-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+
+    /* Pitch CTA section */
+    .cta-section {
+      padding: var(--s-9) 0;
+      text-align: center;
+    }
+    .cta-section h2 { margin: 0 0 var(--s-4); }
+    .cta-section p.lede { margin: 0 auto var(--s-6); max-width: 620px; }
+
+    /* Phases */
+    .phase-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); }
+    @media (max-width: 900px) { .phase-grid { grid-template-columns: 1fr; } }
+    .phase-card {
+      padding: var(--s-5);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+    }
+    .phase-card.active {
+      border-color: rgba(16,185,129,0.32);
+      background: linear-gradient(135deg, rgba(16,185,129,0.06), transparent);
+    }
+    .phase-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: var(--s-3);
+    }
+    .phase-eyebrow.live { color: var(--accent); }
+    .phase-eyebrow.next { color: var(--info); }
+    .phase-eyebrow.future { color: var(--text-tertiary); }
+    .phase-title { font-size: 18px; font-weight: 600; margin: 0 0 var(--s-3); }
+    .phase-list {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: var(--s-2);
+    }
+    .phase-list li {
+      font-size: 13px; color: var(--text-secondary); line-height: 1.5;
+      padding-left: 18px; position: relative;
+    }
+    .phase-list li::before {
+      content: '→'; position: absolute; left: 0; color: var(--accent);
+    }
+    .phase-list li.done::before { content: '✓'; color: var(--accent); }
   </style>
 </head>
-<body class="bg-ink-950 text-slate-100 antialiased">
+<body>
+  <div class="progress-bar" id="progressBar"></div>
 
-  <!-- Hero -->
-  <section class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-accent-500/20 via-ink-950 to-gold-500/10"></div>
-    <div class="relative max-w-7xl mx-auto px-6 pt-12 pb-20">
-      <nav class="flex items-center justify-between mb-20">
-        <div class="flex items-center gap-2">
-          <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center font-black text-xl">N</div>
-          <span class="font-bold text-xl">Vesara</span>
-        </div>
-        <div class="flex items-center gap-6 text-sm text-slate-400">
-          <a href="#features" class="hover:text-white">Features</a>
-          <a href="#pricing" class="hover:text-white">Pricing</a>
-          <a href="#how" class="hover:text-white">How it works</a>
-          <a href="#trial" class="px-4 py-2 gradient-bg rounded-lg text-white font-semibold hover:opacity-90">Start free</a>
-        </div>
-      </nav>
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand" aria-label="Vesara — home">
+        <svg class="brand-mark-svg" width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/>
+          <path d="M32 20 L44 40 H20 Z" fill="#10B981"/>
+        </svg>
+        <span>Vesara</span>
+      </a>
+      <div class="nav-links">
+        <a href="#how" class="nav-link">How it works</a>
+        <a href="#roadmap" class="nav-link">Roadmap</a>
+        <a href="index.html" class="nav-link">Demos</a>
+        <a href="mailto:marina@vesara.ai?subject=Founders%27%20Flock" class="btn btn-accent">Join Founders' Flock <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+  </nav>
 
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass text-xs font-medium text-accent-300 mb-6">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            Built by operators. For operators.
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-inner" style="text-align:left; max-width:none;">
+        <div class="pitch-grid">
+          <div>
+            <div class="hero-badge">
+              <span class="dot"></span>
+              <span>Built by an operator who runs <span class="mono" style="color:var(--text)">28 properties</span> daily</span>
+            </div>
+            <h1 class="display-2" style="margin:0 0 var(--s-5)">
+              <span class="hero-h1-grad">Your scores look great.</span><br>
+              <span class="hero-h1-accent">Are you actually making money?</span>
+            </h1>
+            <p class="lede" style="max-width: 560px; margin: 0 0 var(--s-6);">
+              Vesara is the only short-term rental intelligence platform that scores
+              <strong style="color:var(--text)">22 dimensions including your actual profit margin</strong>
+              &mdash; not just what your listing looks like.
+            </p>
+            <div class="hero-cta" style="justify-content:flex-start;">
+              <a href="mailto:marina@vesara.ai?subject=Founders%27%20Flock%20%E2%80%94%20locking%20in%20%2499%2Fmo" class="btn btn-accent btn-lg">
+                Join the Founders' Flock <span class="arrow">&rarr;</span>
+              </a>
+              <a href="index.html#demos" class="btn btn-ghost btn-lg">See live demos</a>
+            </div>
+            <p class="text-tertiary" style="font-size:13px; margin-top: var(--s-4);">
+              First 100 operators &middot; <strong style="color:var(--text)">$99/mo locked forever</strong> &middot; cancel anytime
+            </p>
           </div>
-          <h1 class="text-5xl lg:text-6xl font-black tracking-tight leading-[1.05] mb-6">
-            Your listing scores look great.<br>
-            <span class="gradient-text">Are you actually making money?</span>
-          </h1>
-          <p class="text-xl text-slate-400 mb-8 leading-relaxed">
-            Vesara is the only short-term-rental listing optimizer that grades <strong class="text-white">22 dimensions including your actual profit margin</strong> — not just what your listing looks like.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-3 mb-6">
-            <a href="#trial" class="px-6 py-4 gradient-bg rounded-xl font-bold text-lg hover:opacity-90 transition text-center">
-              Start 14-day free trial →
-            </a>
-            <a href="#demo" class="px-6 py-4 glass rounded-xl font-semibold text-lg hover:bg-white/10 transition text-center">
-              Watch 90-second demo
-            </a>
-          </div>
-          <p class="text-sm text-slate-500">No credit card. 1 listing free for 14 days. Cancel anytime.</p>
-        </div>
 
-        <!-- Hero illustration: mock dashboard card -->
-        <div class="relative">
-          <div class="absolute inset-0 bg-gradient-to-br from-accent-500/30 to-gold-500/20 blur-3xl"></div>
-          <div class="relative glass rounded-2xl p-6 shadow-2xl">
-            <div class="flex items-start justify-between mb-4">
+          <!-- Hero pitch card -->
+          <div class="pitch-card">
+            <div class="pitch-card-head">
               <div>
-                <div class="text-xs uppercase tracking-wider text-slate-500">San Diego</div>
-                <div class="font-bold text-lg">39th-Floor Penthouse · Gaslamp</div>
-                <div class="text-sm text-slate-400">San Diego, CA</div>
+                <div class="eyebrow" style="margin-bottom:var(--s-2)">San Diego</div>
+                <h3 class="h3" style="margin:0">39th-Floor Penthouse</h3>
+                <div class="text-tertiary" style="font-size:13px;">Gaslamp Quarter</div>
               </div>
-              <div class="text-right">
-                <div class="text-xs uppercase tracking-wider text-slate-500 mb-1">Vesara Score</div>
-                <div class="text-5xl font-black gradient-text leading-none">80<span class="text-2xl text-slate-400">/100</span></div>
-                <div class="text-xs font-bold text-blue-400 mt-1">Grade B</div>
+              <div style="text-align:right;">
+                <div class="eyebrow" style="margin-bottom:var(--s-2)">Vesara Score</div>
+                <div class="pitch-score-num">80<small>/100</small></div>
+                <div class="pitch-grade">Grade B</div>
               </div>
             </div>
-            <div class="grid grid-cols-4 gap-2 mb-4">
-              <div class="text-center"><div class="grade-A text-white text-xs font-bold py-2 rounded">A</div><div class="text-[10px] text-slate-500 mt-1">Photos</div></div>
-              <div class="text-center"><div class="grade-A text-white text-xs font-bold py-2 rounded">A</div><div class="text-[10px] text-slate-500 mt-1">Amenities</div></div>
-              <div class="text-center"><div class="grade-B text-white text-xs font-bold py-2 rounded">B</div><div class="text-[10px] text-slate-500 mt-1">Reviews</div></div>
-              <div class="text-center"><div class="grade-D text-white text-xs font-bold py-2 rounded">D</div><div class="text-[10px] text-slate-500 mt-1">Min Stay</div></div>
+            <div class="dim-grid">
+              <div class="dim-cell"><span class="dim-letter a">A</span><span class="dim-label">Photos</span></div>
+              <div class="dim-cell"><span class="dim-letter a">A</span><span class="dim-label">Amenities</span></div>
+              <div class="dim-cell"><span class="dim-letter b">B</span><span class="dim-label">Reviews</span></div>
+              <div class="dim-cell"><span class="dim-letter d">D</span><span class="dim-label">Min Stay</span></div>
             </div>
-            <div class="border-t border-white/10 pt-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-sm text-slate-400">2025 Net Profit</span>
-                <span class="text-2xl font-black text-emerald-400">$39,971</span>
+            <div class="pitch-pl">
+              <div class="pitch-pl-row">
+                <span class="text-secondary" style="font-size:13px;">Net contribution (TTM)</span>
+                <span class="pitch-pl-num">$39,971</span>
               </div>
-              <div class="flex items-center justify-between text-xs text-slate-500">
+              <div class="pitch-pl-meta">
                 <span>66.1% margin</span>
-                <span class="text-accent-400">+$2,400/mo if MIN NIGHTS fixed →</span>
+                <span class="lift">+$2,400/mo if MIN STAY fixed &rarr;</span>
               </div>
             </div>
           </div>
@@ -118,230 +285,245 @@
     </div>
   </section>
 
-  <!-- Differentiator strip -->
-  <section class="border-y border-white/10 bg-ink-900">
-    <div class="max-w-7xl mx-auto px-6 py-12">
-      <div class="text-center mb-8">
-        <p class="text-sm uppercase tracking-widest text-accent-400 mb-2">Why Vesara vs industry tools</p>
-        <h2 class="text-3xl font-bold">Most tools grade the listing. We grade the business.</h2>
+  <!-- PROOF STRIP -->
+  <section class="proof-strip">
+    <div class="proof-inner">
+      <div class="proof-text">
+        Built by an operator who runs <strong style="color:var(--text)">the actual business</strong> this serves &mdash; not a team that read about it.
       </div>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="glass rounded-xl p-6">
-          <div class="text-3xl font-black gradient-text mb-2">22</div>
-          <div class="font-semibold mb-1">Dimensions scored</div>
-          <p class="text-sm text-slate-400">We score booking settings, channel mix, profitability — things they can't see.</p>
+    </div>
+  </section>
+
+  <!-- DIFFERENTIATORS -->
+  <section class="diff-strip">
+    <div class="container">
+      <div class="sec-head">
+        <div class="eyebrow">Why Vesara vs everyone else</div>
+        <h2 class="h1">Most tools grade the listing. We grade the business.</h2>
+        <p>The competition tells you your photos are pretty. We tell you which fix earns the next dollar.</p>
+      </div>
+      <div class="diff-grid">
+        <div class="diff-card">
+          <div class="diff-num">22</div>
+          <h3 class="diff-title">Dimensions scored</h3>
+          <p class="diff-desc">Photos, copy, amenities, booking settings, channel mix, reviews, profitability &mdash; the things they can't see, all in one number.</p>
         </div>
-        <div class="glass rounded-xl p-6">
-          <div class="text-3xl font-black gradient-text mb-2">$ Impact</div>
-          <div class="font-semibold mb-1">on every fix</div>
-          <p class="text-sm text-slate-400">Every recommendation shows estimated revenue lift in dollars. Stop guessing which fix matters most.</p>
+        <div class="diff-card">
+          <div class="diff-num">$ Lift</div>
+          <h3 class="diff-title">on every recommendation</h3>
+          <p class="diff-desc">Every fix shows estimated revenue lift in dollars. Stop guessing which change matters most. Sort by impact, ship the top one.</p>
         </div>
-        <div class="glass rounded-xl p-6">
-          <div class="text-3xl font-black gradient-text mb-2">P&L</div>
-          <div class="font-semibold mb-1">Built into the score</div>
-          <p class="text-sm text-slate-400">Connect QuickBooks or enter expenses manually. See true net contribution per property — not just gross revenue.</p>
+        <div class="diff-card">
+          <div class="diff-num">P&amp;L</div>
+          <h3 class="diff-title">Built into the score</h3>
+          <p class="diff-desc">Connect QuickBooks or enter expenses manually. See true net contribution per property &mdash; not vanity gross revenue.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 3 features -->
-  <section id="features" class="max-w-7xl mx-auto px-6 py-20">
-    <div class="text-center mb-12">
-      <p class="text-sm uppercase tracking-widest text-accent-400 mb-2">What you get</p>
-      <h2 class="text-4xl font-bold">Three things no other tool does</h2>
-    </div>
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="glass rounded-2xl p-8 hover:bg-white/[.07] transition">
-        <div class="w-12 h-12 grade-A rounded-xl flex items-center justify-center mb-4 text-2xl">📊</div>
-        <h3 class="text-xl font-bold mb-2">Profit-Impact Estimator</h3>
-        <p class="text-slate-400 mb-4">Every recommendation comes with a dollar estimate. "Reduce min nights from 4 to 2 = +$2,400/mo." Real numbers, not vibes.</p>
-        <div class="text-xs text-accent-400 font-semibold">→ See exactly which fix to do first</div>
+  <!-- FEATURES (3 columns matching landing) -->
+  <section class="features section">
+    <div class="container">
+      <div class="sec-head">
+        <div class="eyebrow">What you get</div>
+        <h2 class="h1">Three things no other tool does.</h2>
+        <p>PriceLabs prices. AirDNA reports. We do everything in between &mdash; the part operators actually live in.</p>
       </div>
-      <div class="glass rounded-2xl p-8 hover:bg-white/[.07] transition">
-        <div class="w-12 h-12 grade-B rounded-xl flex items-center justify-center mb-4 text-2xl">💰</div>
-        <h3 class="text-xl font-bold mb-2">P&L per Property</h3>
-        <p class="text-slate-400 mb-4">Connect QuickBooks or enter rent + expenses manually. Net contribution + margin shown alongside your Vesara Score. The profitability score IS a dimension.</p>
-        <div class="text-xs text-accent-400 font-semibold">→ Stop optimizing for ADR alone</div>
-      </div>
-      <div class="glass rounded-2xl p-8 hover:bg-white/[.07] transition">
-        <div class="w-12 h-12 grade-C rounded-xl flex items-center justify-center mb-4 text-2xl">🔍</div>
-        <h3 class="text-xl font-bold mb-2">Hidden Profit Levers</h3>
-        <p class="text-slate-400 mb-4">We see what they can't: min nights killing weekend demand, cleaning fees scaring short stays, channel concentration risk, internal booking velocity.</p>
-        <div class="text-xs text-accent-400 font-semibold">→ The 5 dimensions that move the needle</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- How it works -->
-  <section id="how" class="bg-ink-900 border-y border-white/10">
-    <div class="max-w-7xl mx-auto px-6 py-20">
-      <div class="text-center mb-12">
-        <p class="text-sm uppercase tracking-widest text-accent-400 mb-2">How it works</p>
-        <h2 class="text-4xl font-bold">Score in 5 minutes. Profit lift in 30 days.</h2>
-      </div>
-      <div class="grid md:grid-cols-4 gap-6">
-        <div>
-          <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center font-black mb-4">1</div>
-          <h3 class="font-bold mb-1">Paste a URL</h3>
-          <p class="text-sm text-slate-400">Or connect Guesty, the legacy industry tool, Hostaway. We pull listing data, photos, reviews, and pricing automatically.</p>
+      <div class="grid grid-3">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16l4-8 4 4 6-10"/></svg>
+          </div>
+          <h3 class="feature-title">Profit-Impact Estimator</h3>
+          <p class="feature-desc">Every recommendation comes with a dollar estimate. <em class="serif">"Reduce min nights from 4 to 2 = +$2,400/mo."</em> Real numbers, not vibes.</p>
         </div>
-        <div>
-          <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center font-black mb-4">2</div>
-          <h3 class="font-bold mb-1">Get your Vesara Score</h3>
-          <p class="text-sm text-slate-400">22 dimensions scored A through F. Letter grade per dimension + overall numeric score 0-100.</p>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 6l3 4M16 6l-3 4M14 14l3 3"/></svg>
+          </div>
+          <h3 class="feature-title">P&amp;L per Property</h3>
+          <p class="feature-desc">Connect QuickBooks or enter rent + expenses manually. Net contribution + margin shown alongside your Vesara Score. Profitability IS a dimension.</p>
         </div>
-        <div>
-          <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center font-black mb-4">3</div>
-          <h3 class="font-bold mb-1">Add your P&L</h3>
-          <p class="text-sm text-slate-400">QuickBooks integration or manual entry. Now your score reflects actual profitability — not just listing aesthetics.</p>
-        </div>
-        <div>
-          <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center font-black mb-4">4</div>
-          <h3 class="font-bold mb-1">Apply fixes, watch revenue</h3>
-          <p class="text-sm text-slate-400">Each fix has a dollar estimate. AI-rewritten descriptions and titles ready to copy-paste. Track score history weekly.</p>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <h3 class="feature-title">Hidden Profit Levers</h3>
+          <p class="feature-desc">We see what they can't: min nights killing weekend demand, cleaning fees scaring short stays, channel concentration risk, internal booking velocity.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Pricing -->
-  <section id="pricing" class="max-w-7xl mx-auto px-6 py-20">
-    <div class="text-center mb-12">
-      <p class="text-sm uppercase tracking-widest text-accent-400 mb-2">Pricing</p>
-      <h2 class="text-4xl font-bold mb-2">Try it free for 14 days. No card.</h2>
-      <p class="text-slate-400">Cancel anytime. Annual plans save 20%.</p>
-    </div>
-    <div class="grid md:grid-cols-4 gap-6">
-      <div class="glass rounded-2xl p-6 flex flex-col">
-        <div class="font-bold mb-1">Trial</div>
-        <div class="text-3xl font-black mb-1">$0</div>
-        <div class="text-xs text-slate-500 mb-4">14 days · 1 listing</div>
-        <ul class="text-sm space-y-2 text-slate-300 mb-6 flex-1">
-          <li>✓ Full Vesara scoring</li>
-          <li>✓ P&L manual entry</li>
-          <li>✓ Top performer comp set</li>
-          <li>✗ QuickBooks integration</li>
-        </ul>
-        <a href="#trial" class="text-center py-2 glass rounded-lg font-semibold hover:bg-white/10">Start free</a>
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how" style="padding-top:0">
+    <div class="container">
+      <div class="sec-head">
+        <div class="eyebrow">How it works</div>
+        <h2 class="h1">Score in 5 minutes. Profit lift in 30 days.</h2>
+        <p>Drop in a URL. Get your scorecard. Apply the highest-impact fix first. Track the lift weekly.</p>
       </div>
-      <div class="glass rounded-2xl p-6 flex flex-col">
-        <div class="font-bold mb-1">Solo Host</div>
-        <div class="text-3xl font-black mb-1">$39<span class="text-base text-slate-500">/mo</span></div>
-        <div class="text-xs text-slate-500 mb-4">Up to 5 listings</div>
-        <ul class="text-sm space-y-2 text-slate-300 mb-6 flex-1">
-          <li>✓ Everything in Trial</li>
-          <li>✓ Unlimited re-runs</li>
-          <li>✓ PDF exports</li>
-          <li>✗ QuickBooks integration</li>
-        </ul>
-        <a href="#trial" class="text-center py-2 glass rounded-lg font-semibold hover:bg-white/10">Start free trial</a>
+      <div class="steps-grid">
+        <div>
+          <div class="step-num">1</div>
+          <h3 class="step-title">Paste a URL</h3>
+          <p class="step-desc">Or connect Guesty, Hostaway, the legacy industry tool. We pull listing data, photos, reviews, and pricing automatically.</p>
+        </div>
+        <div>
+          <div class="step-num">2</div>
+          <h3 class="step-title">Get your Vesara Score</h3>
+          <p class="step-desc">22 dimensions scored A through F. Letter grade per dimension + overall score 0&ndash;100.</p>
+        </div>
+        <div>
+          <div class="step-num">3</div>
+          <h3 class="step-title">Add your P&amp;L</h3>
+          <p class="step-desc">QuickBooks integration or manual entry. Now your score reflects actual profitability &mdash; not just listing aesthetics.</p>
+        </div>
+        <div>
+          <div class="step-num">4</div>
+          <h3 class="step-title">Apply fixes, watch revenue</h3>
+          <p class="step-desc">Each fix has a dollar estimate. AI-rewritten descriptions and titles ready to copy-paste. Track score history weekly.</p>
+        </div>
       </div>
-      <div class="rounded-2xl p-6 flex flex-col bg-gradient-to-br from-accent-500/30 to-gold-500/20 border-2 border-accent-400">
-        <div class="font-bold mb-1 flex items-center gap-2">Growing Operator <span class="text-[10px] px-2 py-0.5 bg-gold-500 text-ink-950 rounded-full font-black">MOST POPULAR</span></div>
-        <div class="text-3xl font-black mb-1">$99<span class="text-base text-slate-300">/mo</span></div>
-        <div class="text-xs text-slate-300 mb-4">Up to 25 listings</div>
-        <ul class="text-sm space-y-2 text-white mb-6 flex-1">
-          <li>✓ Everything in Solo</li>
-          <li>✓ <strong>QuickBooks integration</strong></li>
-          <li>✓ <strong>Profit-Impact Estimator</strong></li>
-          <li>✓ Owner sub-views (PMs)</li>
-          <li>✓ Email + Slack alerts</li>
-        </ul>
-        <a href="#trial" class="text-center py-2 bg-white text-ink-950 rounded-lg font-bold hover:bg-slate-100">Start free trial</a>
-      </div>
-      <div class="glass rounded-2xl p-6 flex flex-col">
-        <div class="font-bold mb-1">Portfolio</div>
-        <div class="text-3xl font-black mb-1">$249<span class="text-base text-slate-500">/mo</span></div>
-        <div class="text-xs text-slate-500 mb-4">Up to 100 listings</div>
-        <ul class="text-sm space-y-2 text-slate-300 mb-6 flex-1">
-          <li>✓ Everything in Growing</li>
-          <li>✓ <strong>Search ranking tracker</strong></li>
-          <li>✓ Priority support</li>
-          <li>✓ White-label exports</li>
-        </ul>
-        <a href="#trial" class="text-center py-2 glass rounded-lg font-semibold hover:bg-white/10">Start free trial</a>
-      </div>
-    </div>
-    <div class="text-center mt-8 text-sm text-slate-500">
-      Enterprise (100+ listings, white-label, API access) · <a href="mailto:hello@lussostay.com" class="text-accent-400 hover:underline">Contact us</a>
     </div>
   </section>
-  <!-- Roadmap / What's Coming -->
-  <section id="roadmap" class="bg-ink-900 border-y border-white/10">
-    <div class="max-w-7xl mx-auto px-6 py-20">
-      <div class="text-center mb-12">
-        <p class="text-sm uppercase tracking-widest text-accent-400 mb-2">Roadmap</p>
-        <h2 class="text-4xl font-bold mb-2">What we're building next</h2>
-        <p class="text-slate-400 max-w-2xl mx-auto">Our 12-month roadmap. Customers shape priority — vote in your dashboard.</p>
+
+  <!-- ROADMAP -->
+  <section class="roadmap" id="roadmap">
+    <div class="container">
+      <div class="sec-head">
+        <div class="eyebrow">Roadmap</div>
+        <h2 class="h1">What we're building next.</h2>
+        <p>The 12-feature operator OS. Customers shape priority &mdash; the loudest pain wins.</p>
       </div>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="glass rounded-2xl p-6">
-          <div class="text-xs uppercase tracking-wider text-emerald-400 mb-2">Q3 2026 — Shipping Now</div>
-          <h3 class="font-bold text-lg mb-3">Listing intelligence + profitability</h3>
-          <ul class="text-sm space-y-2 text-slate-300">
-            <li>✓ 22-dimension Vesara scoring</li>
-            <li>✓ Per-property P&amp;L module</li>
-            <li>✓ AI-rewritten title + description with copy-to-clipboard</li>
-            <li>✓ Owner view + PM view + PDF export</li>
-            <li>✓ QuickBooks Online integration</li>
+      <div class="phase-grid">
+        <div class="phase-card active">
+          <div class="phase-eyebrow live">Phase 1 &middot; Live now</div>
+          <h3 class="phase-title">Listing intelligence + profitability</h3>
+          <ul class="phase-list">
+            <li class="done">22-dimension Vesara scoring</li>
+            <li class="done">Per-property P&amp;L module</li>
+            <li class="done">AI-rewritten title + description</li>
+            <li class="done">Owner view + PM view + PDF export</li>
+            <li class="done">QuickBooks Online integration</li>
           </ul>
         </div>
-        <div class="glass rounded-2xl p-6 border border-accent-400/40">
-          <div class="text-xs uppercase tracking-wider text-accent-400 mb-2">Q4 2026 — Next 90 Days</div>
-          <h3 class="font-bold text-lg mb-3">Comparison + benchmarking</h3>
-          <ul class="text-sm space-y-2 text-slate-300">
-            <li>→ Top performer comparison vs your local market</li>
-            <li>→ Industry-tool comparison (we'll show how we score vs other listing tools)</li>
-            <li>→ Profit-impact regression model trained on real lift data</li>
-            <li>→ Slack + email notifications on score changes</li>
-            <li>→ Weekly portfolio digest</li>
+        <div class="phase-card">
+          <div class="phase-eyebrow next">Phase 2 &middot; Next 90 days</div>
+          <h3 class="phase-title">Comparison + benchmarking</h3>
+          <ul class="phase-list">
+            <li>Top performer comparison vs your local market</li>
+            <li>Industry-tool comparison (we'll show how we score vs other listing tools)</li>
+            <li>Profit-impact regression model trained on real lift data</li>
+            <li>Slack + email notifications on score changes</li>
+            <li>Weekly portfolio digest</li>
           </ul>
         </div>
-        <div class="glass rounded-2xl p-6">
-          <div class="text-xs uppercase tracking-wider text-gold-500 mb-2">2027 — Strategic</div>
-          <h3 class="font-bold text-lg mb-3">Operator OS</h3>
-          <ul class="text-sm space-y-2 text-slate-300">
-            <li>→ Mobile app (iOS + Android)</li>
-            <li>→ White-label for property managers</li>
-            <li>→ Owner sub-accounts (read-only homeowner view, sharable link)</li>
-            <li>→ AI agent that auto-applies low-risk fixes (with your approval)</li>
-            <li>→ Open API for custom integrations</li>
-            <li>→ Industry-tool migration: 1-click import from any incumbent platform</li>
+        <div class="phase-card">
+          <div class="phase-eyebrow future">Phase 3 &middot; H2 2026</div>
+          <h3 class="phase-title">The Operator OS</h3>
+          <ul class="phase-list">
+            <li>Mobile app (iOS + Android)</li>
+            <li>White-label for property managers</li>
+            <li>Owner sub-accounts (sharable read-only links)</li>
+            <li>AI agent that auto-applies low-risk fixes (with approval)</li>
+            <li>Open API for custom integrations</li>
           </ul>
         </div>
       </div>
-      <div class="text-center mt-8 text-sm text-slate-500">
-        We're building the operator-grade intelligence layer. Comparisons to other tools come <span class="text-accent-400">later</span>, when we have the receipts. For now: see your score, fix what hurts most, watch revenue climb.
-      </div>
     </div>
   </section>
 
-
-  <!-- Final CTA -->
-  <section id="trial" class="max-w-4xl mx-auto px-6 py-20 text-center">
-    <h2 class="text-4xl lg:text-5xl font-black mb-4">Stop guessing what's hurting your listing.</h2>
-    <p class="text-xl text-slate-400 mb-8">Get your Vesara Score in 5 minutes. See your true profit picture in 30. Decide what to fix first based on dollars — not opinions.</p>
-    <a href="#" class="inline-block px-8 py-5 gradient-bg rounded-xl font-bold text-xl hover:opacity-90 transition">
-      Start your 14-day free trial →
-    </a>
-    <p class="text-sm text-slate-500 mt-4">No credit card. No commitment. Just bring 1 listing.</p>
+  <!-- FINAL CTA -->
+  <section class="cta-section">
+    <div class="container" style="max-width: 760px;">
+      <div class="eyebrow" style="margin-bottom:var(--s-3)">Founders' Flock</div>
+      <h2 class="display-2">
+        <span class="hero-h1-grad">Stop guessing what's hurting your listing.</span>
+      </h2>
+      <p class="lede">
+        Get your Vesara Score in 5 minutes. See your true profit picture in 30. Decide what to fix first based on dollars &mdash; not opinions.
+      </p>
+      <div class="hero-cta">
+        <a href="mailto:marina@vesara.ai?subject=Founders%27%20Flock%20%E2%80%94%20locking%20in%20%2499%2Fmo&body=Hi%20Marina%2C%0A%0AI%27d%20like%20to%20join%20the%20Founders%27%20Flock.%20Here%27s%20what%20I%20run%3A%0A%0A-%20Properties%3A%20%0A-%20Markets%3A%20%0A-%20Current%20PMS%3A%20%0A%0AThanks%21" class="btn btn-accent btn-lg">
+          Join Founders' Flock <span class="arrow">&rarr;</span>
+        </a>
+        <a href="index.html#demos" class="btn btn-ghost btn-lg">See the live demos first</a>
+      </div>
+      <p class="text-tertiary" style="font-size:13px; margin-top: var(--s-4);">
+        First 100 operators only &middot; $99/mo locked forever &middot; goes to $199/mo after
+      </p>
+    </div>
   </section>
 
-  <footer class="border-t border-white/10 py-8">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
-      <div class="flex items-center gap-2">
-        <div class="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center font-black">N</div>
-        <span class="font-semibold text-slate-300">Vesara</span>
-        <span>· Built by LussoStay · operator-led</span>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-cols">
+        <div class="footer-brand">
+          <a href="index.html" class="brand" aria-label="Vesara — home">
+            <svg class="brand-mark-svg" width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
+              <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/>
+              <path d="M32 20 L44 40 H20 Z" fill="#10B981"/>
+            </svg>
+            <span>Vesara</span>
+          </a>
+          <p>The AI Asset Manager for vacation rentals. A LussoStay venture &mdash; built by operators, for operators.</p>
+          <div style="margin-top:var(--s-4)">
+            <span class="founders-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>
+              Founders' Flock &middot; first 100 @ $99/mo locked forever
+            </span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="index.html#demos">Demos</a></li>
+            <li><a href="index.html#product">Features</a></li>
+            <li><a href="#roadmap">Roadmap</a></li>
+            <li><a href="#how">How it works</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Demos</h4>
+          <ul>
+            <li><a href="runs/2026-05-03/">Portfolio</a></li>
+            <li><a href="runs/2026-05-03/property/RID3403.html">Top Performer</a></li>
+            <li><a href="runs/2026-05-03/property/ALX2434.html">Delist Risk</a></li>
+            <li><a href="runs/demo-airbnb-1334271564949136409/">Airbnb URL Demo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="index.html">Landing</a></li>
+            <li><a href="mailto:marina@vesara.ai">marina@vesara.ai</a></li>
+            <li><a href="https://github.com/marinatvere73/klendric-demo" target="_blank" rel="noopener">GitHub</a></li>
+          </ul>
+        </div>
       </div>
-      <div class="flex items-center gap-6">
-        <a href="#" class="hover:text-white">Privacy</a>
-        <a href="#" class="hover:text-white">Terms</a>
-        <a href="mailto:hello@lussostay.com" class="hover:text-white">hello@lussostay.com</a>
+      <div class="footer-bottom">
+        <div>&copy; <span id="yr"></span> Vesara &middot; A LussoStay venture &middot; Building in public</div>
+        <div class="mono" style="font-size:11px">v0.1 &middot; <span id="bt"></span></div>
       </div>
     </div>
   </footer>
 
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+    document.getElementById('bt').textContent = new Date().toISOString().slice(0,10);
+    const nav = document.getElementById('nav');
+    const progress = document.getElementById('progressBar');
+    function onScroll() {
+      const y = window.scrollY;
+      nav.classList.toggle('scrolled', y > 8);
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.width = Math.min(100, (y / h) * 100) + '%';
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  </script>
 </body>
 </html>
