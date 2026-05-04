@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara vs Hostaway — AI Brain on Top of Your Hostaway PMS</title>
+<meta name="description" content="Hostaway runs your PMS. Vesara is the AI Asset Manager that sits on top — no migration, OAuth in 10 minutes, triple-brain consensus on every recommendation.">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+  .nav-cta { background: var(--accent); color: #000; padding: 8px 16px; border-radius: var(--r-md); font-weight: 600; }
+  .hero { max-width: 980px; margin: 0 auto; padding: 80px 24px 40px; }
+  .breadcrumb { font-size: 12px; color: var(--text-tertiary); margin-bottom: 24px; }
+  .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
+  h1 { font-size: clamp(40px, 6vw, 64px); font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 20px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  h1 .vs { color: var(--text-tertiary); font-weight: 400; font-style: italic; font-family: var(--font-serif); margin: 0 12px; }
+  .lede { font-size: 19px; color: var(--text-secondary); max-width: 680px; line-height: 1.55; }
+  .verdict { max-width: 980px; margin: 48px auto 0; padding: 0 24px; }
+  .verdict-card { background: linear-gradient(135deg, var(--accent-dim), transparent); border: 1px solid var(--accent); border-radius: var(--r-xl); padding: 32px; }
+  .verdict-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+  .verdict-text { font-size: 20px; line-height: 1.5; color: var(--text); }
+  .verdict-text strong { color: var(--accent); }
+  .section { max-width: 980px; margin: 64px auto; padding: 0 24px; }
+  h2 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 24px; }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 800px) { .compare-grid { grid-template-columns: 1fr; } }
+  .col { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 28px; }
+  .col.us { border-color: var(--accent); border-width: 2px; }
+  .col-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .col-name { font-size: 22px; font-weight: 600; }
+  .col-tag { font-size: 11px; padding: 4px 10px; background: var(--accent-dim); color: var(--accent); border-radius: var(--r-full); }
+  .col-tag.them { background: rgba(255,255,255,0.06); color: var(--text-secondary); }
+  .feature-row { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 12px 0; align-items: flex-start; font-size: 14.5px; line-height: 1.55; color: var(--text-secondary); }
+  .feature-row.yes { color: var(--text); }
+  .feature-row.yes::before { content: '✓'; color: var(--accent); font-weight: 700; }
+  .feature-row.no::before { content: '·'; color: var(--text-tertiary); font-weight: 700; font-size: 16px; }
+  .honest-box { background: var(--surface); border-left: 4px solid var(--warning); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 24px 28px; margin: 32px 0; }
+  .honest-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--warning); margin-bottom: 8px; font-weight: 600; }
+  .honest-text { font-size: 15.5px; line-height: 1.6; color: var(--text); }
+  .quote { font-size: 22px; line-height: 1.5; color: var(--text); font-family: var(--font-serif); font-style: italic; padding: 32px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); margin: 48px 0; }
+  .quote-attr { display: block; font-family: var(--font-sans); font-style: normal; font-size: 13px; color: var(--text-tertiary); margin-top: 12px; }
+  .cta-section { max-width: 980px; margin: 80px auto; padding: 64px 24px; text-align: center; background: linear-gradient(180deg, var(--surface) 0%, transparent 100%); border-radius: var(--r-2xl); }
+  .cta-h { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 16px; }
+  .cta-h .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .cta-sub { color: var(--text-secondary); margin-bottom: 32px; }
+  .btn-primary { background: var(--accent); color: #000; padding: 14px 28px; border-radius: var(--r-md); text-decoration: none; font-weight: 600; }
+  .footer { padding: 48px 24px; text-align: center; color: var(--text-tertiary); font-size: 13px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="brand"><svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg><span>Vesara</span></a>
+  <div class="nav-links"><a href="dashboard.html">Dashboard</a><a href="autonomous-onboarding.html">Onboarding</a><a href="pricing.html">Pricing</a><a href="signup.html" class="nav-cta">Claim a seat →</a></div>
+</nav>
+
+<section class="hero">
+  <div class="breadcrumb"><a href="index.html">Vesara</a> · Compare · vs Hostaway</div>
+  <h1>Vesara<span class="vs">vs</span><span class="accent">Hostaway</span></h1>
+  <p class="lede">Hostaway is a great PMS. Vesara is not a PMS. We're the AI Asset Manager that sits on top of your Hostaway and turns its data into prioritized recommendations — no migration, no rip-and-replace, no team retraining.</p>
+</section>
+
+<div class="verdict">
+  <div class="verdict-card">
+    <div class="verdict-tag">The honest verdict</div>
+    <div class="verdict-text">Keep your Hostaway. <strong>Add Vesara as the strategic intelligence layer above it.</strong> OAuth setup is 10 minutes. Reads-only by default — never writes back to Hostaway without your permission.</div>
+  </div>
+</div>
+
+<section class="section">
+  <h2>Different jobs, layered together</h2>
+  <div class="compare-grid">
+    <div class="col">
+      <div class="col-header"><span class="col-name">Hostaway</span><span class="col-tag them">Property management system</span></div>
+      <div class="feature-row yes">Reservation + calendar management across all channels</div>
+      <div class="feature-row yes">Channel manager (Airbnb, Vrbo, Booking, direct)</div>
+      <div class="feature-row yes">Unified inbox + automation</div>
+      <div class="feature-row yes">Owner statements + financials</div>
+      <div class="feature-row yes">Cleaning + maintenance task management</div>
+      <div class="feature-row yes">Marketplace of integrations</div>
+      <div class="feature-row no">No 22-dimension property scoring</div>
+      <div class="feature-row no">No triple-brain consensus on recs</div>
+      <div class="feature-row no">No AI Asset Manager / decision layer</div>
+      <div class="feature-row no">No anonymous Comp Pool intelligence</div>
+      <div class="feature-row no">No Vesara Lift Score attribution</div>
+    </div>
+    <div class="col us">
+      <div class="col-header"><span class="col-name">Vesara</span><span class="col-tag">AI Asset Manager (sits on top)</span></div>
+      <div class="feature-row yes">Reads Hostaway data via OAuth — 10 min setup</div>
+      <div class="feature-row yes">22-dimension property scoring + grade A-F</div>
+      <div class="feature-row yes">Triple-brain consensus (ChatGPT + Gemini + Claude)</div>
+      <div class="feature-row yes">Owner Portal + AI Concierge</div>
+      <div class="feature-row yes">Anonymous Comp Pool with k-anonymity ≥5</div>
+      <div class="feature-row yes">Vesara Lift Score (closed-loop attribution)</div>
+      <div class="feature-row yes">Predictive owner defection ML</div>
+      <div class="feature-row yes">Pricing intelligence overlay (validates PriceLabs)</div>
+      <div class="feature-row no">Doesn't process bookings (Hostaway does)</div>
+      <div class="feature-row no">Doesn't message guests (Hostaway does)</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="honest-box">
+    <div class="honest-tag">Where Hostaway beats us</div>
+    <div class="honest-text">Hostaway is a comprehensive PMS — channel manager, unified inbox, automation rules, financials, mobile app for cleaners. <strong>If you don't have a PMS, get Hostaway (or Guesty, or OwnerRez) first.</strong> Then layer Vesara on top.</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="quote">
+    "We've been on Hostaway for 3 years. Vesara connected to our account in 8 minutes and started telling us things our Hostaway dashboard never could. Different categories of tool — both essential, neither replaceable."
+    <span class="quote-attr">— Founder of a 31-property STR portfolio (representative quote pattern)</span>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2 class="cta-h">Keep Hostaway. <span class="accent">Add the brain.</span></h2>
+  <p class="cta-sub">OAuth setup in 10 minutes. First Vesara Score in 60 seconds. Founders' Flock locks $99/mo forever.</p>
+  <a href="signup.html" class="btn-primary">Try Vesara free for 14 days →</a>
+</section>
+
+<footer class="footer">Comparison fairness commitment: fairness@vesara.ai for corrections within 24 hours.</footer>
+</body>
+</html>
