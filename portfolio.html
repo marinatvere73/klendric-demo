@@ -134,6 +134,22 @@
   .blocked-by { background: rgba(239,68,68,0.10); border: 1px solid var(--critical); border-radius: var(--r-md); padding: 8px 12px; margin-top: 8px; font-size: 12px; color: var(--critical); }
   .blocked-by strong { color: var(--critical); }
 
+  .hist-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 100; align-items: flex-start; justify-content: center; padding: 60px 20px; overflow-y: auto; }
+  .hist-content { background: var(--bg-elevated); border: 1px solid var(--border-strong); border-radius: var(--r-xl); max-width: 900px; width: 100%; padding: 32px; box-shadow: var(--shadow-lg); }
+  .hist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .hist-title { font-size: 22px; font-weight: 600; }
+  .hist-close { background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text); padding: 6px 14px; border-radius: var(--r-md); cursor: pointer; font-family: inherit; }
+  .hist-row { display: grid; grid-template-columns: 130px 80px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); align-items: flex-start; font-size: 14px; }
+  .hist-row:last-child { border-bottom: none; }
+  .hist-when { font-family: var(--font-mono); font-size: 12px; color: var(--text-tertiary); }
+  .hist-who { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 600; }
+  .hist-what { color: var(--text-secondary); line-height: 1.5; }
+  .hist-what strong { color: var(--text); }
+  .hist-status { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: var(--r-full); font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+  .hist-status.resolved { background: var(--accent-dim); color: var(--accent); }
+  .hist-status.progress { background: rgba(59,130,246,0.18); color: var(--info); }
+  .hist-status.pending { background: rgba(255,255,255,0.06); color: var(--text-secondary); }
+
   .footer { padding: 32px 24px; text-align: center; color: var(--text-tertiary); font-size: 12px; border-top: 1px solid var(--border); margin-top: 60px; }
 </style>
 </head>
@@ -150,7 +166,9 @@
     <button class="theme-toggle" onclick="toggleTheme()">
       <span id="themeLabel">Light mode</span>
     </button>
-    <button class="export-btn" onclick="exportData()">⇣ Export JSON</button>
+    <button class="export-btn" onclick="exportData()">⇣ JSON</button>
+    <button class="export-btn" onclick="exportCSV()">⇣ CSV</button>
+    <button class="export-btn" onclick="openHistory()">⌘ History</button>
   </div>
 </nav>
 
@@ -183,9 +201,20 @@
 <div class="properties" id="propertiesContainer"></div>
 
 <footer class="footer">
-  All changes auto-save to your browser (localStorage). Export JSON to share with team. Source data from Guesty + PriceLabs as of 2026-05-04.<br>
+  All changes auto-save to your browser (localStorage). Export JSON or CSV to share with team. Source data from Guesty + PriceLabs as of 2026-05-04.<br>
   Future: backend sync via Supabase so the whole team sees the same status in real-time.
 </footer>
+
+<!-- HISTORY MODAL -->
+<div class="hist-modal" id="historyModal" onclick="if(event.target===this) closeHistory()">
+  <div class="hist-content">
+    <div class="hist-header">
+      <div class="hist-title">Audit history · who resolved what when</div>
+      <button class="hist-close" onclick="closeHistory()">Close</button>
+    </div>
+    <div id="historyBody"></div>
+  </div>
+</div>
 
 <script>
   // ============================================================
@@ -204,15 +233,15 @@
       { id: 'WAT340-4', cat: 'channels', title: 'Activate Vrbo channel', desc: '0 Vrbo presence. Family-traveler channel for Reno/Tahoe market. OAuth via Hostaway/Guesty.', conf: 0.78, status: 'pending', goalMin: 'Listed live', goalAwesome: '+1 booking/mo', goalAmazing: '+$900/mo' },
       { id: 'WAT340-5', cat: 'pricing', title: 'Base price test: $255 → $246 (PriceLabs rec)', desc: 'PriceLabs recommends $246 vs current $255. Slight overshoot. 7-day test.', conf: 0.71, status: 'pending', goalMin: 'No occ drop', goalAwesome: '+1pt occ', goalAmazing: '+3pt occ + RevPAR↑' },
     ]},
-    { code: 'QUA1990', name: '4BR Reno · Fireplace · Near Downtown', market: 'Reno', bedrooms: 4, basePrice: 340, occ30: 17, marketOcc: 45, score: 52, recs: [
+    { code: 'QUA1990', name: '4BR Reno · Fireplace · Near Downtown', market: 'Reno', bedrooms: 4, basePrice: 340, occ30: 17, marketOcc: 45, score: 41, recs: [
       { id: 'QUA1990-1', cat: 'diagnostic', title: '🚨 Occupancy collapse — full diagnostic before pricing', desc: '17% vs 45% market = 28pt gap. Triple-brain diagnostic before blunt discount: photos / copy / channel mix / pricing / regulatory.', conf: 0.88, critical: true, status: 'pending', goalMin: '25% occ', goalAwesome: '40% occ', goalAmazing: 'Match market 45%+' },
       { id: 'QUA1990-2', cat: 'pricing', title: 'PriceLabs rec $335 vs current $340 — minor', desc: 'Pricing is NOT the main driver — diagnostic first', conf: 0.65, status: 'pending', goalMin: 'Apply $335', goalAwesome: 'Test elasticity', goalAmazing: 'Optimize to RevPAR max' },
     ]},
-    { code: 'RID3403', name: '4BR Reno · Game Room, BBQ, Trampoline', market: 'Reno', bedrooms: 4, basePrice: 324, occ30: 53, marketOcc: 46, score: 72, recs: [
+    { code: 'RID3403', name: '4BR Reno · Game Room, BBQ, Trampoline', market: 'Reno', bedrooms: 4, basePrice: 324, occ30: 53, marketOcc: 46, score: 74, recs: [
       { id: 'RID3403-AUDIT-CLEARED', cat: 'audit', title: '✓ Offboarding suspicion CLEARED by Marina 2026-05-04', desc: 'Earlier today I incorrectly flagged RID3403 as "offboarding status unverified" based on a misread of the historical-properties ledger. Marina confirmed RID3403 is ACTIVE. Adjusting Vesara analysis pattern: ledger entries should not be interpreted as offboarding signals without cross-reference. Pattern #013 spec updated.', conf: 1.0, critical: false, status: 'resolved', resolvedBy: 'AI+MT', resolvedComment: 'False alarm. Property active. Marina explicit confirmation.', auditTag: 'audit_complete', goalMin: 'Flag cleared', goalAwesome: 'Pattern improved', goalAmazing: 'Future false-positives prevented' },
       { id: 'RID3403-1', cat: 'pricing', title: '⚠ Pricing decision needs Marina judgment — signals conflict', desc: 'PriceLabs recommends $253 (-22% from current $324) citing "booking pace sliding." BUT trailing-30d occupancy 53% is ABOVE market 46%, and trailing-60d 43% is ABOVE market 37%. These signals conflict — PriceLabs is forward-looking (next 30d slowing) while occupancy data is trailing. Three options: (a) HOLD $324 and watch booking pace, (b) MODEST test drop to $299-305 (-6 to -8%), (c) AGGRESSIVE drop to $275-285 per original rec. My recommendation: option (b) — small enough to test elasticity without giving away ADR if booking pace recovers. Awaiting Marina go.', conf: 0.7, critical: false, status: 'pending', auditTag: 'sent_to_audit', auditAssignee: 'MT', goalMin: 'Marina decision logged', goalAwesome: '+$300/mo at $299', goalAmazing: '+$800/mo if booking pace recovers' },
     ]},
-    { code: 'ALX1734', name: 'Chic 1BR Reno · Heated Pool, Spa, Sauna', market: 'Reno', bedrooms: 1, basePrice: 159, occ30: 100, marketOcc: 47, score: 75, recs: [
+    { code: 'ALX1734', name: 'Chic 1BR Reno · Heated Pool, Spa, Sauna', market: 'Reno', bedrooms: 1, basePrice: 159, occ30: 100, marketOcc: 47, score: 88, recs: [
       { id: 'ALX1734-1', cat: 'pricing', title: '+5% ADR test running — 14-day trial active May 5-18', desc: 'PriceLabs +5% percent override pushed across May 5-18 (14 dates) at 2026-05-04 14:43. Property is NOT offboarding (verified). Measurement window opens 2026-05-12 (7d outcome). Predicted impact: +$80-120/mo if occupancy holds at 90%+. Initial test, will iterate based on response.', conf: 0.83, critical: false, status: 'progress', resolvedBy: 'AI', resolvedComment: 'Test live. 7d measurement window opens 2026-05-12.', auditTag: 'audit_complete', goalMin: '+5% ADR no occ drop', goalAwesome: '+8% sustained + 95% occ', goalAmazing: '+12% + 90% occ' },
     ]},
     { code: 'TAN5445', name: '3BR Mountain View · Swim Spa, Mini Golf', market: 'Reno', bedrooms: 3, basePrice: 349, occ30: 100, marketOcc: 43, score: null, offboarding: true, offboardDate: '2026-04-28', recs: [
@@ -221,67 +250,67 @@
     { code: 'SD1303', name: 'Downtown SD 1BR · Queen, Pool, Sauna', market: 'San Diego', bedrooms: 1, basePrice: 340, occ30: 100, marketOcc: 27, score: null, offboarding: true, offboardDate: '2026-04-28', recs: [
       { id: 'SD1303-OFFBOARD', cat: 'audit', title: 'OFFBOARDING — owner blocked calendar', desc: 'Property offboarding as of 2026-04-28. PriceLabs 100% occupancy is FALSE signal (blocked dates, not demand). Excluded from pricing recommendations going forward. Vesara incorrect +5% test from 2026-05-04 14:43 fully reverted within 6 minutes.', conf: 1.0, critical: false, status: 'resolved', resolvedBy: 'AI+MT', resolvedComment: 'PriceLabs +5% test fully reverted (14 dates deleted).', auditTag: 'audit_complete', auditAssignee: 'Jessica', goalMin: 'Excluded from pricing engine', goalAwesome: 'Clean handoff', goalAmazing: 'Owner returns post-rebrand' },
     ]},
-    { code: 'ALX3131', name: 'Serene 1BR · Sauna, Pool, Yoga Studio', market: 'Reno', bedrooms: 1, basePrice: 189, occ30: 90, marketOcc: 47, score: 73, recs: [
+    { code: 'ALX3131', name: 'Serene 1BR · Sauna, Pool, Yoga Studio', market: 'Reno', bedrooms: 1, basePrice: 189, occ30: 90, marketOcc: 47, score: 81, recs: [
       { id: 'ALX3131-1', cat: 'pricing', title: '90% occ vs 47% market — underpriced', desc: '+5% ADR test', conf: 0.78, status: 'pending', goalMin: '+3% ADR', goalAwesome: '+5% + 88% occ', goalAmazing: '+8% + 82% occ' },
     ]},
-    { code: 'ALX2434', name: 'Bright 1BR South Reno · Pool, Gym', market: 'Reno', bedrooms: 1, basePrice: 119, occ30: 80, marketOcc: 47, score: 68, recs: [
+    { code: 'ALX2434', name: 'Bright 1BR South Reno · Pool, Gym', market: 'Reno', bedrooms: 1, basePrice: 119, occ30: 80, marketOcc: 47, score: 81, recs: [
       { id: 'ALX2434-1', cat: 'pricing', title: 'Base $119 — PriceLabs has no recommendation (data thin)', desc: 'Manually test +5% ADR given strong occupancy', conf: 0.65, status: 'pending', goalMin: 'No occ drop', goalAwesome: '+$5/night', goalAmazing: '+$10/night' },
     ]},
-    { code: 'ALX1433', name: '1BR Apt · Hot Tub, Gym, Pool, Mini Golf', market: 'Reno', bedrooms: 1, basePrice: 200, occ30: 80, marketOcc: 47, score: 76, recs: [
+    { code: 'ALX1433', name: '1BR Apt · Hot Tub, Gym, Pool, Mini Golf', market: 'Reno', bedrooms: 1, basePrice: 200, occ30: 80, marketOcc: 47, score: 84, recs: [
       { id: 'ALX1433-1', cat: 'pricing', title: 'Slight overshoot — base $200 vs rec $198', desc: 'Minor', conf: 0.6, status: 'pending', goalMin: 'Apply $198', goalAwesome: 'Test elasticity', goalAmazing: 'Optimize 14d' },
     ]},
-    { code: 'WAT440', name: 'Sparks 1BR · Jacuzzi, Pool, Views', market: 'Sparks', bedrooms: 1, basePrice: 235, occ30: 43, marketOcc: 44, score: 78, recs: [
+    { code: 'WAT440', name: 'Sparks 1BR · Jacuzzi, Pool, Views', market: 'Sparks', bedrooms: 1, basePrice: 235, occ30: 43, marketOcc: 44, score: 74, recs: [
       { id: 'WAT440-1', cat: 'comp', title: 'Sister-property analysis: revenue leader vs WAT340', desc: '$17,311 YTD vs WAT340 $12,277. Document what WAT440 does differently — feed back into WAT340 fixes.', conf: 0.72, status: 'pending', goalMin: 'Identify 1 difference', goalAwesome: 'Document 3 differences', goalAmazing: 'Apply pattern to WAT340' },
     ]},
-    { code: 'ENC6591', name: 'Family 3BR Reno · Patio, BBQ, Casinos', market: 'Reno', bedrooms: 3, basePrice: 240, occ30: 37, marketOcc: 47, score: 70, recs: [
+    { code: 'ENC6591', name: 'Family 3BR Reno · Patio, BBQ, Casinos', market: 'Reno', bedrooms: 3, basePrice: 240, occ30: 37, marketOcc: 47, score: 61, recs: [
       { id: 'ENC6591-1', cat: 'pricing', title: 'Underperforming market — boost to $249 (PriceLabs)', desc: 'occ 37% vs 47% market', conf: 0.74, status: 'pending', goalMin: 'Apply $249', goalAwesome: '+5pt occ', goalAmazing: 'Match market occ' },
     ]},
-    { code: 'LOS1191', name: '4BR Sparks · Patio by Willowcreek Park', market: 'Sparks', bedrooms: 4, basePrice: 369, occ30: 80, marketOcc: 47, score: 84, recs: [
+    { code: 'LOS1191', name: '4BR Sparks · Patio by Willowcreek Park', market: 'Sparks', bedrooms: 4, basePrice: 369, occ30: 80, marketOcc: 47, score: 91, recs: [
       { id: 'LOS1191-1', cat: 'pricing', title: 'Strong performance — slight underpricing signal', desc: '80% occ vs 47% market. PriceLabs rec $363 (slight cut). Test +3% to validate.', conf: 0.7, status: 'pending', goalMin: 'Hold rate, watch occ', goalAwesome: '+3% ADR', goalAmazing: '+5% ADR sustainable' },
     ]},
-    { code: 'MAR2021', name: '4BR Sparks · Golden Eagle Sports', market: 'Sparks', bedrooms: 4, basePrice: 310, occ30: 57, marketOcc: 46, score: 76, recs: [
+    { code: 'MAR2021', name: '4BR Sparks · Golden Eagle Sports', market: 'Sparks', bedrooms: 4, basePrice: 310, occ30: 57, marketOcc: 46, score: 82, recs: [
       { id: 'MAR2021-1', cat: 'pricing', title: 'PriceLabs rec $317 — slight underprice', desc: 'Apply rec', conf: 0.72, status: 'pending', goalMin: 'Apply $317', goalAwesome: '+1pt occ', goalAmazing: 'Steady RevPAR↑' },
     ]},
-    { code: 'SIE1825', name: '3BR Reno · 40 Min Tahoe', market: 'Reno', bedrooms: 3, basePrice: 179, occ30: 23, marketOcc: 47, score: 60, recs: [
+    { code: 'SIE1825', name: '3BR Reno · 40 Min Tahoe', market: 'Reno', bedrooms: 3, basePrice: 179, occ30: 23, marketOcc: 47, score: 46, recs: [
       { id: 'SIE1825-1', cat: 'diagnostic', title: 'Occupancy underperforming — diagnostic needed', desc: '23% vs 47% market. Pricing alone unlikely fix. Check listing copy + photo + channel mix.', conf: 0.74, status: 'pending', goalMin: 'Fix top issue', goalAwesome: '35% occ', goalAmazing: '45% occ match market' },
     ]},
-    { code: 'SIE2301', name: '3BR Family Reno · Patio, Downtown', market: 'Reno', bedrooms: 3, basePrice: 209, occ30: 73, marketOcc: 48, score: 82, recs: [
+    { code: 'SIE2301', name: '3BR Family Reno · Patio, Downtown', market: 'Reno', bedrooms: 3, basePrice: 209, occ30: 73, marketOcc: 48, score: 87, recs: [
       { id: 'SIE2301-1', cat: 'pricing', title: 'Outperforming — PriceLabs rec $215 (slight up)', desc: 'Apply', conf: 0.76, status: 'pending', goalMin: 'Apply $215', goalAwesome: '+$300/mo', goalAmazing: 'Sustain 70%+' },
     ]},
-    { code: 'ALX2213', name: 'Relaxing 2BR · Hot Tub, Pool', market: 'Reno', bedrooms: 2, basePrice: 225, occ30: 53, marketOcc: 47, score: 75, recs: [
+    { code: 'ALX2213', name: 'Relaxing 2BR · Hot Tub, Pool', market: 'Reno', bedrooms: 2, basePrice: 225, occ30: 53, marketOcc: 47, score: 74, recs: [
       { id: 'ALX2213-1', cat: 'pricing', title: 'PriceLabs rec $242 — slight underprice', desc: 'Apply', conf: 0.72, status: 'pending', goalMin: 'Apply $242', goalAwesome: '+$400/mo', goalAmazing: 'Sustain occ' },
     ]},
-    { code: 'ALX2623', name: 'Cozy 1BR Near Tahoe · Heated Pool', market: 'Reno', bedrooms: 1, basePrice: 135, occ30: 70, marketOcc: 47, score: 76, recs: [
+    { code: 'ALX2623', name: 'Cozy 1BR Near Tahoe · Heated Pool', market: 'Reno', bedrooms: 1, basePrice: 135, occ30: 70, marketOcc: 47, score: 84, recs: [
       { id: 'ALX2623-1', cat: 'pricing', title: 'PriceLabs rec $138 — apply', desc: '', conf: 0.7, status: 'pending', goalMin: 'Apply $138', goalAwesome: '+$200/mo', goalAmazing: 'Hold 70%+' },
     ]},
-    { code: 'ALX223', name: 'Modern 1BR Reno · Pool, Spa', market: 'Reno', bedrooms: 1, basePrice: 159, occ30: 37, marketOcc: 47, score: 67, recs: [
+    { code: 'ALX223', name: 'Modern 1BR Reno · Pool, Spa', market: 'Reno', bedrooms: 1, basePrice: 159, occ30: 37, marketOcc: 47, score: 56, recs: [
       { id: 'ALX223-1', cat: 'diagnostic', title: 'Underperforming — need diagnostic', desc: 'PriceLabs rec $155 is barely a cut. Issue likely listing/comp.', conf: 0.7, status: 'pending', goalMin: 'Identify cause', goalAwesome: '45% occ', goalAmazing: 'Match market' },
     ]},
     { code: 'ALX2923', name: 'Stylish 1BR · Pool, Gym, Theater', market: 'Reno', bedrooms: 1, basePrice: 129, occ30: 47, marketOcc: 47, score: 72, recs: [
       { id: 'ALX2923-1', cat: 'pricing', title: 'PriceLabs rec $130 — match', desc: '', conf: 0.65, status: 'pending', goalMin: 'Apply $130', goalAwesome: '+1pt occ', goalAmazing: '55% occ' },
     ]},
-    { code: 'ALX322', name: 'Luxury 2BR Reno · Pool, Spa, Theater', market: 'Reno', bedrooms: 2, basePrice: 225, occ30: 63, marketOcc: 47, score: 78, recs: [
+    { code: 'ALX322', name: 'Luxury 2BR Reno · Pool, Spa, Theater', market: 'Reno', bedrooms: 2, basePrice: 225, occ30: 63, marketOcc: 47, score: 83, recs: [
       { id: 'ALX322-1', cat: 'pricing', title: 'PriceLabs rec $242 — slight underprice', desc: 'Apply', conf: 0.74, status: 'pending', goalMin: 'Apply $242', goalAwesome: '+$300/mo', goalAmazing: 'Sustain' },
     ]},
-    { code: 'ALX3224', name: '2BR Reno · Heated Pool, Mini Golf, Sauna', market: 'Reno', bedrooms: 2, basePrice: 210, occ30: 30, marketOcc: 47, score: 64, recs: [
+    { code: 'ALX3224', name: '2BR Reno · Heated Pool, Mini Golf, Sauna', market: 'Reno', bedrooms: 2, basePrice: 210, occ30: 30, marketOcc: 47, score: 48, recs: [
       { id: 'ALX3224-1', cat: 'diagnostic', title: 'Underperforming market by 17pts — diagnostic', desc: 'PriceLabs rec $211 (no cut signal). Issue elsewhere.', conf: 0.74, status: 'pending', goalMin: 'Identify cause', goalAwesome: '40% occ', goalAmazing: 'Match market' },
     ]},
-    { code: 'ALX1021', name: 'Spacious 2BR · Pool, Theater, Gym', market: 'Reno', bedrooms: 2, basePrice: 179, occ30: 37, marketOcc: 47, score: 68, recs: [
+    { code: 'ALX1021', name: 'Spacious 2BR · Pool, Theater, Gym', market: 'Reno', bedrooms: 2, basePrice: 179, occ30: 37, marketOcc: 47, score: 58, recs: [
       { id: 'ALX1021-1', cat: 'pricing', title: 'PriceLabs rec $184 — slight up', desc: 'Apply + diagnostic on occ gap', conf: 0.7, status: 'pending', goalMin: 'Apply $184', goalAwesome: '+5pt occ', goalAmazing: 'Match market' },
     ]},
-    { code: 'WAT415', name: 'Stunning 1BR · Jacuzzi, Rooftop Lounge', market: 'Sparks', bedrooms: 2, basePrice: 255, occ30: 47, marketOcc: 43, score: 80, recs: [
+    { code: 'WAT415', name: 'Stunning 1BR · Jacuzzi, Rooftop Lounge', market: 'Sparks', bedrooms: 2, basePrice: 255, occ30: 47, marketOcc: 43, score: 78, recs: [
       { id: 'WAT415-1', cat: 'pricing', title: 'PriceLabs rec $256 — match', desc: 'Already aligned', conf: 0.65, status: 'pending', goalMin: 'Hold rate', goalAwesome: '50% occ', goalAmazing: 'Sustain RevPAR' },
     ]},
-    { code: 'WAT416', name: 'Waterfront 2BR · Casinos, IMAX', market: 'Sparks', bedrooms: 2, basePrice: 279, occ30: 43, marketOcc: 44, score: 76, recs: [
+    { code: 'WAT416', name: 'Waterfront 2BR · Casinos, IMAX', market: 'Sparks', bedrooms: 2, basePrice: 279, occ30: 43, marketOcc: 44, score: 69, recs: [
       { id: 'WAT416-1', cat: 'pricing', title: 'Match market rec $279 — at recommendation', desc: 'Sustain', conf: 0.6, status: 'pending', goalMin: 'Hold', goalAwesome: '+5pt occ', goalAmazing: '50%+' },
     ]},
-    { code: 'WAT426', name: 'Modern 2BR Sparks · Pool, Mountain Views', market: 'Sparks', bedrooms: 2, basePrice: 235, occ30: 57, marketOcc: 44, score: 78, recs: [
+    { code: 'WAT426', name: 'Modern 2BR Sparks · Pool, Mountain Views', market: 'Sparks', bedrooms: 2, basePrice: 235, occ30: 57, marketOcc: 44, score: 83, recs: [
       { id: 'WAT426-1', cat: 'pricing', title: 'Above market — slight ADR test possible', desc: '+3% test', conf: 0.7, status: 'pending', goalMin: 'Hold', goalAwesome: '+3% ADR', goalAmazing: '+5% sustained' },
     ]},
-    { code: 'WAT526', name: 'Scenic 2BR · Mountain Views, Jacuzzi', market: 'Sparks', bedrooms: 2, basePrice: 225, occ30: 47, marketOcc: 44, score: 79, recs: [
+    { code: 'WAT526', name: 'Scenic 2BR · Mountain Views, Jacuzzi', market: 'Sparks', bedrooms: 2, basePrice: 225, occ30: 47, marketOcc: 44, score: 77, recs: [
       { id: 'WAT526-1', cat: 'pricing', title: 'PriceLabs rec $227 — slight underprice', desc: 'Apply', conf: 0.7, status: 'pending', goalMin: 'Apply $227', goalAwesome: '+$200/mo', goalAmazing: 'Sustain' },
     ]},
-    { code: 'SD719', name: 'Downtown SD King Suite · Sauna, Pool', market: 'San Diego', bedrooms: 1, basePrice: 295, occ30: 23, marketOcc: 26, score: 65, recs: [
+    { code: 'SD719', name: 'Downtown SD King Suite · Sauna, Pool', market: 'San Diego', bedrooms: 1, basePrice: 295, occ30: 23, marketOcc: 26, score: 61, recs: [
       { id: 'SD719-1', cat: 'pricing', title: 'PriceLabs rec $292 — slight cut', desc: 'Match market occupancy ~26% — pricing not the issue. Diagnostic on listing', conf: 0.72, status: 'pending', goalMin: 'Apply $292', goalAwesome: '35% occ', goalAmazing: '45% occ' },
     ]},
   ];
@@ -416,6 +445,69 @@
     a.download = 'vesara-portfolio-state-' + new Date().toISOString().slice(0,10) + '.json';
     a.click();
     URL.revokeObjectURL(url);
+  }
+
+  function csvEscape(v) {
+    if (v == null) return '';
+    const s = String(v);
+    if (s.includes(',') || s.includes('"') || s.includes('\n')) {
+      return '"' + s.replace(/"/g, '""') + '"';
+    }
+    return s;
+  }
+
+  function exportCSV() {
+    const headers = ['Property', 'Property Name', 'Market', 'Bedrooms', 'Base Price', 'Score', 'Grade', 'Occ 30d', 'Market Occ', 'Offboarding', 'Rec ID', 'Category', 'Critical', 'Title', 'Confidence', 'Goal Min', 'Goal Awesome', 'Goal Amazing', 'Status', 'Resolved By', 'Resolved At', 'Comment', 'Audit Tag', 'Audit Assignee'];
+    const rows = [headers.join(',')];
+    PORTFOLIO.forEach(p => {
+      p.recs.forEach(r => {
+        rows.push([
+          p.code, p.name, p.market, p.bedrooms, p.basePrice,
+          p.score === null ? '' : p.score, p.score === null ? '' : (p.grade || ''),
+          p.occ30, p.marketOcc, p.offboarding ? 'YES' : '',
+          r.id, r.cat, r.critical ? 'YES' : '', r.title, r.conf,
+          r.goalMin || '', r.goalAwesome || '', r.goalAmazing || '',
+          r.status || 'pending', r.resolvedBy || '', r.resolvedAt || '',
+          r.resolvedComment || '', r.auditTag || '', r.auditAssignee || ''
+        ].map(csvEscape).join(','));
+      });
+    });
+    const blob = new Blob([rows.join('\n')], {type: 'text/csv'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'vesara-portfolio-' + new Date().toISOString().slice(0,10) + '.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function openHistory() {
+    const modal = document.getElementById('historyModal');
+    if (!modal) return;
+    const body = document.getElementById('historyBody');
+    // Build resolved rec history sorted by resolvedAt DESC
+    const items = [];
+    PORTFOLIO.forEach(p => p.recs.forEach(r => {
+      if (r.resolvedAt || r.status === 'resolved' || r.status === 'progress') {
+        items.push({ p, r });
+      }
+    }));
+    items.sort((a, b) => (b.r.resolvedAt || '').localeCompare(a.r.resolvedAt || ''));
+    body.innerHTML = items.length === 0 ? '<p style="color: var(--text-tertiary);">No history yet — resolve some recs and they show here.</p>' : items.map(it => `
+      <div class="hist-row">
+        <div class="hist-when">${it.r.resolvedAt || '(in progress)'}</div>
+        <div class="hist-who">${it.r.resolvedBy || '—'}</div>
+        <div class="hist-what">
+          <strong>${it.p.code}</strong> · ${it.r.title}
+          <span class="hist-status ${it.r.status}">${it.r.status || 'pending'}</span>
+          ${it.r.resolvedComment ? '<div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px; font-style: italic;">"' + it.r.resolvedComment + '"</div>' : ''}
+        </div>
+      </div>
+    `).join('');
+    modal.style.display = 'flex';
+  }
+  function closeHistory() {
+    document.getElementById('historyModal').style.display = 'none';
   }
 
   // ============================================================
