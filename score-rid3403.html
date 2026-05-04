@@ -32,8 +32,8 @@
   .note-box { max-width: 1100px; margin: 12px auto; padding: 12px 18px; background: var(--accent-dim); border: 1px solid var(--accent); border-radius: var(--r-md); color: var(--accent); font-size: 13.5px; }
   .note-box.test { background: rgba(59,130,246,0.10); border-color: var(--info); color: var(--info); }
 
-  .hero-grid { max-width: 1100px; margin: 32px auto 0; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-  @media (max-width: 800px) { .hero-grid { grid-template-columns: 1fr; } }
+  .score-hero-row { max-width: 1100px; margin: 32px auto 0; padding: 0 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 800px) { .score-hero-row { grid-template-columns: 1fr; } }
   .score-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-2xl); padding: 36px; text-align: center; position: relative; overflow: hidden; }
   .score-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at top, var(--accent-dim), transparent 70%); pointer-events: none; }
   .score-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 12px; font-weight: 600; position: relative; }
@@ -130,7 +130,7 @@
 <div class="note-box">★ Awaiting Marina pricing decision (3 options surfaced: hold / -7% / -15%)</div>
 
 
-<section class="hero-grid">
+<section class="score-hero-row">
   <div class="score-card">
     <div class="score-label">▲ VESARA SCORE</div>
     <div class="score-num">74</div>
