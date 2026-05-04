@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara — Sub-Processors</title>
+<meta name="description" content="Public list of every Vesara sub-processor. Reviewed annually. 30-day notice on any addition.">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+  .doc { max-width: 880px; margin: 0 auto; padding: 80px 24px 100px; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--accent); background: var(--accent-dim); color: var(--accent); border-radius: var(--r-full); font-size: 12px; margin-bottom: 24px; }
+  h1 { font-size: 48px; font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 16px; }
+  .lede { font-size: 18px; color: var(--text-secondary); line-height: 1.55; margin-bottom: 48px; }
+  .table { width: 100%; border-collapse: collapse; font-size: 14.5px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; }
+  .table th { text-align: left; padding: 16px 20px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); border-bottom: 1px solid var(--border); background: var(--surface-2); }
+  .table td { padding: 16px 20px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+  .table tr:last-child td { border-bottom: none; }
+  .table td strong { color: var(--text); }
+  .meta-line { font-size: 13px; color: var(--text-tertiary); margin-bottom: 24px; }
+  .footer { padding: 48px 24px; text-align: center; color: var(--text-tertiary); font-size: 13px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="brand"><svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg><span>Vesara</span></a>
+  <div class="nav-links"><a href="trust.html">Trust</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
+</nav>
+
+<article class="doc">
+  <span class="pill">● Sub-Processors</span>
+  <h1>Every third party that touches your data.</h1>
+  <p class="lede">Public, current, reviewed annually. 30-day notice before adding any sub-processor. All under contract that prohibits using your data for any purpose other than serving you.</p>
+  <div class="meta-line">Last updated: 2026-05-04 · Next review: 2026-08-04</div>
+
+  <table class="table">
+    <thead>
+      <tr><th>Sub-processor</th><th>Purpose</th><th>Data accessed</th><th>Location</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Stripe, Inc.</strong></td><td>Payment processing + subscription billing</td><td>Billing data only (name, email, card token, address)</td><td>US (PCI DSS Level 1)</td></tr>
+      <tr><td><strong>Supabase Inc.</strong></td><td>Database hosting + authentication</td><td>All operational data (encrypted at rest)</td><td>US (us-east-1) default · EU (eu-central-1) on Pro+ tier</td></tr>
+      <tr><td><strong>Vercel Inc.</strong></td><td>Web application hosting + edge CDN</td><td>Account info + product session data</td><td>Global edge · primary US</td></tr>
+      <tr><td><strong>OpenAI, L.L.C.</strong></td><td>LLM provider (ChatGPT) for triple-brain consensus</td><td>Prompts only · zero retention agreement</td><td>US</td></tr>
+      <tr><td><strong>Anthropic, PBC</strong></td><td>LLM provider (Claude) for triple-brain consensus</td><td>Prompts only · zero retention</td><td>US</td></tr>
+      <tr><td><strong>Google LLC (Gemini API)</strong></td><td>LLM provider (Gemini) for triple-brain consensus</td><td>Prompts only · standard API retention</td><td>US</td></tr>
+      <tr><td><strong>Postmark (Wildbit, LLC)</strong></td><td>Transactional email delivery</td><td>Recipient email + message body</td><td>US</td></tr>
+      <tr><td><strong>Functional Software Inc. (Sentry)</strong></td><td>Error monitoring + performance</td><td>Stack traces (PII-scrubbed) + opaque user IDs</td><td>US</td></tr>
+      <tr><td><strong>Cloudflare, Inc.</strong></td><td>CDN + DDoS protection + DNS</td><td>Request metadata (IP, headers)</td><td>Global edge</td></tr>
+      <tr><td><strong>BetterStack (Better Stack Ltd.)</strong></td><td>Uptime monitoring + status page</td><td>Endpoint health metrics only (no customer data)</td><td>EU (Czech Republic)</td></tr>
+      <tr><td><strong>Linear Orbit, Inc.</strong></td><td>Issue tracking + product roadmap</td><td>Internal team data only — no customer data</td><td>US</td></tr>
+      <tr><td><strong>Slack Technologies, LLC</strong></td><td>Team comms + Founders' Flock community channel</td><td>Internal + community-shared messages only</td><td>US</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size: 14.5px; color: var(--text-secondary); line-height: 1.7; margin-top: 32px;">All sub-processors are contractually required to (a) process your data only as instructed by Vesara, (b) maintain confidentiality, (c) implement appropriate security measures, and (d) assist with data subject rights requests. Sub-processor agreements available on request to <a href="mailto:legal@vesara.ai" style="color: var(--accent);">legal@vesara.ai</a>.</p>
+
+  <p style="font-size: 14.5px; color: var(--text-secondary); line-height: 1.7; margin-top: 16px;"><strong style="color: var(--text);">30-day notice policy:</strong> Adding a new sub-processor triggers email notice + product banner 30 days in advance. You may object in writing; if Vesara cannot accommodate, you may terminate the affected portion of the Service.</p>
+</article>
+
+<footer class="footer">Sub-processors page · Updated 2026-05-04 · Annual review next: 2026-08-04</footer>
+</body>
+</html>
