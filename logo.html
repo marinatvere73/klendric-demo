@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Vesara — Brand & Logo</title>
+  <meta name="description" content="The Vesara logo system. Mark, wordmark, lockup, color, spacing, and downloads.">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#050505">
+  <link rel="icon" type="image/svg+xml" href="vesara-logo-mark-accent.svg">
+  <link rel="alternate icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="design-system.css">
+  <style>
+    .hero-logo {
+      padding: 96px 0 64px;
+      background:
+        radial-gradient(60% 80% at 50% 0%, rgba(16,185,129,0.10), transparent 70%),
+        #0A0A0A;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .hero-logo-inner {
+      max-width: 980px; margin: 0 auto; padding: 0 24px; text-align: center;
+    }
+    .hero-mark { display: inline-block; filter: drop-shadow(0 0 60px rgba(16,185,129,0.35)); }
+    .hero-eyebrow {
+      display:inline-block; padding: 6px 12px; border-radius: 999px;
+      border: 1px solid rgba(16,185,129,0.35);
+      color: var(--accent); font-size: 12px; letter-spacing: 0.12em;
+      text-transform: uppercase; margin-bottom: 24px;
+    }
+    .hero-title { font-size: clamp(40px,6vw,72px); font-weight: 600; letter-spacing:-0.03em; margin: 24px 0 12px; }
+    .hero-sub { color: var(--text-secondary); font-size: 18px; max-width: 620px; margin: 0 auto; }
+
+    .grid-variations {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px; padding: 64px 0;
+    }
+    .variation {
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
+      overflow: hidden; background: #0F0F10;
+    }
+    .variation-canvas {
+      aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+      padding: 32px;
+    }
+    .variation-canvas.dark   { background: #0A0A0A; }
+    .variation-canvas.light  { background: #FAFAF9; }
+    .variation-canvas.accent { background: #10B981; }
+    .variation-canvas.gray   { background: #1A1A1B; }
+    .variation-meta {
+      padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; justify-content: space-between; align-items: baseline; gap: 8px;
+    }
+    .variation-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .variation-file { font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+    .section-block { padding: 64px 0; border-top: 1px solid rgba(255,255,255,0.06); }
+    .section-title { font-size: 14px; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 12px; }
+    .section-h { font-size: 36px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .section-lede { color: var(--text-secondary); font-size: 17px; max-width: 680px; margin-bottom: 48px; }
+
+    .swatch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 16px; }
+    .swatch { border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
+    .swatch-color { aspect-ratio: 16/10; }
+    .swatch-meta { padding: 14px 16px; background: #0F0F10; }
+    .swatch-name { font-size: 13px; font-weight: 600; }
+    .swatch-hex  { font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+    .donts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 20px; }
+    .dont {
+      border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 14px;
+      background: rgba(239,68,68,0.03);
+      overflow: hidden;
+    }
+    .dont-canvas { aspect-ratio: 4/3; display:flex; align-items:center; justify-content:center; padding: 24px; background: #0A0A0A; position: relative; }
+    .dont-canvas::after {
+      content: ""; position: absolute; left: 8px; right: 8px; top: 50%;
+      height: 2px; background: #EF4444; transform: rotate(-12deg); opacity: 0.65;
+    }
+    .dont-meta { padding: 14px 18px; }
+    .dont-label { font-size: 12px; color: #EF4444; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+    .dont-text  { font-size: 14px; color: var(--text-secondary); }
+
+    .downloads { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 12px; }
+    .download {
+      display:flex; align-items:center; justify-content:space-between; gap: 16px;
+      padding: 16px 20px; border-radius: 12px; background: #0F0F10;
+      border: 1px solid rgba(255,255,255,0.08);
+      text-decoration: none; color: var(--text);
+      transition: all .2s ease;
+    }
+    .download:hover { border-color: var(--accent); background: rgba(16,185,129,0.06); }
+    .download-name { font-size: 14px; font-weight: 600; }
+    .download-meta { font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+    .download-arrow { color: var(--accent); }
+
+    .clearspace-demo { display:flex; justify-content:center; padding: 48px; background: #0A0A0A; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); }
+    .clearspace-frame { position: relative; padding: 60px; border: 1px dashed rgba(16,185,129,0.4); border-radius: 8px; }
+    .clearspace-frame::before {
+      content: "x"; position: absolute; top: 26px; left: 50%; transform: translateX(-50%);
+      color: var(--accent); font-family: 'Fraunces', serif; font-style: italic; font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand" aria-label="Vesara — home">
+        <svg class="brand-mark-svg" width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/>
+          <path d="M32 20 L44 40 H20 Z" fill="#10B981"/>
+        </svg>
+        <span>Vesara</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="marketing.html" class="nav-link">Product</a>
+        <a href="#downloads" class="btn btn-primary">Download assets <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero-logo">
+    <div class="hero-logo-inner">
+      <div class="hero-eyebrow">Brand · v1.0</div>
+      <div class="hero-mark" aria-hidden="true">
+        <svg width="200" height="200" viewBox="0 0 64 64">
+          <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="2.2" stroke-linejoin="round"/>
+          <path d="M32 20 L44 40 H20 Z" fill="#10B981"/>
+        </svg>
+      </div>
+      <h1 class="hero-title">The Vesara mark.</h1>
+      <p class="hero-sub">A chamfered hexagon — the geometry of infrastructure — wrapped around an aperture: an inverted triangle that reads as lens, action, and downward arrow. Built to sit on the same shelf as Stripe, Linear, and Vercel.</p>
+    </div>
+  </section>
+
+  <section class="container section-block">
+    <div class="section-title">The System</div>
+    <h2 class="section-h">Six variations. One geometry.</h2>
+    <p class="section-lede">Every asset uses the same chamfered hexagon and inverted triangle. Color, fill, and lockup change for context — never the geometry itself.</p>
+
+    <div class="grid-variations">
+
+      <!-- Full lockup dark -->
+      <div class="variation">
+        <div class="variation-canvas dark">
+          <svg width="240" height="48" viewBox="0 0 320 64">
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M32 20 L44 40 H20 Z" fill="#FFFFFF"/>
+            <text x="84" y="40" fill="#FFFFFF" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="22" letter-spacing="3.4">VESARA</text>
+          </svg>
+        </div>
+        <div class="variation-meta">
+          <span class="variation-name">Full lockup · Dark</span>
+          <span class="variation-file">vesara-logo-full.svg</span>
+        </div>
+      </div>
+
+      <!-- Full lockup light -->
+      <div class="variation">
+        <div class="variation-canvas light">
+          <svg width="240" height="48" viewBox="0 0 320 64">
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#0A0A0A" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M32 20 L44 40 H20 Z" fill="#0A0A0A"/>
+            <text x="84" y="40" fill="#0A0A0A" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="22" letter-spacing="3.4">VESARA</text>
+          </svg>
+        </div>
+        <div class="variation-meta">
+          <span class="variation-name">Full lockup · Light</span>
+          <span class="variation-file">vesara-logo-full-light.svg</span>
+        </div>
+      </div>
+
+      <!-- Full lockup mono -->
+      <div class="variation">
+        <div class="variation-canvas dark">
+          <svg width="240" height="48" viewBox="0 0 320 64">
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M32 20 L44 40 H20 Z" fill="#10B981"/>
+            <text x="84" y="40" fill="#10B981" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="22" letter-spacing="3.4">VESARA</text>
+          </svg>
+        </div>
+        <div class="variation-meta">
+          <span class="variation-name">Full lockup · Accent mono</span>
+          <span class="variation-file">vesara-logo-mono.svg</span>
+        </div>
+      </div>
+
+      <!-- Mark only -->
+      <div class="variation">
+        <div class="variation-canvas dark">
+          <svg width="120" height="120" viewBox="0 0 64 64">
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M32 20 L44 40 H20 Z" fill="#10B981"/>
+          </svg>
+        </div>
+        <div class="variation-meta">
+          <span class="variation-name">Mark only</span>
+          <span class="variation-file">vesara-logo-mark-accent.svg</span>
+        </div>
+      </div>
+
+      <!-- App icon badge -->
+      <div class="variation">
+        <div class="variation-canvas gray">
+          <svg width="120" height="120" viewBox="0 0 64 64">
+            <rect width="64" height="64" rx="14" fill="#0A0A0A"/>
+            <path d="M32 12 L52 24 V40 L32 52 L12 40 V24 Z" fill="none" stroke="#10B981" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M32 24 L42 40 H22 Z" fill="#10B981"/>
+          </svg>
+        </div>
+        <div class="variation-meta">
+          <span class="variation-name">App icon · Badge</span>
+          <span class="variation-file">vesara-logo-mark-badge.svg</span>
+        </div>
+      </div>
+
+      <!-- Wordmark only -->
+      <div class="variation">
+        <div class="variation-canvas dark">
+          <svg width="220" height="48" viewBox="0 0 240 64">
+            <text x="0" y="44" fill="#FFFFFF" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="28" letter-spacing="4.2">VESARA</text>
+          </svg>
+        </div>
+        <div class="variation-meta">
+          <span class="variation-name">Wordmark only</span>
+          <span class="variation-file">vesara-logo-wordmark.svg</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="container section-block">
+    <div class="section-title">Color</div>
+    <h2 class="section-h">One accent. One ground.</h2>
+    <p class="section-lede">Vesara Emerald sits on near-black. Pure black for print. White only as inversion. Never tint the mark with anything else.</p>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#10B981"></div>
+        <div class="swatch-meta"><div class="swatch-name">Vesara Emerald</div><div class="swatch-hex">#10B981 · accent only</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0A0A0A"></div>
+        <div class="swatch-meta"><div class="swatch-name">Ink</div><div class="swatch-hex">#0A0A0A · default ground</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FAFAF9"></div>
+        <div class="swatch-meta" style="color:#0A0A0A;background:#FAFAF9"><div class="swatch-name" style="color:#0A0A0A">Bone</div><div class="swatch-hex" style="color:#525252">#FAFAF9 · light ground</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FFFFFF"></div>
+        <div class="swatch-meta" style="color:#0A0A0A;background:#FAFAF9"><div class="swatch-name" style="color:#0A0A0A">Pure</div><div class="swatch-hex" style="color:#525252">#FFFFFF · inversion</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container section-block">
+    <div class="section-title">Clear Space</div>
+    <h2 class="section-h">Give the mark room.</h2>
+    <p class="section-lede">Minimum clear space on all four sides equals the cap-height of the wordmark (the "x" measure). Never crowd it with adjacent text, logos, or borders.</p>
+    <div class="clearspace-demo">
+      <div class="clearspace-frame">
+        <svg width="280" height="56" viewBox="0 0 320 64">
+          <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M32 20 L44 40 H20 Z" fill="#FFFFFF"/>
+          <text x="84" y="40" fill="#FFFFFF" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="22" letter-spacing="3.4">VESARA</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="container section-block">
+    <div class="section-title">Don't</div>
+    <h2 class="section-h">Six things that break the mark.</h2>
+    <p class="section-lede">The mark survives at 16px. The rules are short. Follow them.</p>
+    <div class="donts">
+      <div class="dont">
+        <div class="dont-canvas">
+          <svg width="120" height="120" viewBox="0 0 64 64">
+            <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#10B981"/><stop offset="1" stop-color="#3B82F6"/></linearGradient></defs>
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="url(#g1)" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M32 20 L44 40 H20 Z" fill="url(#g1)"/>
+          </svg>
+        </div>
+        <div class="dont-meta"><div class="dont-label">Don't</div><div class="dont-text">No gradients on the mark.</div></div>
+      </div>
+
+      <div class="dont">
+        <div class="dont-canvas">
+          <svg width="120" height="120" viewBox="0 0 64 64">
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="6" stroke-linejoin="round"/>
+            <path d="M32 20 L44 40 H20 Z" fill="#10B981"/>
+          </svg>
+        </div>
+        <div class="dont-meta"><div class="dont-label">Don't</div><div class="dont-text">Don't change stroke weight.</div></div>
+      </div>
+
+      <div class="dont">
+        <div class="dont-canvas">
+          <svg width="120" height="120" viewBox="0 0 64 64" style="transform:rotate(20deg)">
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M32 20 L44 40 H20 Z" fill="#10B981"/>
+          </svg>
+        </div>
+        <div class="dont-meta"><div class="dont-label">Don't</div><div class="dont-text">Don't rotate the mark.</div></div>
+      </div>
+
+      <div class="dont">
+        <div class="dont-canvas">
+          <svg width="180" height="100" viewBox="0 0 64 64" preserveAspectRatio="none">
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M32 20 L44 40 H20 Z" fill="#10B981"/>
+          </svg>
+        </div>
+        <div class="dont-meta"><div class="dont-label">Don't</div><div class="dont-text">Don't stretch or distort.</div></div>
+      </div>
+
+      <div class="dont">
+        <div class="dont-canvas">
+          <svg width="120" height="120" viewBox="0 0 64 64">
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="#F59E0B" stroke="#F59E0B" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M32 20 L44 40 H20 Z" fill="#0A0A0A"/>
+          </svg>
+        </div>
+        <div class="dont-meta"><div class="dont-label">Don't</div><div class="dont-text">Don't recolor outside the system.</div></div>
+      </div>
+
+      <div class="dont">
+        <div class="dont-canvas">
+          <svg width="120" height="120" viewBox="0 0 64 64" style="filter:drop-shadow(4px 4px 0 #EF4444)">
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M32 20 L44 40 H20 Z" fill="#10B981"/>
+          </svg>
+        </div>
+        <div class="dont-meta"><div class="dont-label">Don't</div><div class="dont-text">Don't add hard shadows or 3D.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container section-block" id="downloads">
+    <div class="section-title">Downloads</div>
+    <h2 class="section-h">Production-ready files.</h2>
+    <p class="section-lede">Every asset is optimized SVG (under 2KB) plus PNG/ICO renderings for raster contexts. Black, white, and accent variants ship by default.</p>
+    <div class="downloads">
+      <a class="download" href="vesara-logo-full.svg" download>
+        <div><div class="download-name">Full lockup · Dark</div><div class="download-meta">vesara-logo-full.svg</div></div><span class="download-arrow">&darr;</span>
+      </a>
+      <a class="download" href="vesara-logo-full-light.svg" download>
+        <div><div class="download-name">Full lockup · Light</div><div class="download-meta">vesara-logo-full-light.svg</div></div><span class="download-arrow">&darr;</span>
+      </a>
+      <a class="download" href="vesara-logo-mono.svg" download>
+        <div><div class="download-name">Full lockup · Mono accent</div><div class="download-meta">vesara-logo-mono.svg</div></div><span class="download-arrow">&darr;</span>
+      </a>
+      <a class="download" href="vesara-logo-mark.svg" download>
+        <div><div class="download-name">Mark · currentColor</div><div class="download-meta">vesara-logo-mark.svg</div></div><span class="download-arrow">&darr;</span>
+      </a>
+      <a class="download" href="vesara-logo-mark-accent.svg" download>
+        <div><div class="download-name">Mark · accent</div><div class="download-meta">vesara-logo-mark-accent.svg</div></div><span class="download-arrow">&darr;</span>
+      </a>
+      <a class="download" href="vesara-logo-mark-badge.svg" download>
+        <div><div class="download-name">App icon · badge</div><div class="download-meta">vesara-logo-mark-badge.svg</div></div><span class="download-arrow">&darr;</span>
+      </a>
+      <a class="download" href="vesara-logo-wordmark.svg" download>
+        <div><div class="download-name">Wordmark only</div><div class="download-meta">vesara-logo-wordmark.svg</div></div><span class="download-arrow">&darr;</span>
+      </a>
+      <a class="download" href="favicon.ico" download>
+        <div><div class="download-name">Favicon · 16/32/48</div><div class="download-meta">favicon.ico</div></div><span class="download-arrow">&darr;</span>
+      </a>
+      <a class="download" href="apple-touch-icon.png" download>
+        <div><div class="download-name">Apple touch icon · 180px</div><div class="download-meta">apple-touch-icon.png</div></div><span class="download-arrow">&darr;</span>
+      </a>
+      <a class="download" href="og-image.png" download>
+        <div><div class="download-name">OG / social card · 1200×630</div><div class="download-meta">og-image.png</div></div><span class="download-arrow">&darr;</span>
+      </a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-bottom">
+        <div>&copy; <span id="yr"></span> Vesara &middot; A LussoStay venture</div>
+        <div><a href="index.html" class="footer-link">Home</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>

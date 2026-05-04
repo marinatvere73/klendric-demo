@@ -17,7 +17,7 @@
   --text: rgba(255, 255, 255, 0.96);
   --text-secondary: rgba(255, 255, 255, 0.62);
   --text-tertiary: rgba(255, 255, 255, 0.42);
-  --text-muted: rgba(255, 255, 255, 0.28);
+  --text-muted: rgba(255, 255, 255, 0.55); /* WCAG AA: bumped from 0.28 (~2.0:1) to 0.55 (~4.6:1) */
 
   /* Signature accent — emerald, the color of money */
   --accent: #10B981;
@@ -232,6 +232,15 @@ html, body {
   font-size: 12px;
   color: #000;
   box-shadow: 0 0 20px var(--accent-glow);
+}
+.brand-mark-svg {
+  display: block;
+  filter: drop-shadow(0 0 12px rgba(16,185,129,0.45));
+  transition: transform var(--dur-med) var(--ease), filter var(--dur-med) var(--ease);
+}
+.brand:hover .brand-mark-svg {
+  transform: rotate(-6deg) scale(1.05);
+  filter: drop-shadow(0 0 18px rgba(16,185,129,0.7));
 }
 .nav-links {
   display: flex;

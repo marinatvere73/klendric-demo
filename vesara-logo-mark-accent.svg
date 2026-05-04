@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Vesara mark">
+  <title>Vesara</title>
+  <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M32 20 L44 40 H20 Z" fill="#10B981"/>
+</svg>

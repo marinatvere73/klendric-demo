@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Vesara sitemap. All pages are noindex,nofollow during private beta —
+  this sitemap exists so we can flip the switch later by removing the
+  noindex meta and the robots.txt Disallow.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://marinatvere73.github.io/klendric-demo/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://marinatvere73.github.io/klendric-demo/marketing.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://marinatvere73.github.io/klendric-demo/runs/2026-05-03/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://marinatvere73.github.io/klendric-demo/runs/2026-05-03/property/RID3403.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://marinatvere73.github.io/klendric-demo/runs/2026-05-03/property/SD3902.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://marinatvere73.github.io/klendric-demo/runs/2026-05-03/property/QUA1990.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://marinatvere73.github.io/klendric-demo/runs/2026-05-03/property/SD1303.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://marinatvere73.github.io/klendric-demo/runs/2026-05-03/property/ALX2434.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://marinatvere73.github.io/klendric-demo/runs/demo-airbnb-1334271564949136409/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+</urlset>

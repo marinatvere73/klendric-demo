@@ -1,0 +1,8 @@
+# Vesara — Private Beta
+# Disallow all crawlers during invite-only Founders' Flock period.
+# This will be opened up post-launch.
+
+User-agent: *
+Disallow: /
+
+Sitemap: https://marinatvere73.github.io/klendric-demo/sitemap.xml
