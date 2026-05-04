@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara — Team Operations Portfolio (LussoStay)</title>
+<meta name="description" content="Live team workspace: 27 LussoStay properties on Vesara. Triage recs, mark resolved, track who fixed what. Internal team tool.">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body.light { --bg: #FAFAF9; --bg-elevated: #FFFFFF; --surface: #FFFFFF; --surface-2: #F5F5F4; --surface-3: #EAE9E5; --border: rgba(0,0,0,0.08); --border-strong: rgba(0,0,0,0.16); --text: rgba(15,15,15,0.95); --text-secondary: rgba(15,15,15,0.62); --text-tertiary: rgba(15,15,15,0.42); --accent: #047857; --accent-hover: #059669; --accent-dim: rgba(4,120,87,0.08); --accent-glow: rgba(4,120,87,0.16); }
+  body.light .nav { background: rgba(255,255,255,0.92); }
+  body.light .nav-cta, body.light .btn-primary { color: #FFFFFF !important; }
+  body.light .live-banner { background: rgba(4,120,87,0.06); }
+
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; transition: background var(--dur-base) var(--ease), color var(--dur-base) var(--ease); }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links { display: flex; align-items: center; gap: 16px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; }
+  .nav-cta { background: var(--accent); color: #000; padding: 8px 16px; border-radius: var(--r-md); font-weight: 600; }
+  .live-banner { background: rgba(16,185,129,0.10); border-bottom: 1px solid var(--accent); padding: 8px 24px; text-align: center; font-size: 12px; color: var(--accent); }
+
+  .theme-toggle, .who-input { background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text); padding: 6px 12px; border-radius: var(--r-md); font-size: 12px; cursor: pointer; font-family: inherit; }
+  .who-input { width: 80px; cursor: text; }
+  .who-input::placeholder { color: var(--text-tertiary); }
+
+  .header { max-width: 1400px; margin: 0 auto; padding: 32px 24px 16px; }
+  h1 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 8px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .lede { color: var(--text-secondary); font-size: 15px; margin: 0; max-width: 720px; line-height: 1.55; }
+
+  .meta-bar { max-width: 1400px; margin: 24px auto 16px; padding: 0 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+  .meta { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px 16px; }
+  .meta-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); }
+  .meta-num { font-size: 22px; font-weight: 700; color: var(--accent); margin-top: 4px; font-family: var(--font-serif); font-style: italic; line-height: 1; }
+  .meta-sub { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+  .controls { max-width: 1400px; margin: 16px auto; padding: 0 24px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .search-input { flex: 1; min-width: 200px; max-width: 400px; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--r-md); color: var(--text); font-family: inherit; font-size: 14px; }
+  .filter-pill { padding: 8px 14px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--r-full); color: var(--text-secondary); font-size: 12px; cursor: pointer; font-family: inherit; transition: all var(--dur-fast); }
+  .filter-pill.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 600; }
+  body.light .filter-pill.active { color: #FFFFFF; }
+  .export-btn { padding: 8px 14px; background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text); border-radius: var(--r-md); cursor: pointer; font-size: 12px; font-family: inherit; }
+
+  .properties { max-width: 1400px; margin: 0 auto 80px; padding: 0 24px; display: grid; gap: 16px; }
+  .prop-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; transition: border-color var(--dur-fast); }
+  .prop-card:hover { border-color: var(--border-strong); }
+  .prop-header { padding: 20px 24px; display: grid; grid-template-columns: 80px 1fr auto auto; gap: 20px; align-items: center; cursor: pointer; }
+  .prop-grade { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 22px; color: #000; font-family: var(--font-serif); font-style: italic; }
+  .grade-A { background: var(--grade-a); }
+  .grade-B { background: var(--grade-b); color: #FFF; }
+  .grade-C { background: var(--grade-c); }
+  .grade-D { background: var(--grade-d); }
+  .grade-F { background: var(--grade-f); }
+  .prop-info .pid { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); letter-spacing: 0.04em; }
+  .prop-info .name { font-size: 16px; font-weight: 600; margin-top: 4px; }
+  .prop-info .meta { font-size: 12px; color: var(--text-secondary); margin-top: 4px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .prop-progress { text-align: right; min-width: 140px; }
+  .prog-bar { width: 100%; height: 6px; background: var(--surface-3); border-radius: var(--r-full); overflow: hidden; margin-top: 6px; }
+  .prog-fill { height: 100%; background: var(--accent); border-radius: var(--r-full); transition: width var(--dur-base); }
+  .prog-text { font-size: 12px; color: var(--text-secondary); }
+  .prop-toggle { color: var(--text-tertiary); font-size: 18px; transition: transform var(--dur-fast); }
+  .prop-card.open .prop-toggle { transform: rotate(90deg); }
+
+  .recs-block { display: none; padding: 0 24px 24px; border-top: 1px solid var(--border); }
+  .prop-card.open .recs-block { display: block; }
+
+  .rec-item { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px; margin-top: 16px; }
+  .rec-item.resolved { background: var(--accent-dim); border-color: var(--accent); }
+  .rec-top { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: flex-start; margin-bottom: 12px; }
+  .rec-cat { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+  .rec-title { font-size: 15px; font-weight: 600; line-height: 1.4; }
+  .rec-desc { font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; margin: 8px 0 12px; }
+  .rec-conf { font-size: 11px; color: var(--text-tertiary); }
+  .rec-conf strong { color: var(--accent); }
+
+  .goals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
+  .goal { padding: 10px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-md); text-align: center; }
+  .goal-tier { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 4px; }
+  .goal-tier.min { color: var(--warning); }
+  .goal-tier.awesome { color: var(--info); }
+  .goal-tier.amazing { color: var(--accent); }
+  .goal-val { font-size: 13px; font-weight: 600; }
+  .goal-desc { font-size: 10px; color: var(--text-tertiary); margin-top: 2px; line-height: 1.3; }
+
+  .rec-resolve { display: grid; grid-template-columns: 110px 110px 1fr auto; gap: 8px; margin-top: 12px; align-items: center; }
+  @media (max-width: 700px) { .rec-resolve { grid-template-columns: 1fr; } }
+  .rec-resolve select, .rec-resolve input { padding: 8px 10px; background: var(--bg-elevated); border: 1px solid var(--border-strong); border-radius: var(--r-sm); color: var(--text); font-family: inherit; font-size: 12px; }
+  .rec-resolve input.who { font-family: var(--font-mono); text-transform: uppercase; }
+  .rec-resolve input.comment { font-size: 12.5px; }
+  .rec-resolve button { padding: 8px 14px; background: var(--accent); color: #000; border: none; border-radius: var(--r-sm); font-weight: 600; font-size: 12px; cursor: pointer; font-family: inherit; }
+  body.light .rec-resolve button { color: #FFFFFF; }
+  .rec-resolve button:disabled { background: var(--surface-3); color: var(--text-tertiary); cursor: not-allowed; }
+
+  .resolved-stamp { background: var(--accent-dim); border: 1px solid var(--accent); border-radius: var(--r-md); padding: 12px; margin-top: 8px; font-size: 12.5px; }
+  .resolved-stamp strong { color: var(--accent); }
+  .resolved-stamp .by { font-family: var(--font-mono); }
+
+  .footer { padding: 32px 24px; text-align: center; color: var(--text-tertiary); font-size: 12px; border-top: 1px solid var(--border); margin-top: 60px; }
+</style>
+</head>
+<body>
+
+<div class="live-banner">● TEAM OPS · 27 LussoStay properties on Vesara · localStorage persistence · changes saved automatically</div>
+
+<nav class="nav">
+  <a href="index.html" class="brand"><svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg><span>Vesara · Portfolio Ops</span></a>
+  <div class="nav-links">
+    <a href="proof.html">Proof</a>
+    <a href="dashboard.html">Dashboard</a>
+    <input class="who-input" id="userInitials" placeholder="Your initials" maxlength="6" oninput="saveInitials()" />
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <span id="themeLabel">Light mode</span>
+    </button>
+    <button class="export-btn" onclick="exportData()">⇣ Export JSON</button>
+  </div>
+</nav>
+
+<header class="header">
+  <h1>LussoStay <span class="accent">portfolio operations</span></h1>
+  <p class="lede">Every Vesara recommendation across 27 properties. Triage, mark resolved, track who fixed what. Add your initials top right and start working the list. Goal tiers per item: <strong style="color: var(--warning);">Minimum</strong> · <strong style="color: var(--info);">Awesome</strong> · <strong style="color: var(--accent);">Amazing</strong>.</p>
+</header>
+
+<div class="meta-bar">
+  <div class="meta"><div class="meta-label">Properties</div><div class="meta-num" id="metaProps">27</div><div class="meta-sub">on pilot</div></div>
+  <div class="meta"><div class="meta-label">Total recs</div><div class="meta-num" id="metaTotal">0</div><div class="meta-sub">across portfolio</div></div>
+  <div class="meta"><div class="meta-label">Resolved</div><div class="meta-num" id="metaResolved">0</div><div class="meta-sub">complete ✓</div></div>
+  <div class="meta"><div class="meta-label">In progress</div><div class="meta-num" id="metaProgress">0</div><div class="meta-sub">someone working</div></div>
+  <div class="meta"><div class="meta-label">Pending</div><div class="meta-num" id="metaPending">0</div><div class="meta-sub">unclaimed</div></div>
+  <div class="meta"><div class="meta-label">Predicted lift</div><div class="meta-num" id="metaLift">$0</div><div class="meta-sub">when all resolved</div></div>
+</div>
+
+<div class="controls">
+  <input type="text" class="search-input" id="searchInput" placeholder="Search property code, market, or rec..." oninput="renderProperties()" />
+  <button class="filter-pill active" data-filter="all" onclick="setFilter('all', this)">All</button>
+  <button class="filter-pill" data-filter="pending" onclick="setFilter('pending', this)">Pending</button>
+  <button class="filter-pill" data-filter="progress" onclick="setFilter('progress', this)">In progress</button>
+  <button class="filter-pill" data-filter="resolved" onclick="setFilter('resolved', this)">Resolved</button>
+  <button class="filter-pill" data-filter="critical" onclick="setFilter('critical', this)">⚠ Critical only</button>
+</div>
+
+<div class="properties" id="propertiesContainer"></div>
+
+<footer class="footer">
+  All changes auto-save to your browser (localStorage). Export JSON to share with team. Source data from Guesty + PriceLabs as of 2026-05-04.<br>
+  Future: backend sync via Supabase so the whole team sees the same status in real-time.
+</footer>
+
+<script>
+  // ============================================================
+  //   PORTFOLIO DATA — sourced from Guesty + PriceLabs 2026-05-04
+  //   Real numbers. Real properties. Recs sourced from Vesara analysis.
+  // ============================================================
+  const PORTFOLIO = [
+    { code: 'SD3902', name: '39th-Floor Penthouse · Ocean Views', market: 'San Diego', bedrooms: 1, basePrice: 449, occ30: 53, marketOcc: 27, score: 78, recs: [
+      { id: 'SD3902-1', cat: 'compliance', title: 'Min-stay rule compliance enforced ✓', desc: 'Memorial Day + SD Pride violations fixed (May 22-25 → 4n, Jul 17-19 → 4n)', conf: 0.99, status: 'resolved', resolvedBy: 'AI+MT', resolvedComment: 'Executed via PriceLabs MCP 2026-05-04. 7 overrides preserve $599/$549 floors.', goalMin: '0 violations', goalAwesome: '+$1.2K/yr saved', goalAmazing: '+$2.4K/yr saved' },
+      { id: 'SD3902-2', cat: 'pricing', title: 'June min_stay 2 (Marina exception) ✓', desc: '30 PriceLabs overrides for June 1-30 to capture gap-night demand', conf: 1.00, status: 'resolved', resolvedBy: 'AI+MT', resolvedComment: 'June flexibility window active. Reverts to min 4 from July 1.', goalMin: '+1 booking', goalAwesome: '+$400/mo', goalAmazing: '+$1,200/mo' },
+    ]},
+    { code: 'WAT340', name: 'Sparks Marina 1BR · Waterfront Views', market: 'Sparks', bedrooms: 1, basePrice: 255, occ30: 47, marketOcc: 44, score: 81, recs: [
+      { id: 'WAT340-1', cat: 'ops', title: 'Build 3-step arrival flow (visual guide)', desc: 'Check-in score 4.77/5. Auto-generate parking → entrance → unit door annotated photo guide. 24h pre-arrival message + 20-min post-arrival ping. Lock code activation timing audit.', conf: 0.92, status: 'pending', goalMin: '4.77 → 4.85', goalAwesome: '4.77 → 4.92', goalAmazing: '4.77 → 5.0 + +$220/mo' },
+      { id: 'WAT340-2', cat: 'listing', title: 'Value perception fix (no rate cut)', desc: 'Value 4.77/5 — restructure $60 cleaning fee, add "no checkout chores" line, add bundling line near top of description.', conf: 0.85, status: 'pending', goalMin: 'Value 4.85', goalAwesome: '+$300/mo', goalAmazing: '+$700/mo + Value 5.0' },
+      { id: 'WAT340-3', cat: 'ops', title: 'Push review response 75% → 100%', desc: 'Respond to 2 missing reviews (Dec 7 4-star, Feb 9 Booking). Standardize 3-touch post-stay sequence.', conf: 0.84, status: 'pending', goalMin: '90% response', goalAwesome: '100% response', goalAmazing: '100% + $180/mo lift' },
+      { id: 'WAT340-4', cat: 'channels', title: 'Activate Vrbo channel', desc: '0 Vrbo presence. Family-traveler channel for Reno/Tahoe market. OAuth via Hostaway/Guesty.', conf: 0.78, status: 'pending', goalMin: 'Listed live', goalAwesome: '+1 booking/mo', goalAmazing: '+$900/mo' },
+      { id: 'WAT340-5', cat: 'pricing', title: 'Base price test: $255 → $246 (PriceLabs rec)', desc: 'PriceLabs recommends $246 vs current $255. Slight overshoot. 7-day test.', conf: 0.71, status: 'pending', goalMin: 'No occ drop', goalAwesome: '+1pt occ', goalAmazing: '+3pt occ + RevPAR↑' },
+    ]},
+    { code: 'QUA1990', name: '4BR Reno · Fireplace · Near Downtown', market: 'Reno', bedrooms: 4, basePrice: 340, occ30: 17, marketOcc: 45, score: 52, recs: [
+      { id: 'QUA1990-1', cat: 'diagnostic', title: '🚨 Occupancy collapse — full diagnostic before pricing', desc: '17% vs 45% market = 28pt gap. Triple-brain diagnostic before blunt discount: photos / copy / channel mix / pricing / regulatory.', conf: 0.88, critical: true, status: 'pending', goalMin: '25% occ', goalAwesome: '40% occ', goalAmazing: 'Match market 45%+' },
+      { id: 'QUA1990-2', cat: 'pricing', title: 'PriceLabs rec $335 vs current $340 — minor', desc: 'Pricing is NOT the main driver — diagnostic first', conf: 0.65, status: 'pending', goalMin: 'Apply $335', goalAwesome: 'Test elasticity', goalAmazing: 'Optimize to RevPAR max' },
+    ]},
+    { code: 'RID3403', name: '4BR Reno · Game Room, BBQ, Trampoline', market: 'Reno', bedrooms: 4, basePrice: 324, occ30: 53, marketOcc: 46, score: 64, recs: [
+      { id: 'RID3403-1', cat: 'pricing', title: '🚨 Base $324 vs PriceLabs rec $253 (-22%)', desc: 'Booking pace sliding. Drop to $275-285 range as initial test, monitor 7d response.', conf: 0.86, critical: true, status: 'pending', goalMin: 'Drop to $295', goalAwesome: '+$800/mo recovery', goalAmazing: '+$1,500/mo' },
+    ]},
+    { code: 'ALX1734', name: 'Chic 1BR Reno · Heated Pool, Spa, Sauna', market: 'Reno', bedrooms: 1, basePrice: 159, occ30: 100, marketOcc: 47, score: 75, recs: [
+      { id: 'ALX1734-1', cat: 'pricing', title: '🚨 100% occ vs 47% market — underpriced', desc: '+8% ADR test (one-week trial). Conservative because weekend rates more elastic. PriceLabs rec $135 (LOWER than current — outlier signal worth investigating).', conf: 0.83, critical: true, status: 'pending', goalMin: '+5% ADR no occ drop', goalAwesome: '+8% ADR + 95% occ', goalAmazing: '+12% ADR + 90% occ' },
+    ]},
+    { code: 'TAN5445', name: '3BR Mountain View · Swim Spa, Mini Golf', market: 'Reno', bedrooms: 3, basePrice: 349, occ30: 100, marketOcc: 43, score: 80, recs: [
+      { id: 'TAN5445-1', cat: 'pricing', title: '🚨 100% occ 60d vs 32% market — underpriced', desc: 'Highest underpriced signal in portfolio. +10% ADR test recommended. PriceLabs rec $335.', conf: 0.85, critical: true, status: 'pending', goalMin: '+5% ADR', goalAwesome: '+10% + 95% occ', goalAmazing: '+15% + 88% occ' },
+    ]},
+    { code: 'SD1303', name: 'Downtown SD 1BR · Queen, Pool, Sauna', market: 'San Diego', bedrooms: 1, basePrice: 340, occ30: 100, marketOcc: 27, score: 79, recs: [
+      { id: 'SD1303-1', cat: 'pricing', title: '🚨 100% occ vs 27% market — massively underpriced', desc: '+12% ADR test. Market is at 27% — we are 3.7x market occupancy at our current rate.', conf: 0.88, critical: true, status: 'pending', goalMin: '+5% ADR', goalAwesome: '+12% + 95% occ', goalAmazing: '+18% + 88% occ' },
+    ]},
+    { code: 'ALX3131', name: 'Serene 1BR · Sauna, Pool, Yoga Studio', market: 'Reno', bedrooms: 1, basePrice: 189, occ30: 90, marketOcc: 47, score: 73, recs: [
+      { id: 'ALX3131-1', cat: 'pricing', title: '90% occ vs 47% market — underpriced', desc: '+5% ADR test', conf: 0.78, status: 'pending', goalMin: '+3% ADR', goalAwesome: '+5% + 88% occ', goalAmazing: '+8% + 82% occ' },
+    ]},
+    { code: 'ALX2434', name: 'Bright 1BR South Reno · Pool, Gym', market: 'Reno', bedrooms: 1, basePrice: 119, occ30: 80, marketOcc: 47, score: 68, recs: [
+      { id: 'ALX2434-1', cat: 'pricing', title: 'Base $119 — PriceLabs has no recommendation (data thin)', desc: 'Manually test +5% ADR given strong occupancy', conf: 0.65, status: 'pending', goalMin: 'No occ drop', goalAwesome: '+$5/night', goalAmazing: '+$10/night' },
+    ]},
+    { code: 'ALX1433', name: '1BR Apt · Hot Tub, Gym, Pool, Mini Golf', market: 'Reno', bedrooms: 1, basePrice: 200, occ30: 80, marketOcc: 47, score: 76, recs: [
+      { id: 'ALX1433-1', cat: 'pricing', title: 'Slight overshoot — base $200 vs rec $198', desc: 'Minor', conf: 0.6, status: 'pending', goalMin: 'Apply $198', goalAwesome: 'Test elasticity', goalAmazing: 'Optimize 14d' },
+    ]},
+    { code: 'WAT440', name: 'Sparks 1BR · Jacuzzi, Pool, Views', market: 'Sparks', bedrooms: 1, basePrice: 235, occ30: 43, marketOcc: 44, score: 78, recs: [
+      { id: 'WAT440-1', cat: 'comp', title: 'Sister-property analysis: revenue leader vs WAT340', desc: '$17,311 YTD vs WAT340 $12,277. Document what WAT440 does differently — feed back into WAT340 fixes.', conf: 0.72, status: 'pending', goalMin: 'Identify 1 difference', goalAwesome: 'Document 3 differences', goalAmazing: 'Apply pattern to WAT340' },
+    ]},
+    { code: 'ENC6591', name: 'Family 3BR Reno · Patio, BBQ, Casinos', market: 'Reno', bedrooms: 3, basePrice: 240, occ30: 37, marketOcc: 47, score: 70, recs: [
+      { id: 'ENC6591-1', cat: 'pricing', title: 'Underperforming market — boost to $249 (PriceLabs)', desc: 'occ 37% vs 47% market', conf: 0.74, status: 'pending', goalMin: 'Apply $249', goalAwesome: '+5pt occ', goalAmazing: 'Match market occ' },
+    ]},
+    { code: 'LOS1191', name: '4BR Sparks · Patio by Willowcreek Park', market: 'Sparks', bedrooms: 4, basePrice: 369, occ30: 80, marketOcc: 47, score: 84, recs: [
+      { id: 'LOS1191-1', cat: 'pricing', title: 'Strong performance — slight underpricing signal', desc: '80% occ vs 47% market. PriceLabs rec $363 (slight cut). Test +3% to validate.', conf: 0.7, status: 'pending', goalMin: 'Hold rate, watch occ', goalAwesome: '+3% ADR', goalAmazing: '+5% ADR sustainable' },
+    ]},
+    { code: 'MAR2021', name: '4BR Sparks · Golden Eagle Sports', market: 'Sparks', bedrooms: 4, basePrice: 310, occ30: 57, marketOcc: 46, score: 76, recs: [
+      { id: 'MAR2021-1', cat: 'pricing', title: 'PriceLabs rec $317 — slight underprice', desc: 'Apply rec', conf: 0.72, status: 'pending', goalMin: 'Apply $317', goalAwesome: '+1pt occ', goalAmazing: 'Steady RevPAR↑' },
+    ]},
+    { code: 'SIE1825', name: '3BR Reno · 40 Min Tahoe', market: 'Reno', bedrooms: 3, basePrice: 179, occ30: 23, marketOcc: 47, score: 60, recs: [
+      { id: 'SIE1825-1', cat: 'diagnostic', title: 'Occupancy underperforming — diagnostic needed', desc: '23% vs 47% market. Pricing alone unlikely fix. Check listing copy + photo + channel mix.', conf: 0.74, status: 'pending', goalMin: 'Fix top issue', goalAwesome: '35% occ', goalAmazing: '45% occ match market' },
+    ]},
+    { code: 'SIE2301', name: '3BR Family Reno · Patio, Downtown', market: 'Reno', bedrooms: 3, basePrice: 209, occ30: 73, marketOcc: 48, score: 82, recs: [
+      { id: 'SIE2301-1', cat: 'pricing', title: 'Outperforming — PriceLabs rec $215 (slight up)', desc: 'Apply', conf: 0.76, status: 'pending', goalMin: 'Apply $215', goalAwesome: '+$300/mo', goalAmazing: 'Sustain 70%+' },
+    ]},
+    { code: 'ALX2213', name: 'Relaxing 2BR · Hot Tub, Pool', market: 'Reno', bedrooms: 2, basePrice: 225, occ30: 53, marketOcc: 47, score: 75, recs: [
+      { id: 'ALX2213-1', cat: 'pricing', title: 'PriceLabs rec $242 — slight underprice', desc: 'Apply', conf: 0.72, status: 'pending', goalMin: 'Apply $242', goalAwesome: '+$400/mo', goalAmazing: 'Sustain occ' },
+    ]},
+    { code: 'ALX2623', name: 'Cozy 1BR Near Tahoe · Heated Pool', market: 'Reno', bedrooms: 1, basePrice: 135, occ30: 70, marketOcc: 47, score: 76, recs: [
+      { id: 'ALX2623-1', cat: 'pricing', title: 'PriceLabs rec $138 — apply', desc: '', conf: 0.7, status: 'pending', goalMin: 'Apply $138', goalAwesome: '+$200/mo', goalAmazing: 'Hold 70%+' },
+    ]},
+    { code: 'ALX223', name: 'Modern 1BR Reno · Pool, Spa', market: 'Reno', bedrooms: 1, basePrice: 159, occ30: 37, marketOcc: 47, score: 67, recs: [
+      { id: 'ALX223-1', cat: 'diagnostic', title: 'Underperforming — need diagnostic', desc: 'PriceLabs rec $155 is barely a cut. Issue likely listing/comp.', conf: 0.7, status: 'pending', goalMin: 'Identify cause', goalAwesome: '45% occ', goalAmazing: 'Match market' },
+    ]},
+    { code: 'ALX2923', name: 'Stylish 1BR · Pool, Gym, Theater', market: 'Reno', bedrooms: 1, basePrice: 129, occ30: 47, marketOcc: 47, score: 72, recs: [
+      { id: 'ALX2923-1', cat: 'pricing', title: 'PriceLabs rec $130 — match', desc: '', conf: 0.65, status: 'pending', goalMin: 'Apply $130', goalAwesome: '+1pt occ', goalAmazing: '55% occ' },
+    ]},
+    { code: 'ALX322', name: 'Luxury 2BR Reno · Pool, Spa, Theater', market: 'Reno', bedrooms: 2, basePrice: 225, occ30: 63, marketOcc: 47, score: 78, recs: [
+      { id: 'ALX322-1', cat: 'pricing', title: 'PriceLabs rec $242 — slight underprice', desc: 'Apply', conf: 0.74, status: 'pending', goalMin: 'Apply $242', goalAwesome: '+$300/mo', goalAmazing: 'Sustain' },
+    ]},
+    { code: 'ALX3224', name: '2BR Reno · Heated Pool, Mini Golf, Sauna', market: 'Reno', bedrooms: 2, basePrice: 210, occ30: 30, marketOcc: 47, score: 64, recs: [
+      { id: 'ALX3224-1', cat: 'diagnostic', title: 'Underperforming market by 17pts — diagnostic', desc: 'PriceLabs rec $211 (no cut signal). Issue elsewhere.', conf: 0.74, status: 'pending', goalMin: 'Identify cause', goalAwesome: '40% occ', goalAmazing: 'Match market' },
+    ]},
+    { code: 'ALX1021', name: 'Spacious 2BR · Pool, Theater, Gym', market: 'Reno', bedrooms: 2, basePrice: 179, occ30: 37, marketOcc: 47, score: 68, recs: [
+      { id: 'ALX1021-1', cat: 'pricing', title: 'PriceLabs rec $184 — slight up', desc: 'Apply + diagnostic on occ gap', conf: 0.7, status: 'pending', goalMin: 'Apply $184', goalAwesome: '+5pt occ', goalAmazing: 'Match market' },
+    ]},
+    { code: 'WAT415', name: 'Stunning 1BR · Jacuzzi, Rooftop Lounge', market: 'Sparks', bedrooms: 2, basePrice: 255, occ30: 47, marketOcc: 43, score: 80, recs: [
+      { id: 'WAT415-1', cat: 'pricing', title: 'PriceLabs rec $256 — match', desc: 'Already aligned', conf: 0.65, status: 'pending', goalMin: 'Hold rate', goalAwesome: '50% occ', goalAmazing: 'Sustain RevPAR' },
+    ]},
+    { code: 'WAT416', name: 'Waterfront 2BR · Casinos, IMAX', market: 'Sparks', bedrooms: 2, basePrice: 279, occ30: 43, marketOcc: 44, score: 76, recs: [
+      { id: 'WAT416-1', cat: 'pricing', title: 'Match market rec $279 — at recommendation', desc: 'Sustain', conf: 0.6, status: 'pending', goalMin: 'Hold', goalAwesome: '+5pt occ', goalAmazing: '50%+' },
+    ]},
+    { code: 'WAT426', name: 'Modern 2BR Sparks · Pool, Mountain Views', market: 'Sparks', bedrooms: 2, basePrice: 235, occ30: 57, marketOcc: 44, score: 78, recs: [
+      { id: 'WAT426-1', cat: 'pricing', title: 'Above market — slight ADR test possible', desc: '+3% test', conf: 0.7, status: 'pending', goalMin: 'Hold', goalAwesome: '+3% ADR', goalAmazing: '+5% sustained' },
+    ]},
+    { code: 'WAT526', name: 'Scenic 2BR · Mountain Views, Jacuzzi', market: 'Sparks', bedrooms: 2, basePrice: 225, occ30: 47, marketOcc: 44, score: 79, recs: [
+      { id: 'WAT526-1', cat: 'pricing', title: 'PriceLabs rec $227 — slight underprice', desc: 'Apply', conf: 0.7, status: 'pending', goalMin: 'Apply $227', goalAwesome: '+$200/mo', goalAmazing: 'Sustain' },
+    ]},
+    { code: 'SD719', name: 'Downtown SD King Suite · Sauna, Pool', market: 'San Diego', bedrooms: 1, basePrice: 295, occ30: 23, marketOcc: 26, score: 65, recs: [
+      { id: 'SD719-1', cat: 'pricing', title: 'PriceLabs rec $292 — slight cut', desc: 'Match market occupancy ~26% — pricing not the issue. Diagnostic on listing', conf: 0.72, status: 'pending', goalMin: 'Apply $292', goalAwesome: '35% occ', goalAmazing: '45% occ' },
+    ]},
+  ];
+
+  // Compute auto grades
+  PORTFOLIO.forEach(p => {
+    p.grade = p.score >= 85 ? 'A' : p.score >= 75 ? 'B' : p.score >= 65 ? 'C' : p.score >= 55 ? 'D' : 'F';
+  });
+
+  // ============================================================
+  //   STATE — localStorage persistence
+  // ============================================================
+  const STATE_KEY = 'vesara-portfolio-state-v1';
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STATE_KEY) || '{}'); } catch { return {}; }
+  }
+  function saveState() { localStorage.setItem(STATE_KEY, JSON.stringify(state)); }
+  let state = loadState();
+
+  // Apply persisted state to PORTFOLIO recs
+  PORTFOLIO.forEach(p => p.recs.forEach(r => {
+    const s = state[r.id];
+    if (s) { r.status = s.status; r.resolvedBy = s.resolvedBy; r.resolvedComment = s.resolvedComment; r.resolvedAt = s.resolvedAt; }
+  }));
+
+  // ============================================================
+  //   USER INITIALS
+  // ============================================================
+  function loadInitials() {
+    const v = localStorage.getItem('vesara-user-initials') || '';
+    document.getElementById('userInitials').value = v;
+    return v;
+  }
+  function saveInitials() {
+    localStorage.setItem('vesara-user-initials', document.getElementById('userInitials').value.toUpperCase());
+  }
+
+  // ============================================================
+  //   THEME
+  // ============================================================
+  (function () { const s = localStorage.getItem('vesara-theme'); if (s === 'light') document.body.classList.add('light'); })();
+  function toggleTheme() { const b = document.body, l = b.classList.toggle('light'); localStorage.setItem('vesara-theme', l ? 'light' : 'dark'); document.getElementById('themeLabel').textContent = l ? 'Dark mode' : 'Light mode'; }
+
+  // ============================================================
+  //   FILTERS
+  // ============================================================
+  let currentFilter = 'all';
+  function setFilter(f, btn) {
+    currentFilter = f;
+    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    renderProperties();
+  }
+
+  // ============================================================
+  //   RESOLVE / UPDATE A REC
+  // ============================================================
+  function setRecStatus(recId, status) {
+    const initials = document.getElementById('userInitials').value.toUpperCase().trim();
+    if ((status === 'resolved' || status === 'progress') && !initials) {
+      alert('Add your initials in the top-right field first.');
+      return;
+    }
+    const rec = findRec(recId);
+    if (!rec) return;
+    rec.status = status;
+    if (status === 'resolved') {
+      rec.resolvedBy = initials;
+      rec.resolvedAt = new Date().toISOString().slice(0, 16).replace('T', ' ');
+      const c = document.querySelector('[data-comment="' + recId + '"]');
+      rec.resolvedComment = c ? c.value : '';
+    } else if (status === 'progress') {
+      rec.resolvedBy = initials;
+      rec.resolvedAt = null;
+    } else {
+      rec.resolvedBy = null; rec.resolvedComment = null; rec.resolvedAt = null;
+    }
+    state[recId] = { status: rec.status, resolvedBy: rec.resolvedBy, resolvedComment: rec.resolvedComment, resolvedAt: rec.resolvedAt };
+    saveState();
+    renderProperties();
+    refreshMeta();
+  }
+  function findRec(recId) {
+    for (const p of PORTFOLIO) for (const r of p.recs) if (r.id === recId) return r;
+    return null;
+  }
+
+  // ============================================================
+  //   EXPORT
+  // ============================================================
+  function exportData() {
+    const blob = new Blob([JSON.stringify(state, null, 2)], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'vesara-portfolio-state-' + new Date().toISOString().slice(0,10) + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // ============================================================
+  //   RENDER
+  // ============================================================
+  function refreshMeta() {
+    let total = 0, resolved = 0, progress = 0, pending = 0;
+    PORTFOLIO.forEach(p => p.recs.forEach(r => {
+      total++;
+      if (r.status === 'resolved') resolved++;
+      else if (r.status === 'progress') progress++;
+      else pending++;
+    }));
+    document.getElementById('metaTotal').textContent = total;
+    document.getElementById('metaResolved').textContent = resolved;
+    document.getElementById('metaProgress').textContent = progress;
+    document.getElementById('metaPending').textContent = pending;
+  }
+
+  function renderProperties() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const container = document.getElementById('propertiesContainer');
+    container.innerHTML = '';
+
+    const filtered = PORTFOLIO.filter(p => {
+      // Search filter
+      if (search) {
+        const hay = (p.code + ' ' + p.name + ' ' + p.market + ' ' + p.recs.map(r => r.title + ' ' + r.desc).join(' ')).toLowerCase();
+        if (!hay.includes(search)) return false;
+      }
+      // Status filter
+      if (currentFilter === 'all') return true;
+      if (currentFilter === 'critical') return p.recs.some(r => r.critical);
+      return p.recs.some(r => r.status === currentFilter || (currentFilter === 'pending' && !r.status));
+    });
+
+    filtered.forEach(p => {
+      const total = p.recs.length;
+      const done = p.recs.filter(r => r.status === 'resolved').length;
+      const pct = total ? Math.round(done/total*100) : 0;
+
+      const card = document.createElement('div');
+      card.className = 'prop-card';
+      card.innerHTML = `
+        <div class="prop-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="prop-grade grade-${p.grade}">${p.grade}</div>
+          <div class="prop-info">
+            <div class="pid">${p.code}</div>
+            <div class="name">${p.name}</div>
+            <div class="meta">
+              <span>${p.market}</span>
+              <span>${p.bedrooms}BR</span>
+              <span>$${p.basePrice}/night</span>
+              <span>occ ${p.occ30}% (mkt ${p.marketOcc}%)</span>
+              <span>Score ${p.score}/100</span>
+            </div>
+          </div>
+          <div class="prop-progress">
+            <div class="prog-text">${done}/${total} resolved · ${pct}%</div>
+            <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+          </div>
+          <div class="prop-toggle">›</div>
+        </div>
+        <div class="recs-block">
+          ${p.recs.map(r => renderRec(r)).join('')}
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function renderRec(r) {
+    const isResolved = r.status === 'resolved';
+    return `
+      <div class="rec-item ${isResolved ? 'resolved' : ''}">
+        <div class="rec-top">
+          <div>
+            <div class="rec-cat">${r.cat}${r.critical ? ' · ⚠ CRITICAL' : ''}</div>
+            <div class="rec-title">${r.title}</div>
+          </div>
+          <div class="rec-conf">conf <strong>${r.conf}</strong></div>
+        </div>
+        ${r.desc ? `<div class="rec-desc">${r.desc}</div>` : ''}
+        <div class="goals">
+          <div class="goal"><div class="goal-tier min">▸ MINIMUM</div><div class="goal-val">${r.goalMin || '—'}</div><div class="goal-desc">good baseline</div></div>
+          <div class="goal"><div class="goal-tier awesome">★ AWESOME</div><div class="goal-val">${r.goalAwesome || '—'}</div><div class="goal-desc">target</div></div>
+          <div class="goal"><div class="goal-tier amazing">✦ AMAZING</div><div class="goal-val">${r.goalAmazing || '—'}</div><div class="goal-desc">stretch</div></div>
+        </div>
+        ${isResolved ? `
+          <div class="resolved-stamp">✓ <strong>Resolved</strong> by <span class="by">${r.resolvedBy || '—'}</span> at ${r.resolvedAt || '—'}<br>${r.resolvedComment ? '<em>"' + r.resolvedComment + '"</em>' : ''}</div>
+          <div class="rec-resolve">
+            <button onclick="setRecStatus('${r.id}','pending')">↺ Reopen</button>
+          </div>
+        ` : `
+          <div class="rec-resolve">
+            <select onchange="setRecStatus('${r.id}', this.value); this.value=''">
+              <option value="">Set status…</option>
+              <option value="progress">▸ In progress</option>
+              <option value="resolved">✓ Resolved</option>
+            </select>
+            <input type="text" class="comment" data-comment="${r.id}" placeholder="Comment (saved on Resolve)" />
+          </div>
+        `}
+      </div>
+    `;
+  }
+
+  // ============================================================
+  //   INIT
+  // ============================================================
+  loadInitials();
+  document.getElementById('themeLabel').textContent = document.body.classList.contains('light') ? 'Dark mode' : 'Light mode';
+  renderProperties();
+  refreshMeta();
+</script>
+
+</body>
+</html>
