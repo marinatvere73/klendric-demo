@@ -80,19 +80,31 @@
 
   function submitWaitlist(e) {
     e.preventDefault();
-    // Capture to localStorage as a holding pattern until backend ships
+    // Use FormData to safely access fields by name (avoids form.name conflict with HTMLFormElement.name)
     const form = e.target;
+    const fd = new FormData(form);
     const data = {
-      name: form.name.value, email: form.email.value, company: form.company.value,
-      properties: form.properties.value, market: form.market.value, pms: form.pms.value,
-      currentTools: form.currentTools.value, notes: form.notes.value,
+      name: fd.get('name') || '',
+      email: fd.get('email') || '',
+      company: fd.get('company') || '',
+      properties: fd.get('properties') || '',
+      market: fd.get('market') || '',
+      pms: fd.get('pms') || '',
+      currentTools: fd.get('currentTools') || '',
+      notes: fd.get('notes') || '',
       submittedAt: new Date().toISOString(),
     };
-    const list = JSON.parse(localStorage.getItem('vesara-waitlist') || '[]');
-    list.push(data);
-    localStorage.setItem('vesara-waitlist', JSON.stringify(list));
+    try {
+      const list = JSON.parse(localStorage.getItem('vesara-waitlist') || '[]');
+      list.push(data);
+      localStorage.setItem('vesara-waitlist', JSON.stringify(list));
+    } catch (err) {
+      console.error('Could not save waitlist entry locally', err);
+    }
     document.getElementById('successMsg').classList.add('show');
-    document.getElementById('waitlistForm').reset();
+    form.reset();
+    // Scroll the success message into view so user sees confirmation
+    document.getElementById('successMsg').scrollIntoView({ behavior: 'smooth', block: 'center' });
     return false;
   }
 </script>
