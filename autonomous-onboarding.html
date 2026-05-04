@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara — Zero-Touch Autonomous Onboarding</title>
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+
+  .hero { max-width: 980px; margin: 0 auto; padding: 80px 24px 48px; text-align: center; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--accent); background: var(--accent-dim); color: var(--accent); border-radius: var(--r-full); font-size: 12px; margin-bottom: 24px; }
+  h1 { font-size: clamp(40px, 6vw, 64px); font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 20px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .lede { font-size: 18px; color: var(--text-secondary); max-width: 680px; margin: 0 auto; line-height: 1.55; }
+
+  .marina-card { max-width: 720px; margin: 48px auto 0; padding: 28px 32px; background: linear-gradient(135deg, var(--accent-dim), transparent); border: 1px solid var(--accent); border-radius: var(--r-xl); display: flex; gap: 20px; align-items: center; }
+  .marina-avatar { width: 56px; height: 56px; border-radius: 50%; background: var(--accent); color: #000; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 22px; flex-shrink: 0; }
+  .marina-quote { text-align: left; }
+  .marina-quote .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 4px; }
+  .marina-quote .text { font-size: 15.5px; line-height: 1.55; color: var(--text); font-style: italic; }
+
+  .stats-row { max-width: 980px; margin: 64px auto 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; padding: 0 24px; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 24px; text-align: center; }
+  .stat-num { font-size: 36px; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; font-family: var(--font-serif); font-style: italic; line-height: 1; }
+  .stat-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-top: 8px; }
+  .stat-sub { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+
+  .timeline-section { max-width: 1100px; margin: 80px auto; padding: 0 24px; }
+  .timeline-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-bottom: 32px; }
+
+  .step { display: grid; grid-template-columns: 200px 1fr; gap: 32px; padding: 32px 0; border-bottom: 1px solid var(--border); position: relative; }
+  .step::before { content: ''; position: absolute; left: 200px; top: 56px; bottom: -32px; width: 1px; background: var(--border); }
+  .step:last-child::before { display: none; }
+
+  .step-time { display: flex; flex-direction: column; align-items: flex-start; }
+  .step-marker { width: 40px; height: 40px; border-radius: 50%; background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; margin-bottom: 12px; position: relative; z-index: 2; background: var(--bg); }
+  .step-when { font-size: 13px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; }
+  .step-marina { font-size: 11px; color: var(--accent); margin-top: 8px; padding: 4px 10px; background: var(--accent-dim); border-radius: var(--r-full); font-weight: 600; }
+
+  .step-body { padding-top: 4px; }
+  .step-title { font-size: 22px; font-weight: 600; letter-spacing: -0.015em; margin: 0 0 8px; }
+  .step-desc { color: var(--text-secondary); font-size: 14.5px; line-height: 1.6; }
+  .step-actions { margin-top: 16px; display: grid; gap: 6px; }
+  .step-action { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--text-secondary); padding: 8px 12px; background: var(--surface-2); border-radius: var(--r-md); border: 1px solid var(--border); }
+  .step-action::before { content: '→'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .step-action.ai::before { content: '◇'; color: var(--info); }
+  .step-action.system::before { content: '⚙'; color: var(--text-tertiary); }
+  .step-action.email::before { content: '✉'; color: var(--accent); }
+  .step-action.delight::before { content: '★'; color: var(--warning); }
+
+  .escalation-section { max-width: 1100px; margin: 80px auto; padding: 0 24px; }
+  .esc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
+  @media (max-width: 800px) { .esc-grid { grid-template-columns: 1fr; } }
+  .esc-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 32px; }
+  .esc-card.zero { border-left: 4px solid var(--accent); }
+  .esc-card.escalate { border-left: 4px solid var(--warning); }
+  .esc-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 12px; font-weight: 600; }
+  .esc-card.escalate .esc-tag { color: var(--warning); }
+  .esc-title { font-size: 22px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 16px; }
+  .esc-list { display: grid; gap: 10px; }
+  .esc-item { display: flex; gap: 10px; font-size: 14px; color: var(--text-secondary); padding: 10px 14px; background: var(--surface-2); border-radius: var(--r-md); }
+  .esc-item::before { content: '○'; color: var(--text-tertiary); flex-shrink: 0; }
+  .esc-card.zero .esc-item::before { content: '✓'; color: var(--accent); font-weight: 700; }
+  .esc-card.escalate .esc-item::before { content: '!'; color: var(--warning); font-weight: 700; }
+
+  .ai-coach-demo { max-width: 760px; margin: 80px auto; padding: 0 24px; }
+  .chat-window { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; }
+  .chat-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+  .chat-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--info)); display: flex; align-items: center; justify-content: center; color: #000; font-weight: 700; }
+  .chat-name { font-size: 15px; font-weight: 600; }
+  .chat-status { font-size: 12px; color: var(--accent); }
+  .chat-body { padding: 20px; max-height: 480px; overflow-y: auto; }
+  .msg { margin-bottom: 14px; max-width: 80%; }
+  .msg.ai { display: flex; gap: 10px; }
+  .msg.user { margin-left: auto; }
+  .msg-bubble { padding: 12px 16px; border-radius: var(--r-lg); font-size: 14px; line-height: 1.5; }
+  .msg.ai .msg-bubble { background: var(--surface-2); color: var(--text); border-top-left-radius: 4px; }
+  .msg.user .msg-bubble { background: var(--accent); color: #000; border-top-right-radius: 4px; font-weight: 500; }
+  .msg-tag { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-top: 4px; padding-left: 16px; }
+  .msg-confidence { display: inline-block; padding: 2px 8px; background: var(--accent-dim); color: var(--accent); border-radius: var(--r-full); font-size: 11px; margin-left: 8px; }
+
+  .footer { text-align: center; padding: 60px 24px; color: var(--text-tertiary); font-size: 13px; border-top: 1px solid var(--border); margin-top: 80px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="brand">
+    <svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg>
+    <span>Vesara</span>
+  </a>
+  <div class="nav-links">
+    <a href="onboarding.html">Onboarding wizard</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="launch.html">Launch tracker</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <span class="pill">● Phase 47b · Marina-explicit directive 2026-05-03</span>
+  <h1>Onboarding that runs <span class="accent">without you in the room.</span></h1>
+  <p class="lede">From signup to fully-configured operator with first owner invited and AI Coach handling questions — in 7 days, with zero required touchpoints from Marina. The whole company scales without scaling Marina.</p>
+
+  <div class="marina-card">
+    <div class="marina-avatar">M</div>
+    <div class="marina-quote">
+      <div class="label">Marina · 2026-05-03</div>
+      <div class="text">"The onboarding has to be extremely smooth and professional, automated, and autonomous if possible for anyone new coming on board. The more hands-off the better for me."</div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-row">
+  <div class="stat">
+    <div class="stat-num">0</div>
+    <div class="stat-label">Marina touchpoints</div>
+    <div class="stat-sub">in the default flow</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">60s</div>
+    <div class="stat-label">to first revenue insight</div>
+    <div class="stat-sub">first Vesara Score</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">7d</div>
+    <div class="stat-label">to fully autonomous</div>
+    <div class="stat-sub">AI Coach in command</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">85%</div>
+    <div class="stat-label">questions handled by AI</div>
+    <div class="stat-sub">no human routing</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">≤4 min</div>
+    <div class="stat-label">Marina time per FF delight</div>
+    <div class="stat-sub">opt-in only</div>
+  </div>
+</div>
+
+<section class="timeline-section">
+  <div class="timeline-title">▶ The 7-day autonomous journey</div>
+
+  <div class="step">
+    <div class="step-time">
+      <div class="step-marker">0</div>
+      <div class="step-when">Minute 0</div>
+      <div class="step-marina">0 Marina touchpoints</div>
+    </div>
+    <div class="step-body">
+      <div class="step-title">Signup completes — instant</div>
+      <div class="step-desc">Customer enters email + business info on the signup page. 3 fields. No demo call. Stripe Checkout collects card on file with 14-day trial ($0 today).</div>
+      <div class="step-actions">
+        <div class="step-action system">Stripe webhook fires → Supabase user record created in &lt;1s</div>
+        <div class="step-action system">Founders' Flock seat #N atomically reserved via Postgres advisory lock</div>
+        <div class="step-action system">Magic-link login email sent within 8 seconds</div>
+        <div class="step-action email">Postmark fires Email 1: "Welcome to Founders' Flock seat #N" within 30 seconds</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-time">
+      <div class="step-marker">1</div>
+      <div class="step-when">Minute 1</div>
+      <div class="step-marina">0 Marina touchpoints</div>
+    </div>
+    <div class="step-body">
+      <div class="step-title">First Vesara Score — the 60-second promise</div>
+      <div class="step-desc">Customer clicks magic link → onboarding wizard. Pastes first listing URL (Airbnb, Vrbo, Booking, direct). Vesara scrapes, scores 22 dimensions, polls comp pool. Triple-brain consensus runs in parallel.</div>
+      <div class="step-actions">
+        <div class="step-action ai">Triple-brain consensus (ChatGPT + Gemini + Claude) computes confidence-weighted score</div>
+        <div class="step-action system">22-dimension scoring engine returns 0-100 score + grade A-F</div>
+        <div class="step-action ai">3 specific revenue insights surfaced ("priced 14% below market this weekend"…)</div>
+        <div class="step-action system">Confetti animation + "You're in. Let's set up the rest."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-time">
+      <div class="step-marker">5</div>
+      <div class="step-when">Minute 5</div>
+      <div class="step-marina">0 Marina touchpoints</div>
+    </div>
+    <div class="step-body">
+      <div class="step-title">PMS / Channel connection — one-click OAuth</div>
+      <div class="step-desc">Wizard asks where customer manages their listings. Picks Guesty / Hostaway / OwnerRez / Lodgify / Hospitable / direct. One-click OAuth — no API token paste required for major PMSes.</div>
+      <div class="step-actions">
+        <div class="step-action system">OAuth flow auto-imports all properties, prices, owners, bookings, reviews</div>
+        <div class="step-action ai">AI Coach starts learning the customer's portfolio in background</div>
+        <div class="step-action system">Real-time progress: "23 properties imported · 14 owners imported · 1,420 bookings imported"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-time">
+      <div class="step-marker">15</div>
+      <div class="step-when">Minute 15</div>
+      <div class="step-marina">0 Marina touchpoints</div>
+    </div>
+    <div class="step-body">
+      <div class="step-title">First batch of recommendations</div>
+      <div class="step-desc">All properties scored. Lift Score baseline computed. Top 5 revenue opportunities surfaced ranked by impact × confidence. AI Coach proactively engages.</div>
+      <div class="step-actions">
+        <div class="step-action ai">AI Coach pings: "Welcome — I noticed your Galena Forest property is priced 14% below market this weekend. Want me to walk you through it?"</div>
+        <div class="step-action system">Customer can: apply / ignore / "tell me more" → AI Coach explains reasoning</div>
+        <div class="step-action ai">Confidence scoring on every rec — only ≥0.85 confidence shown, lower kept in "exploring" lane</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-time">
+      <div class="step-marker">1h</div>
+      <div class="step-when">Hour 1</div>
+      <div class="step-marina">0 Marina touchpoints</div>
+    </div>
+    <div class="step-body">
+      <div class="step-title">Owner invites + portal setup</div>
+      <div class="step-desc">Wizard suggests inviting owners to the Owner Portal. AI Coach drafts personalized intros — one per owner — based on portfolio data.</div>
+      <div class="step-actions">
+        <div class="step-action ai">AI generates personalized invite drafts referencing each owner's specific properties</div>
+        <div class="step-action system">Customer reviews drafts (one per owner) — edits or approves</div>
+        <div class="step-action email">Postmark sends personalized invite per owner</div>
+        <div class="step-action system">Owner Portal goes live for that operator's brand (white-labeled)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-time">
+      <div class="step-marker">D1</div>
+      <div class="step-when">Day 1</div>
+      <div class="step-marina">0 Marina touchpoints</div>
+    </div>
+    <div class="step-body">
+      <div class="step-title">Email 2 + Slack invite (autonomous)</div>
+      <div class="step-desc">Postmark fires Email 2: private Slack invite + Marina's actual phone number for emergencies. Slack invite link is autosent — Marina's pinned welcome message handles all new arrivals.</div>
+      <div class="step-actions">
+        <div class="step-action email">Email 2 sends: "Your private Slack invite + my actual phone number"</div>
+        <div class="step-action system">Auto-add to #founders-flock channel via Slack API</div>
+        <div class="step-action ai">In-product AI Coach: "How was your first day? Anything broken?"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-time">
+      <div class="step-marker">D3</div>
+      <div class="step-when">Day 3</div>
+      <div class="step-marina">0 Marina touchpoints</div>
+    </div>
+    <div class="step-body">
+      <div class="step-title">Engagement check-in</div>
+      <div class="step-desc">Email 3 fires: "Did the score actually help?" Reply analytics fed back to AI Coach. Reply-to is marina@vesara.ai but AI Coach drafts the response — Marina approves with one click only if the reply is escalation-worthy.</div>
+      <div class="step-actions">
+        <div class="step-action email">Email 3 sends: "Did the score actually help?"</div>
+        <div class="step-action ai">AI sentiment-scores reply, drafts response, only escalates to Marina if confidence &lt;0.85 OR sentiment &lt; -0.4</div>
+        <div class="step-action ai">If customer hasn't connected Vrbo channel yet: "Want to do that now?" (drift detection)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-time">
+      <div class="step-marker">D7</div>
+      <div class="step-when">Day 7</div>
+      <div class="step-marina">0 Marina touchpoints</div>
+    </div>
+    <div class="step-body">
+      <div class="step-title">First weekly digest</div>
+      <div class="step-desc">Vesara generates customer's first weekly digest — Lift Score this week, top 3 wins, top 3 things to act on next week. Dashboard widget + email.</div>
+      <div class="step-actions">
+        <div class="step-action system">Lift Score attribution computed (pricing, listing, reviews, gap nights)</div>
+        <div class="step-action email">Weekly digest email sent with proof of value delivered</div>
+        <div class="step-action ai">AI Coach: "Want me to put these on your calendar?" → creates Google Calendar events</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-time">
+      <div class="step-marker">D10</div>
+      <div class="step-when">Day 10</div>
+      <div class="step-marina">0 Marina touchpoints</div>
+    </div>
+    <div class="step-body">
+      <div class="step-title">Trial-ending notice + value summary</div>
+      <div class="step-desc">Email 4 fires 4 days before trial ends. AI Coach proactively summarizes value delivered with specific dollar amounts.</div>
+      <div class="step-actions">
+        <div class="step-action email">Email 4: "Your trial ends in 4 days" with switch-to-annual + cancel links</div>
+        <div class="step-action ai">"Vesara found $4,210 of opportunities for you. Here's the proof." (auto-generated value receipt)</div>
+        <div class="step-action system">Dashboard banner: "Day X of 14 trial · You can cancel anytime, $0 charged"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-time">
+      <div class="step-marker">D14</div>
+      <div class="step-when">Day 14 — conversion</div>
+      <div class="step-marina">★ Optional FF delight (≤4 min)</div>
+    </div>
+    <div class="step-body">
+      <div class="step-title">Conversion — fully operational</div>
+      <div class="step-desc">Stripe charges card. AI Coach transitions from "onboarding mode" to "operational coach mode." Customer enters quarterly roadmap voter pool. Annual retreat calendar invite sent.</div>
+      <div class="step-actions">
+        <div class="step-action system">Stripe charges $99 — Founders' Flock lock activates permanently</div>
+        <div class="step-action email">Email 5: "You're officially in. Roadmap voting opens today."</div>
+        <div class="step-action system">Added to quarterly roadmap voter list (Phase 38 mechanic)</div>
+        <div class="step-action system">Annual Founders' Flock retreat calendar invite sent</div>
+        <div class="step-action delight">OPTIONAL: Marina sends 1 personal Slack DM ("Welcome — saw you converted. Anything you need?") — opt-in for first 100 FF only</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section class="escalation-section">
+  <div class="timeline-title">▶ When does Marina actually get involved?</div>
+
+  <div class="esc-grid">
+    <div class="esc-card zero">
+      <div class="esc-tag">Default path · 0 Marina touchpoints</div>
+      <div class="esc-title">The system handles all of these autonomously</div>
+      <div class="esc-list">
+        <div class="esc-item">New signups, payment processing, trial management</div>
+        <div class="esc-item">PMS connection, property import, owner sync</div>
+        <div class="esc-item">First Vesara Score and revenue recommendations</div>
+        <div class="esc-item">Owner invites and portal setup</div>
+        <div class="esc-item">Onboarding email sequence (5 emails over 14 days)</div>
+        <div class="esc-item">Weekly digests and value summaries</div>
+        <div class="esc-item">Tier-1 support questions (85% AI Coach handled)</div>
+        <div class="esc-item">Trial-end conversion and annual retreat invites</div>
+        <div class="esc-item">Drift detection and re-engagement</div>
+      </div>
+    </div>
+
+    <div class="esc-card escalate">
+      <div class="esc-tag">Escalation only · auto-routed to Marina</div>
+      <div class="esc-title">The system surfaces these — and only these</div>
+      <div class="esc-list">
+        <div class="esc-item">Customer types "human" / "real person" / "Marina" in support</div>
+        <div class="esc-item">Customer mentions "billing" / "refund" / "cancel" / "broken" / "down"</div>
+        <div class="esc-item">Sentiment score drops below -0.4 (frustrated customer)</div>
+        <div class="esc-item">AI Coach confidence below 0.85 on a customer answer</div>
+        <div class="esc-item">High-value churn risk detected by Phase 42 anti-churn engine</div>
+        <div class="esc-item">Issue persists across 2+ AI exchanges without resolution</div>
+        <div class="esc-item">Press / PR opportunity surfaced from customer feedback</div>
+        <div class="esc-item">Real outage requiring human comms (status banner + apology)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ai-coach-demo">
+  <div class="timeline-title">▶ AI Coach — the autonomous frontline (sample)</div>
+
+  <div class="chat-window">
+    <div class="chat-header">
+      <div class="chat-avatar">V</div>
+      <div>
+        <div class="chat-name">Vesara AI Coach</div>
+        <div class="chat-status">● Online · trained on your portfolio</div>
+      </div>
+    </div>
+    <div class="chat-body">
+      <div class="msg ai">
+        <div>
+          <div class="msg-bubble">Welcome to Vesara, Marina! I see you just connected 23 properties from Guesty. Before we go further — your Galena Forest property "The Aerie" is priced $485/night this weekend. I'm seeing 3 of 4 comps in your market raised to $560+ for the same dates. Want me to walk through the suggested change?</div>
+          <div class="msg-tag">Triple-brain consensus <span class="msg-confidence">CONF 0.91</span></div>
+        </div>
+      </div>
+      <div class="msg user">
+        <div class="msg-bubble">Sure, what changed?</div>
+      </div>
+      <div class="msg ai">
+        <div>
+          <div class="msg-bubble">Two factors: (1) Galena had a 14% YoY summer demand uptick this week per Vesara Comp Pool. (2) Your top 4 direct comps (similar bed/bath in 2-mile radius) raised an avg of 18% in the past 72 hours. ChatGPT and Claude agree this is real demand, not a one-property anomaly. Gemini flagged it could be a single event-driven spike — recommend $560 floor for this weekend, revisit Tuesday. Net expected lift: +$215 for Sat night alone.</div>
+          <div class="msg-tag">3-source citations available · ChatGPT (0.92) Claude (0.88) Gemini (0.78)</div>
+        </div>
+      </div>
+      <div class="msg user">
+        <div class="msg-bubble">Apply it</div>
+      </div>
+      <div class="msg ai">
+        <div>
+          <div class="msg-bubble">Done. Pushed to PriceLabs. New floor $560 Saturday, $520 Friday + Sunday. Reverts to your standard Tuesday morning unless I see continued strength. I'll watch and report. Anything else? (Or want to keep working through the other 4 high-impact recs?)</div>
+          <div class="msg-tag">Action logged · auditable in Settings → Decision Log</div>
+        </div>
+      </div>
+      <div class="msg user">
+        <div class="msg-bubble">Show me the rest</div>
+      </div>
+      <div class="msg ai">
+        <div>
+          <div class="msg-bubble">Pulling up #2-5 now. Quick preview: #2 is Skyline 41 (raise weekend rate 12%), #3 is The Aerie reviews (3 negative within 24h need response — drafts ready), #4 is Marina Maison photos (6 listings underperforming), #5 is Tiago's overdue March statement (auto-draft ready, $4,287 payout). Want me to tackle them in order or pick one?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  Phase 47b · Zero-Touch Autonomous Onboarding · Built per Marina's directive 2026-05-03<br>
+  Marina time per new customer in default flow: <strong style="color: var(--accent);">0 minutes</strong> · Optional Founders' Flock delight: ≤4 min
+</footer>
+
+</body>
+</html>
