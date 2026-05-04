@@ -58,6 +58,24 @@
   .prop-info .pid { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); letter-spacing: 0.04em; }
   .prop-info .name { font-size: 16px; font-weight: 600; margin-top: 4px; }
   .prop-info .meta { font-size: 12px; color: var(--text-secondary); margin-top: 4px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .occ-strip { margin-top: 10px; padding: 10px 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md); display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; align-items: center; }
+  @media (max-width: 700px) { .occ-strip { grid-template-columns: 1fr 1fr; } }
+  .occ-cell { display: flex; flex-direction: column; gap: 2px; }
+  .occ-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); font-weight: 600; }
+  .occ-val { font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; }
+  .occ-val.current { color: var(--text); }
+  .occ-val.market { color: var(--text-secondary); }
+  .occ-val.target { color: var(--info); }
+  .occ-val.gap { font-family: var(--font-serif); font-style: italic; }
+  .occ-val.gap.ahead { color: var(--accent); }
+  .occ-val.gap.behind { color: var(--warning); }
+  .occ-val.gap.crit { color: var(--critical); }
+  .occ-bar-wrap { margin-top: 8px; position: relative; height: 18px; background: var(--bg); border-radius: var(--r-sm); overflow: hidden; border: 1px solid var(--border); }
+  .occ-bar-current { position: absolute; top: 0; left: 0; bottom: 0; background: var(--accent); border-radius: var(--r-sm); transition: width var(--dur-base); opacity: 0.8; }
+  .occ-bar-market { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--text-secondary); z-index: 2; }
+  .occ-bar-target { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--info); z-index: 3; }
+  .occ-bar-labels { display: flex; justify-content: space-between; font-size: 9px; color: var(--text-tertiary); margin-top: 4px; }
+  .occ-na { font-size: 12px; color: var(--text-tertiary); font-style: italic; padding: 8px 0; }
   .prop-progress { text-align: right; min-width: 140px; }
   .prog-bar { width: 100%; height: 6px; background: var(--surface-3); border-radius: var(--r-full); overflow: hidden; margin-top: 6px; }
   .prog-fill { height: 100%; background: var(--accent); border-radius: var(--r-full); transition: width var(--dur-base); }
@@ -447,6 +465,17 @@
       const done = p.recs.filter(r => r.status === 'resolved').length;
       const pct = total ? Math.round(done/total*100) : 0;
 
+      // Compute target occupancy: market + 5pt aspirational uplift for active properties.
+      // Premium properties (score≥80) get +10pt aspirational; weak (<60) target = market.
+      let targetOcc = null;
+      if (!p.offboarding && p.score !== null && p.marketOcc !== null) {
+        const uplift = p.score >= 80 ? 10 : (p.score >= 70 ? 7 : (p.score >= 60 ? 5 : 0));
+        targetOcc = Math.min(95, p.marketOcc + uplift);
+      }
+      const gap = (targetOcc !== null) ? (p.occ30 - targetOcc) : null;
+      const gapClass = gap === null ? '' : (gap >= 0 ? 'ahead' : (gap >= -5 ? 'behind' : 'crit'));
+      const gapDisplay = gap === null ? '—' : (gap >= 0 ? '+' + gap.toFixed(0) + 'pt ahead' : gap.toFixed(0) + 'pt behind');
+
       const card = document.createElement('div');
       card.className = 'prop-card' + (p.offboarding ? ' offboarding' : '');
       const offboardBanner = p.offboarding === true ? `
@@ -470,9 +499,24 @@
               <span>${p.market}</span>
               <span>${p.bedrooms}BR</span>
               <span>$${p.basePrice}/night</span>
-              <span>occ ${p.occ30}% (mkt ${p.marketOcc}%)</span>
               <span>${p.score === null ? 'Score N/A (offboarding)' : 'Score ' + p.score + '/100'}</span>
             </div>
+            ${targetOcc === null ? `
+              <div class="occ-na">Occupancy data N/A while offboarding (calendar blocked = false 100% signal)</div>
+            ` : `
+              <div class="occ-strip">
+                <div class="occ-cell"><span class="occ-label">Current 30d</span><span class="occ-val current">${p.occ30}%</span></div>
+                <div class="occ-cell"><span class="occ-label">Market avg</span><span class="occ-val market">${p.marketOcc}%</span></div>
+                <div class="occ-cell"><span class="occ-label">Vesara target</span><span class="occ-val target">${targetOcc}%</span></div>
+                <div class="occ-cell"><span class="occ-label">Gap</span><span class="occ-val gap ${gapClass}">${gapDisplay}</span></div>
+              </div>
+              <div class="occ-bar-wrap" title="Current ${p.occ30}% · Market ${p.marketOcc}% · Vesara target ${targetOcc}%">
+                <div class="occ-bar-current" style="width:${p.occ30}%"></div>
+                <div class="occ-bar-market" style="left:${p.marketOcc}%" title="Market avg ${p.marketOcc}%"></div>
+                <div class="occ-bar-target" style="left:${targetOcc}%" title="Vesara target ${targetOcc}%"></div>
+              </div>
+              <div class="occ-bar-labels"><span>0%</span><span>your bar = current · grey line = market · blue line = target</span><span>100%</span></div>
+            `}
           </div>
           <div class="prop-progress">
             <div class="prog-text">${done}/${total} resolved · ${pct}%</div>

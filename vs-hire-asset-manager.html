@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara vs Hiring an Asset Manager — $599/mo vs $85K/yr salary</title>
+<meta name="description" content="An in-house asset manager is $85K/yr loaded. Vesara is $599/mo and works 24/7 across all your properties. Brutal economics breakdown.">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body.light { --bg: #FAFAF9; --surface: #FFFFFF; --surface-2: #F5F5F4; --border: rgba(0,0,0,0.08); --border-strong: rgba(0,0,0,0.16); --text: rgba(15,15,15,0.95); --text-secondary: rgba(15,15,15,0.62); --text-tertiary: rgba(15,15,15,0.42); --accent: #047857; --accent-dim: rgba(4,120,87,0.08); }
+  body.light .nav { background: rgba(255,255,255,0.85); }
+  body.light .nav-cta, body.light .btn-primary { color: #FFFFFF !important; }
+
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; transition: background var(--dur-base) var(--ease); }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+  .nav-cta { background: var(--accent); color: #000; padding: 8px 16px; border-radius: var(--r-md); font-weight: 600; }
+  .theme-toggle { background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text); padding: 6px 12px; border-radius: var(--r-md); font-size: 12px; cursor: pointer; margin-left: 12px; }
+
+  .hero { max-width: 980px; margin: 0 auto; padding: 80px 24px 40px; }
+  .breadcrumb { font-size: 12px; color: var(--text-tertiary); margin-bottom: 20px; }
+  .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
+  h1 { font-size: clamp(40px, 6vw, 64px); font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 20px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  h1 .vs { color: var(--text-tertiary); font-weight: 400; font-style: italic; font-family: var(--font-serif); margin: 0 12px; }
+  .lede { font-size: 19px; color: var(--text-secondary); max-width: 720px; line-height: 1.55; }
+
+  .verdict { max-width: 980px; margin: 48px auto 0; padding: 0 24px; }
+  .verdict-card { background: linear-gradient(135deg, var(--accent-dim), transparent); border: 1px solid var(--accent); border-radius: var(--r-xl); padding: 32px; }
+  .verdict-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+  .verdict-text { font-size: 20px; line-height: 1.5; color: var(--text); }
+  .verdict-text strong { color: var(--accent); }
+
+  .section { max-width: 980px; margin: 64px auto; padding: 0 24px; }
+  h2 { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 20px; }
+
+  .economics { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 32px; margin: 24px 0; }
+  .econ-row { display: grid; grid-template-columns: 1fr auto auto; gap: 32px; padding: 14px 0; border-bottom: 1px solid var(--border); align-items: center; font-size: 14.5px; }
+  .econ-row:last-child { border-bottom: none; padding-top: 16px; font-weight: 700; font-size: 16px; }
+  .econ-row.header { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); padding: 8px 0; }
+  .econ-num { color: var(--text); font-variant-numeric: tabular-nums; }
+  .econ-num.bad { color: var(--critical); }
+  .econ-num.good { color: var(--accent); font-weight: 600; }
+
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+  @media (max-width: 800px) { .compare-grid { grid-template-columns: 1fr; } }
+  .col { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 28px; }
+  .col.us { border-color: var(--accent); border-width: 2px; }
+  .col-header { padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .col-name { font-size: 22px; font-weight: 600; }
+  .col-tag { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+  .feature-row { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 10px 0; align-items: flex-start; font-size: 14px; line-height: 1.55; color: var(--text-secondary); }
+  .feature-row.yes { color: var(--text); }
+  .feature-row.yes::before { content: '✓'; color: var(--accent); font-weight: 700; }
+  .feature-row.no::before { content: '·'; color: var(--text-tertiary); font-weight: 700; font-size: 16px; }
+  .feature-row.bad::before { content: '✗'; color: var(--critical); font-weight: 700; }
+
+  .honest-box { background: var(--surface); border-left: 4px solid var(--warning); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 24px 28px; margin: 32px 0; }
+  .honest-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--warning); margin-bottom: 8px; font-weight: 600; }
+
+  .cta-section { max-width: 980px; margin: 80px auto; padding: 64px 24px; text-align: center; background: linear-gradient(180deg, var(--surface), transparent); border-radius: var(--r-2xl); }
+  .cta-h { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 16px; }
+  .cta-h .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: #000; padding: 14px 28px; border-radius: var(--r-md); text-decoration: none; font-weight: 600; }
+  .btn-ghost { background: transparent; color: var(--text); padding: 14px 28px; border: 1px solid var(--border-strong); border-radius: var(--r-md); text-decoration: none; }
+
+  .footer { padding: 48px 24px; text-align: center; color: var(--text-tertiary); font-size: 13px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="brand"><svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg><span>Vesara</span></a>
+  <div class="nav-links">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="signup.html" class="nav-cta">Claim a seat →</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">Light mode</button>
+  </div>
+</nav>
+
+<script>
+  (function () { var s = localStorage.getItem('vesara-theme'); if (s === 'light') document.body.classList.add('light'); })();
+  function toggleTheme() { var l = document.body.classList.toggle('light'); localStorage.setItem('vesara-theme', l ? 'light' : 'dark'); var btn = document.querySelector('.theme-toggle'); if (btn) btn.textContent = l ? 'Dark mode' : 'Light mode'; }
+  document.addEventListener('DOMContentLoaded', function () { var btn = document.querySelector('.theme-toggle'); if (btn) btn.textContent = document.body.classList.contains('light') ? 'Dark mode' : 'Light mode'; });
+</script>
+
+<section class="hero">
+  <div class="breadcrumb"><a href="index.html">Vesara</a> · Compare · vs Hiring an Asset Manager</div>
+  <h1>Vesara<span class="vs">vs</span><span class="accent">Hiring an Asset Manager</span></h1>
+  <p class="lede">Most growing PMs eventually consider hiring a dedicated Asset/Revenue Manager when the founder can no longer hold every property in their head. The math has changed.</p>
+</section>
+
+<div class="verdict">
+  <div class="verdict-card">
+    <div class="verdict-tag">The honest verdict</div>
+    <div class="verdict-text">If you have <strong>5+ properties</strong> and you're hand-managing pricing/listings, Vesara at $599/mo replaces 60-70% of an asset manager's day-to-day work for <strong>1/12th the cost</strong>. The other 30-40% (relationships, judgment calls, escalations) still needs a human — but that human can be you, not a $85K hire.</div>
+  </div>
+</div>
+
+<section class="section">
+  <h2>The total cost of an Asset Manager hire</h2>
+  <div class="economics">
+    <div class="econ-row header">
+      <div>Loaded annual cost · 1 in-house Asset Manager · US</div>
+      <div>Year 1</div>
+      <div>Year 2+</div>
+    </div>
+    <div class="econ-row">
+      <div>Base salary (US median for STR Asset Manager)</div>
+      <div class="econ-num">$72,000</div>
+      <div class="econ-num">$76,000</div>
+    </div>
+    <div class="econ-row">
+      <div>Payroll taxes + benefits (~22% loaded)</div>
+      <div class="econ-num">$15,840</div>
+      <div class="econ-num">$16,720</div>
+    </div>
+    <div class="econ-row">
+      <div>Tools they need (PriceLabs, AirDNA, monitoring)</div>
+      <div class="econ-num">$3,600</div>
+      <div class="econ-num">$3,600</div>
+    </div>
+    <div class="econ-row">
+      <div>Onboarding + training (Year 1 only)</div>
+      <div class="econ-num">$4,000</div>
+      <div class="econ-num">$0</div>
+    </div>
+    <div class="econ-row">
+      <div>Recruiting cost (recruiter or your time)</div>
+      <div class="econ-num">$8,000</div>
+      <div class="econ-num">$0</div>
+    </div>
+    <div class="econ-row">
+      <div>Equipment + workspace (laptop, software seats)</div>
+      <div class="econ-num">$2,500</div>
+      <div class="econ-num">$1,200</div>
+    </div>
+    <div class="econ-row">
+      <div><strong>Total loaded cost</strong></div>
+      <div class="econ-num bad"><strong>$105,940</strong></div>
+      <div class="econ-num bad"><strong>$97,520</strong></div>
+    </div>
+    <div class="econ-row">
+      <div><strong>Vesara Pro ($599/mo, supports up to 50 properties)</strong></div>
+      <div class="econ-num good"><strong>$7,188</strong></div>
+      <div class="econ-num good"><strong>$7,188</strong></div>
+    </div>
+    <div class="econ-row">
+      <div><strong>Annual delta</strong></div>
+      <div></div>
+      <div class="econ-num good"><strong>+$90,332/yr saved</strong></div>
+    </div>
+  </div>
+  <p style="font-size: 13px; color: var(--text-tertiary); margin-top: 12px;">Salary range source: industry compensation surveys for STR Asset/Revenue Manager roles in US Tier 1 markets. Actual cost depends on your geography + benefits package.</p>
+</section>
+
+<section class="section">
+  <h2>What each does well (honestly)</h2>
+  <div class="compare-grid">
+    <div class="col">
+      <div class="col-header">
+        <div class="col-name">In-house Asset Manager</div>
+        <div class="col-tag">Human · 40 hr/week · $90-110K loaded</div>
+      </div>
+      <div class="feature-row yes">Builds owner relationships face-to-face</div>
+      <div class="feature-row yes">Makes judgment calls on edge cases (regulatory, owner conflict, PR)</div>
+      <div class="feature-row yes">Negotiates with vendors + channels</div>
+      <div class="feature-row yes">Trains operations team</div>
+      <div class="feature-row yes">Attends trade conferences, builds network</div>
+      <div class="feature-row no">Works 40 hrs/week, not 24/7</div>
+      <div class="feature-row no">Holds opinions, can be wrong, no second opinion</div>
+      <div class="feature-row no">Vacation, sick days, eventually quits</div>
+      <div class="feature-row bad">Can only mentally hold ~30 properties at full depth</div>
+      <div class="feature-row bad">Performance varies by individual hire</div>
+    </div>
+    <div class="col us">
+      <div class="col-header">
+        <div class="col-name">Vesara Pro</div>
+        <div class="col-tag">AI Asset Manager · 24/7 · $599/mo flat</div>
+      </div>
+      <div class="feature-row yes">22-dimension property scoring across portfolio every night</div>
+      <div class="feature-row yes">Triple-brain consensus (3 LLMs) on every recommendation</div>
+      <div class="feature-row yes">Anonymous Comp Pool benchmarking</div>
+      <div class="feature-row yes">Owner AI Concierge for variance memos</div>
+      <div class="feature-row yes">Override compliance engine (CEO rules enforced)</div>
+      <div class="feature-row yes">Vesara Lift Score — measured ROI attribution</div>
+      <div class="feature-row yes">Scales linearly to 50+ properties without missing detail</div>
+      <div class="feature-row no">Doesn't attend conferences or shake hands</div>
+      <div class="feature-row no">Can't negotiate with a difficult owner in person</div>
+      <div class="feature-row no">Surfaces decisions; you still approve high-stakes ones</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="honest-box">
+    <div class="honest-tag">Where the human still wins</div>
+    <p style="font-size: 15px; line-height: 1.6; margin: 0;">If your portfolio has <strong>significant owner-relationship complexity</strong> — venture-backed PM with weekly investor calls, 100+ owners with varying communication preferences, regulatory disputes requiring strategic judgment — you still need a human. Vesara handles the <strong>analytics + recommendations + execution</strong>. A human handles <strong>relationships + judgment + escalations</strong>. The right answer at scale is usually <strong>both</strong> — Vesara plus 1 human at half a $85K hire's salary doing only the relationship work.</p>
+  </div>
+</section>
+
+<section class="section">
+  <h2>The hybrid model (what we recommend)</h2>
+  <p style="font-size: 16.5px; color: var(--text-secondary); line-height: 1.65;">For PMs with 25-100 properties, the optimal staffing is:</p>
+  <ul style="font-size: 16px; color: var(--text-secondary); line-height: 1.85; padding-left: 22px;">
+    <li><strong style="color: var(--text);">Vesara Pro ($599/mo)</strong> for the analytics + recommendations + monitoring across all properties</li>
+    <li><strong style="color: var(--text);">1 part-time owner-relations specialist (~$35K/yr)</strong> for owner conversations, conflict resolution, in-market presence</li>
+    <li><strong style="color: var(--text);">You stay strategic</strong> — focus on portfolio growth + new owner acquisition, not daily pricing decisions</li>
+  </ul>
+  <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.65; margin-top: 16px;">Combined cost: <strong style="color: var(--accent);">$42K/yr</strong> vs. <strong style="color: var(--critical);">$98K/yr</strong> for a single full-time asset manager who also can't be in two places. Net savings: <strong style="color: var(--accent);">$56K/yr</strong>, with better coverage.</p>
+</section>
+
+<section class="cta-section">
+  <h2 class="cta-h">Spend $599/mo. <span class="accent">Save $90K/yr.</span></h2>
+  <p style="color: var(--text-secondary); margin-bottom: 32px;">Vesara Pro tier supports up to 50 properties. Founders' Flock locks $99/mo lifetime for first 100 customers.</p>
+  <div class="cta-buttons">
+    <a href="signup.html" class="btn-primary">Try Vesara free for 14 days →</a>
+    <a href="pricing.html" class="btn-ghost">See all tiers</a>
+  </div>
+</section>
+
+<footer class="footer">Comparison fairness commitment: fairness@vesara.ai for corrections within 24 hours.</footer>
+
+</body>
+</html>

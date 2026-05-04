@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara Founders' Flock — Waitlist</title>
+<meta name="description" content="Join the Founders' Flock waitlist. First 100 STR operators get $99/mo locked forever. Pre-launch — get in line for one of the last permanent seats.">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body.light { --bg: #FAFAF9; --surface: #FFFFFF; --surface-2: #F5F5F4; --border: rgba(0,0,0,0.08); --border-strong: rgba(0,0,0,0.16); --text: rgba(15,15,15,0.95); --text-secondary: rgba(15,15,15,0.62); --text-tertiary: rgba(15,15,15,0.42); --accent: #047857; --accent-dim: rgba(4,120,87,0.08); }
+  body.light .nav { background: rgba(255,255,255,0.85); }
+  body.light .nav-cta, body.light .submit-btn { color: #FFFFFF !important; }
+
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; transition: background var(--dur-base) var(--ease); }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+  .nav-cta { background: var(--accent); color: #000; padding: 8px 16px; border-radius: var(--r-md); font-weight: 600; }
+  .theme-toggle { background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text); padding: 6px 12px; border-radius: var(--r-md); font-size: 12px; cursor: pointer; margin-left: 12px; }
+
+  .layout { display: grid; grid-template-columns: 1fr 1fr; max-width: 1200px; margin: 0 auto; gap: 80px; padding: 60px 24px; align-items: center; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; gap: 40px; } }
+
+  .left-side { padding: 0; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--accent); border-radius: var(--r-full); font-size: 12px; color: var(--accent); margin-bottom: 24px; background: var(--accent-dim); }
+  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: vPulse 1.8s infinite; }
+  @keyframes vPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.32); } 50% { box-shadow: 0 0 0 8px transparent; } }
+  h1 { font-size: 48px; font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 20px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .lede { font-size: 18px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 32px; }
+
+  .promises { display: grid; gap: 12px; margin-bottom: 32px; }
+  .promise { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md); }
+  .promise-icon { color: var(--accent); font-size: 18px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+  .promise-text { font-size: 14px; line-height: 1.5; }
+  .promise-text strong { color: var(--text); }
+
+  .seats { padding: 24px; border: 1px solid var(--accent); border-radius: var(--r-lg); background: linear-gradient(135deg, var(--accent-dim), transparent); }
+  .seats-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .seats-num { font-size: 32px; font-weight: 700; color: var(--accent); font-family: var(--font-serif); font-style: italic; line-height: 1; }
+  .seats-label { font-size: 13px; color: var(--text-secondary); }
+  .seats-progress { height: 8px; background: var(--surface-3); border-radius: var(--r-full); overflow: hidden; }
+  .seats-fill { height: 100%; width: 47%; background: var(--accent); border-radius: var(--r-full); }
+
+  .form-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 40px; box-shadow: var(--shadow-lg); }
+  .form-title { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 8px; }
+  .form-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 32px; }
+  label { display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; }
+  input, select, textarea { width: 100%; padding: 12px 14px; background: var(--bg); border: 1px solid var(--border-strong); border-radius: var(--r-md); color: var(--text); font-family: inherit; font-size: 14.5px; box-sizing: border-box; transition: border-color var(--dur-fast); }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+  textarea { min-height: 80px; resize: vertical; }
+  .field { margin-bottom: 20px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .submit-btn { width: 100%; padding: 14px 24px; background: var(--accent); color: #000; border: none; border-radius: var(--r-md); font-weight: 600; font-size: 15px; cursor: pointer; margin-top: 8px; transition: background var(--dur-fast); }
+  .submit-btn:hover { background: var(--accent-hover); }
+  .micro { font-size: 12px; color: var(--text-tertiary); margin-top: 16px; text-align: center; line-height: 1.5; }
+  .success { display: none; padding: 20px; background: var(--accent-dim); border: 1px solid var(--accent); border-radius: var(--r-md); margin-bottom: 16px; color: var(--accent); font-size: 14px; }
+  .success.show { display: block; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="brand"><svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg><span>Vesara</span></a>
+  <div class="nav-links">
+    <a href="pricing.html">Pricing</a>
+    <a href="founder.html">Founder</a>
+    <a href="signup.html" class="nav-cta">Already ready? Claim a seat →</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">Light mode</button>
+  </div>
+</nav>
+
+<script>
+  (function () { var s = localStorage.getItem('vesara-theme'); if (s === 'light') document.body.classList.add('light'); })();
+  function toggleTheme() { var l = document.body.classList.toggle('light'); localStorage.setItem('vesara-theme', l ? 'light' : 'dark'); var btn = document.querySelector('.theme-toggle'); if (btn) btn.textContent = l ? 'Dark mode' : 'Light mode'; }
+  document.addEventListener('DOMContentLoaded', function () { var btn = document.querySelector('.theme-toggle'); if (btn) btn.textContent = document.body.classList.contains('light') ? 'Dark mode' : 'Light mode'; });
+
+  function submitWaitlist(e) {
+    e.preventDefault();
+    // Capture to localStorage as a holding pattern until backend ships
+    const form = e.target;
+    const data = {
+      name: form.name.value, email: form.email.value, company: form.company.value,
+      properties: form.properties.value, market: form.market.value, pms: form.pms.value,
+      currentTools: form.currentTools.value, notes: form.notes.value,
+      submittedAt: new Date().toISOString(),
+    };
+    const list = JSON.parse(localStorage.getItem('vesara-waitlist') || '[]');
+    list.push(data);
+    localStorage.setItem('vesara-waitlist', JSON.stringify(list));
+    document.getElementById('successMsg').classList.add('show');
+    document.getElementById('waitlistForm').reset();
+    return false;
+  }
+</script>
+
+<div class="layout">
+
+  <div class="left-side">
+    <span class="pill"><span class="pulse"></span> Pre-launch · Founders' Flock waitlist</span>
+    <h1>Get in line for one of the <span class="accent">last permanent seats.</span></h1>
+    <p class="lede">First 100 STR operators get $99/month <strong>locked forever</strong>. Public launch is May 17, 2026. Currently 47 of 100 seats already claimed by hand-picked operators we've reached out to. Join the waitlist below — we'll triage by ICP fit and notify you when your seat is ready.</p>
+
+    <div class="promises">
+      <div class="promise"><span class="promise-icon">●</span><span class="promise-text"><strong>$99/mo locked forever</strong> — even when standard tier hits $599/mo. Permanent. Contractual.</span></div>
+      <div class="promise"><span class="promise-icon">●</span><span class="promise-text"><strong>Direct line to Marina</strong> — Slack + SMS. Not a support queue.</span></div>
+      <div class="promise"><span class="promise-icon">●</span><span class="promise-text"><strong>Roadmap voting rights</strong> — 1 vote per quarter on Vesara product priorities</span></div>
+      <div class="promise"><span class="promise-icon">●</span><span class="promise-text"><strong>Annual Founders' Flock retreat</strong> — 3 days, hosted by Vesara, travel covered up to $800</span></div>
+      <div class="promise"><span class="promise-icon">●</span><span class="promise-text"><strong>14-day free trial</strong> when your seat opens — card on file, no charge until day 15</span></div>
+    </div>
+
+    <div class="seats">
+      <div class="seats-row">
+        <div>
+          <div class="seats-num">47 / 100</div>
+          <div class="seats-label">seats claimed before public launch</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="color: var(--accent); font-size: 16px; font-weight: 600;">53 left</div>
+          <div class="seats-label">closing forever at #100</div>
+        </div>
+      </div>
+      <div class="seats-progress"><div class="seats-fill"></div></div>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <div class="success" id="successMsg">
+      ✓ <strong>Got it.</strong> Marina personally reviews every waitlist entry. We'll email within 5 business days. If you're a strong ICP fit, you'll get a private signup link before public launch.
+    </div>
+    <h2 class="form-title">Tell us about your operation.</h2>
+    <p class="form-sub">90 seconds. We use this to triage seat assignments — the best ICP fits get the earliest invites.</p>
+
+    <form id="waitlistForm" onsubmit="return submitWaitlist(event)">
+      <div class="row">
+        <div class="field">
+          <label>First name</label>
+          <input type="text" name="name" required placeholder="Marina" />
+        </div>
+        <div class="field">
+          <label>Work email</label>
+          <input type="email" name="email" required placeholder="you@yourcompany.com" />
+        </div>
+      </div>
+      <div class="field">
+        <label>Company name</label>
+        <input type="text" name="company" required placeholder="Your STR management company" />
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>How many properties do you manage?</label>
+          <select name="properties" required>
+            <option value="">— pick one —</option>
+            <option>1-4 (we may not be the right fit yet)</option>
+            <option>5-15</option>
+            <option>16-30</option>
+            <option>31-50</option>
+            <option>51-100</option>
+            <option>100+</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Primary market</label>
+          <input type="text" name="market" required placeholder="Reno NV, Smokies TN, etc." />
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Current PMS</label>
+          <select name="pms" required>
+            <option value="">— pick one —</option>
+            <option>Guesty</option>
+            <option>Hostaway</option>
+            <option>OwnerRez</option>
+            <option>Lodgify</option>
+            <option>Hospitable</option>
+            <option>Track</option>
+            <option>Streamline</option>
+            <option>Escapia</option>
+            <option>None / spreadsheet</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Current pricing tool</label>
+          <select name="currentTools" required>
+            <option value="">— pick one —</option>
+            <option>PriceLabs</option>
+            <option>Wheelhouse</option>
+            <option>Beyond Pricing</option>
+            <option>None / manual</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>What's the #1 problem you'd want Vesara to solve? (optional but helps triage)</label>
+        <textarea name="notes" placeholder="e.g. 'Owners constantly question pricing decisions and I have no clean way to defend them.' Be specific — this is what we use to evaluate fit."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Join the waitlist →</button>
+      <p class="micro">No card. No spam. Marina personally reviews every entry within 5 business days. If you're not the right fit yet, we'll tell you honestly — and what would change that.</p>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

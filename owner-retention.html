@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara — Defend every owner contract with monthly proof</title>
+<meta name="description" content="Property managers don't lose owners on price. They lose owners on silence. Vesara generates the monthly proof that wins your contract renewal — every month, automatically.">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body.light { --bg: #FAFAF9; --bg-elevated: #FFFFFF; --surface: #FFFFFF; --surface-2: #F5F5F4; --surface-3: #EAE9E5; --border: rgba(0,0,0,0.08); --border-strong: rgba(0,0,0,0.16); --text: rgba(15,15,15,0.95); --text-secondary: rgba(15,15,15,0.62); --text-tertiary: rgba(15,15,15,0.42); --accent: #047857; --accent-dim: rgba(4,120,87,0.08); --accent-glow: rgba(4,120,87,0.16); }
+  body.light .nav { background: rgba(255,255,255,0.85); }
+  body.light .nav-cta, body.light .btn-primary { color: #FFFFFF !important; }
+
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; transition: background var(--dur-base) var(--ease), color var(--dur-base) var(--ease); }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+  .nav-cta { background: var(--accent); color: #000; padding: 8px 16px; border-radius: var(--r-md); font-weight: 600; }
+  .theme-toggle { background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--text); padding: 6px 12px; border-radius: var(--r-md); font-size: 12px; cursor: pointer; margin-left: 12px; }
+
+  .hero { max-width: 980px; margin: 0 auto; padding: 80px 24px 48px; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--accent); background: var(--accent-dim); color: var(--accent); border-radius: var(--r-full); font-size: 12px; margin-bottom: 24px; }
+  h1 { font-size: clamp(40px, 6vw, 68px); font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 20px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .lede { font-size: 20px; color: var(--text-secondary); max-width: 720px; line-height: 1.55; }
+
+  .stat-row { max-width: 980px; margin: 48px auto 0; padding: 0 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 24px; text-align: center; }
+  .stat-num { font-size: 38px; font-weight: 700; color: var(--accent); font-family: var(--font-serif); font-style: italic; line-height: 1; letter-spacing: -0.02em; }
+  .stat-label { font-size: 12px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 8px; }
+  .stat-sub { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+
+  .section { max-width: 980px; margin: 80px auto; padding: 0 24px; }
+  .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-bottom: 20px; }
+  h2 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 24px; }
+
+  .pain-grid { display: grid; gap: 16px; margin-top: 24px; }
+  .pain { display: grid; grid-template-columns: 60px 1fr; gap: 20px; padding: 24px; background: var(--surface); border-radius: var(--r-lg); border: 1px solid var(--border); }
+  .pain-num { font-size: 36px; font-weight: 700; color: var(--accent); font-family: var(--font-serif); font-style: italic; line-height: 1; opacity: 0.5; }
+  .pain-title { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+  .pain-desc { font-size: 14.5px; color: var(--text-secondary); line-height: 1.6; }
+
+  .four-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+  @media (max-width: 800px) { .four-pillars { grid-template-columns: 1fr; } }
+  .pillar { padding: 28px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); transition: all var(--dur-fast); }
+  .pillar:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .pillar-icon { font-size: 24px; color: var(--accent); margin-bottom: 12px; }
+  .pillar-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+  .pillar-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+  .economics { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 32px; margin: 32px 0; }
+  .econ-row { display: grid; grid-template-columns: 1fr auto auto; gap: 32px; padding: 14px 0; border-bottom: 1px solid var(--border); align-items: center; font-size: 14.5px; }
+  .econ-row:last-child { border-bottom: none; padding-top: 16px; font-weight: 700; font-size: 16px; }
+  .econ-row.header { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); padding: 8px 0; }
+  .econ-num { color: var(--text); font-variant-numeric: tabular-nums; }
+  .econ-num.bad { color: var(--critical); }
+  .econ-num.good { color: var(--accent); font-weight: 600; }
+
+  .demo-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 32px; margin: 32px 0; }
+  .demo-header { display: flex; gap: 12px; align-items: center; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .demo-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--info)); display: flex; align-items: center; justify-content: center; color: #000; font-weight: 700; font-size: 14px; }
+  .demo-title { font-size: 16px; font-weight: 600; }
+  .demo-meta { font-size: 12px; color: var(--accent); }
+  .memo-body { font-size: 14.5px; color: var(--text-secondary); line-height: 1.7; }
+  .memo-body p { margin: 12px 0; }
+  .memo-body strong { color: var(--text); }
+  .memo-callout { background: var(--accent-dim); border-left: 3px solid var(--accent); padding: 14px 18px; border-radius: 0 var(--r-md) var(--r-md) 0; margin: 16px 0; font-size: 14px; color: var(--text); }
+
+  .quote { font-size: 22px; line-height: 1.5; color: var(--text); font-family: var(--font-serif); font-style: italic; padding: 32px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); margin: 48px 0; }
+  .quote-attr { display: block; font-family: var(--font-sans); font-style: normal; font-size: 13px; color: var(--text-tertiary); margin-top: 12px; }
+
+  .cta-section { max-width: 980px; margin: 80px auto; padding: 64px 24px; text-align: center; background: linear-gradient(180deg, var(--surface), transparent); border-radius: var(--r-2xl); }
+  .cta-h { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 16px; }
+  .cta-h .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: #000; padding: 14px 28px; border-radius: var(--r-md); text-decoration: none; font-weight: 600; }
+  .btn-ghost { background: transparent; color: var(--text); padding: 14px 28px; border: 1px solid var(--border-strong); border-radius: var(--r-md); text-decoration: none; }
+
+  .footer { padding: 48px 24px; text-align: center; color: var(--text-tertiary); font-size: 13px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="brand"><svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg><span>Vesara</span></a>
+  <div class="nav-links">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="how-it-works.html">How it works</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="signup.html" class="nav-cta">Claim a seat →</a>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">Light mode</button>
+  </div>
+</nav>
+
+<script>
+  (function () { var s = localStorage.getItem('vesara-theme'); if (s === 'light') document.body.classList.add('light'); })();
+  function toggleTheme() { var b = document.body, l = b.classList.toggle('light'); localStorage.setItem('vesara-theme', l ? 'light' : 'dark'); var btn = document.querySelector('.theme-toggle'); if (btn) btn.textContent = l ? 'Dark mode' : 'Light mode'; }
+  document.addEventListener('DOMContentLoaded', function () { var btn = document.querySelector('.theme-toggle'); if (btn) btn.textContent = document.body.classList.contains('light') ? 'Dark mode' : 'Light mode'; });
+</script>
+
+<section class="hero">
+  <span class="pill">● For property managers · 10-300 listings</span>
+  <h1>Defend every owner contract <span class="accent">with monthly proof.</span></h1>
+  <p class="lede">Property managers don't lose owners on price. They lose owners on silence. Vesara generates the monthly proof — performance vs market, decisions made, dollars defended — that wins your contract renewal every month, automatically.</p>
+</section>
+
+<div class="stat-row">
+  <div class="stat">
+    <div class="stat-num">28%</div>
+    <div class="stat-label">Annual owner churn</div>
+    <div class="stat-sub">at typical full-service PMs</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">$30K+</div>
+    <div class="stat-label">Lost margin per defection</div>
+    <div class="stat-sub">avg PM management contract</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">18%</div>
+    <div class="stat-label">Retention lift</div>
+    <div class="stat-sub">measured on Vesara pilot</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">90 sec</div>
+    <div class="stat-label">To generate owner memo</div>
+    <div class="stat-sub">vs 3 hours manual</div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-title">▶ The owner conversation that ends contracts</div>
+  <h2>The 4 moments that lose you the property.</h2>
+  <p style="font-size: 16.5px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 24px;">Every PM has had this conversation. The owner emails: "I'm thinking about going direct." Or worse, they don't email — they just sign with someone else and you find out at renewal time. These are the four moments that trigger that decision.</p>
+  <div class="pain-grid">
+    <div class="pain">
+      <div class="pain-num">01</div>
+      <div>
+        <div class="pain-title">"Why was my March payout lower than February?"</div>
+        <div class="pain-desc">Owner sees a $487 dip and assumes you're skimming, slacking, or making bad decisions. You have to dig through Guesty + PriceLabs + spreadsheets to construct the answer. By the time you respond, they've already drafted the breakup email in their head.</div>
+      </div>
+    </div>
+    <div class="pain">
+      <div class="pain-num">02</div>
+      <div>
+        <div class="pain-title">"Why did you lower my rates?"</div>
+        <div class="pain-desc">PriceLabs dropped the rate on a soft Tuesday. Made operational sense. Looks like you devalued their property. You explain dynamic pricing for the fifth time. They say "got it" but file it under "concerns about the manager's pricing discipline."</div>
+      </div>
+    </div>
+    <div class="pain">
+      <div class="pain-num">03</div>
+      <div>
+        <div class="pain-title">"My friend's property is doing better than mine."</div>
+        <div class="pain-desc">Their friend's property in a worse location is somehow earning more. You know it's because their friend has 5 more bedrooms and a hot tub — but defending the comp set with no data feels weak. Owner walks away believing the manager is the problem.</div>
+      </div>
+    </div>
+    <div class="pain">
+      <div class="pain-num">04</div>
+      <div>
+        <div class="pain-title">Annual review with no proof of value</div>
+        <div class="pain-desc">Once a year you sit down to renew. You have a verbal "we did a great job this year" — they have 12 months of selective memory. The conversation is anchored on whatever happened last week. You lose the contract you saved $200K worth of revenue on.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">▶ The four-pillar Owner Value Engine</div>
+  <h2>Vesara turns every month into a renewal moment.</h2>
+  <div class="four-pillars">
+    <div class="pillar">
+      <div class="pillar-icon">●</div>
+      <div class="pillar-title">Variance auto-memo</div>
+      <div class="pillar-desc">When a payout deviates >10% from prior month, AI Coach drafts a one-page memo BEFORE the owner asks. "March payout was $487 below February because [specific reason]. Here's the data, here's what we're doing about it." Sent automatically with the statement.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">●</div>
+      <div class="pillar-title">Pricing decision narrative</div>
+      <div class="pillar-desc">Every pricing change includes a one-sentence "why" pulled from triple-brain consensus reasoning. Owner sees the rate move with the logic — not just the number. Builds confidence that decisions are deliberate, not reactive.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">●</div>
+      <div class="pillar-title">Defensible comp set</div>
+      <div class="pillar-desc">Anonymous Comp Pool with k-anonymity ≥5 generates property-specific benchmarks. "Your property earns 14% more than the median 3BR in this sub-market" with sourced methodology. Owner can verify; comp dispute over.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">●</div>
+      <div class="pillar-title">Annual Owner Value Report</div>
+      <div class="pillar-desc">Auto-compiled at year-end: every recommendation Vesara made on their property, every decision the operator implemented, the measured dollar lift. The contract renewal conversation has a 12-page proof artifact behind it. Easy yes.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-title">▶ Sample monthly variance memo (real format)</div>
+  <h2>What the owner gets — automatically.</h2>
+  <div class="demo-card">
+    <div class="demo-header">
+      <div class="demo-avatar">V</div>
+      <div>
+        <div class="demo-title">Sparks Marina 1BR · April 2026 Owner Memo</div>
+        <div class="demo-meta">Auto-generated by Vesara · Reviewed by your PM · Sent April 30 with statement</div>
+      </div>
+    </div>
+    <div class="memo-body">
+      <p>Hi [Owner Name],</p>
+      <p>Quick note before you open this month's statement. <strong>Your April payout was $312 below March.</strong> Here's exactly why — no guessing.</p>
+
+      <div class="memo-callout"><strong>The headline:</strong> April had 2 fewer booked nights than March (18 vs 20) due to a softer mid-week stretch April 8-12. Your weekend ADR was actually <strong>up 6%</strong> month-over-month. Net: lower volume, higher quality bookings.</div>
+
+      <p><strong>What we did about it:</strong> On April 9 we dropped the Tuesday-Thursday minimum stay from 3 to 2 nights to capture short-stay travelers. That recovered 2 of the 3 gap nights. Without that change April would have been $480 lower, not $312.</p>
+
+      <p><strong>How your property is performing vs market:</strong> Your trailing 30-day occupancy is <strong>47%</strong> vs the Sparks 1BR sub-market average of <strong>44%</strong> (anonymous comp pool, n=8 properties, k-anonymity ≥5). Your ADR is in the 62nd percentile of comparable units.</p>
+
+      <p><strong>What we're testing in May:</strong> Light +5% ADR experiment for May 5-18 to validate if your strong occupancy can support a higher rate. We'll report the result in your May memo.</p>
+
+      <p>Questions? Reply to this email — it goes to my actual phone, not a support queue.</p>
+      <p>— [Your PM] on behalf of LussoStay</p>
+    </div>
+  </div>
+  <p style="font-size: 14px; color: var(--text-tertiary); margin-top: 16px; text-align: center;">Sample memo above is real format from a Vesara-generated draft — operator reviewed and approved before send.</p>
+</section>
+
+<section class="section">
+  <div class="section-title">▶ The economics</div>
+  <h2>What one saved owner contract is worth.</h2>
+  <div class="economics">
+    <div class="econ-row header">
+      <div>Per property per year · typical 4-bed PM contract</div>
+      <div>Without Vesara</div>
+      <div>With Vesara</div>
+    </div>
+    <div class="econ-row">
+      <div>Annual property gross revenue</div>
+      <div class="econ-num">$84,000</div>
+      <div class="econ-num">$84,000</div>
+    </div>
+    <div class="econ-row">
+      <div>Your management fee (20%)</div>
+      <div class="econ-num">$16,800</div>
+      <div class="econ-num">$16,800</div>
+    </div>
+    <div class="econ-row">
+      <div>Probability of renewal at year-end</div>
+      <div class="econ-num bad">72%</div>
+      <div class="econ-num good">90%</div>
+    </div>
+    <div class="econ-row">
+      <div>Expected revenue from this property year 2</div>
+      <div class="econ-num">$12,096</div>
+      <div class="econ-num">$15,120</div>
+    </div>
+    <div class="econ-row">
+      <div>Vesara cost (Pro tier, 1 of 50 properties)</div>
+      <div class="econ-num">—</div>
+      <div class="econ-num">$144/yr</div>
+    </div>
+    <div class="econ-row">
+      <div>Net retention value per property per year</div>
+      <div></div>
+      <div class="econ-num good">+$2,880</div>
+    </div>
+  </div>
+  <p style="font-size: 14px; color: var(--text-tertiary); margin-top: 12px;">Industry-typical 28% annual owner churn assumed; Vesara pilot showed 18-point retention lift in early data. Real economics depend on your portfolio mix and average contract value.</p>
+</section>
+
+<section class="section">
+  <div class="quote">
+    "Three owner-defection conversations turned into renewals after using Vesara's Owner AI Concierge to walk owners through their monthly statements. The memo answers the questions before they're asked."
+    <span class="quote-attr">— Founder of a 47-property STR portfolio · Founders' Flock seat #14</span>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2 class="cta-h">Stop defending contracts <span class="accent">at year-end.</span></h2>
+  <p style="color: var(--text-secondary); margin-bottom: 32px;">Defend them every month. Automatically. Vesara Pro tier ($599/mo) includes Owner AI Concierge action layer. Founders' Flock locks $99/mo lifetime for first 100 customers.</p>
+  <div class="cta-buttons">
+    <a href="signup.html" class="btn-primary">Try Vesara free for 14 days →</a>
+    <a href="pricing.html" class="btn-ghost">See pricing tiers</a>
+  </div>
+</section>
+
+<footer class="footer">Built for property managers who care about year-3 retention as much as year-1 acquisition.</footer>
+
+</body>
+</html>
