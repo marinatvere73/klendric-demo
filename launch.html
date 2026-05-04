@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara — Go-Live Tracker</title>
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; }
+  .nav-inner { max-width: var(--container); margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; letter-spacing: -0.01em; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links { display: flex; gap: 24px; align-items: center; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; transition: color var(--dur-fast); }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta { background: var(--accent); color: #000; padding: 8px 16px; border-radius: var(--r-md); font-weight: 600; font-size: 14px; }
+
+  .hero { max-width: var(--container); margin: 0 auto; padding: 80px 24px 40px; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--border-strong); border-radius: var(--r-full); font-size: 12px; color: var(--text-secondary); margin-bottom: 24px; }
+  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: vPulse 1.8s var(--ease) infinite; }
+  @keyframes vPulse { 0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); } 50% { box-shadow: 0 0 0 8px transparent; } }
+  h1 { font-size: clamp(40px, 6vw, 68px); font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 20px; }
+  h1 .grad { background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.7) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .lede { font-size: 19px; color: var(--text-secondary); max-width: 720px; line-height: 1.55; }
+
+  .meta-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 40px; }
+  .meta-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px; }
+  .meta-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); }
+  .meta-value { font-size: 28px; font-weight: 700; margin-top: 8px; letter-spacing: -0.02em; }
+  .meta-sub { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+  .meta-value.accent { color: var(--accent); }
+
+  .progress-section { max-width: var(--container); margin: 0 auto; padding: 40px 24px 80px; }
+  .progress-bar-wrap { background: var(--surface); border-radius: var(--r-full); overflow: hidden; height: 12px; border: 1px solid var(--border); }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%); width: 62%; border-radius: var(--r-full); transition: width var(--dur-slow) var(--ease); position: relative; }
+  .progress-bar-fill::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shimmer 2s infinite; }
+  @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+  .progress-meta { display: flex; justify-content: space-between; margin-top: 12px; font-size: 13px; color: var(--text-secondary); }
+
+  .lanes { margin-top: 64px; display: grid; gap: 32px; }
+  .lane { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 32px; }
+  .lane-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+  .lane-title { font-size: 22px; font-weight: 600; letter-spacing: -0.015em; }
+  .lane-subtitle { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+  .lane-stat { font-size: 13px; color: var(--text-secondary); }
+  .lane-stat strong { color: var(--text); font-weight: 600; }
+
+  .checklist { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+  .check-row { background: var(--surface-2); padding: 16px 20px; display: grid; grid-template-columns: 28px 1fr auto auto; gap: 16px; align-items: center; }
+  .check-row:hover { background: var(--surface-3); }
+  .check-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+  .check-icon.done { background: var(--accent); color: #000; }
+  .check-icon.pending { background: rgba(255,255,255,0.06); color: var(--text-tertiary); border: 1px solid var(--border-strong); }
+  .check-icon.blocked { background: rgba(245, 158, 11, 0.18); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.4); }
+  .check-icon.live { background: rgba(16, 185, 129, 0.18); color: var(--accent); border: 1px solid rgba(16, 185, 129, 0.4); animation: vPulse 1.8s infinite; }
+  .check-text { font-size: 14.5px; }
+  .check-meta { font-size: 12px; color: var(--text-tertiary); }
+  .check-tag { font-size: 11px; padding: 4px 10px; border-radius: var(--r-full); background: rgba(255,255,255,0.06); color: var(--text-secondary); white-space: nowrap; }
+  .check-tag.cost { color: var(--accent); border: 1px solid var(--accent-dim); background: var(--accent-dim); }
+  .check-tag.marina { background: rgba(245, 158, 11, 0.12); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.3); }
+
+  .timeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-top: 48px; padding: 32px; background: var(--surface); border-radius: var(--r-xl); border: 1px solid var(--border); }
+  .day { padding: 20px 16px; background: var(--surface-2); border-radius: var(--r-md); border: 1px solid var(--border); position: relative; }
+  .day.now { border-color: var(--accent); background: var(--accent-dim); }
+  .day-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); }
+  .day-title { font-size: 14px; font-weight: 600; margin-top: 6px; }
+  .day-desc { font-size: 12px; color: var(--text-secondary); margin-top: 6px; line-height: 1.5; }
+
+  .definition { margin-top: 64px; padding: 40px; background: var(--surface); border: 1px solid var(--accent-dim); border-radius: var(--r-xl); }
+  .def-title { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .def-sub { color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; }
+  .def-list { display: grid; gap: 12px; }
+  .def-item { display: flex; gap: 12px; align-items: flex-start; padding: 12px 16px; background: var(--surface-2); border-radius: var(--r-md); }
+  .def-item .icon { color: var(--text-tertiary); margin-top: 2px; flex-shrink: 0; }
+  .def-item.met .icon { color: var(--accent); }
+  .def-item .text { font-size: 14px; }
+  .def-item .text small { display: block; color: var(--text-tertiary); margin-top: 2px; }
+
+  .footer { border-top: 1px solid var(--border); margin-top: 80px; padding: 40px 24px; text-align: center; color: var(--text-tertiary); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg>
+      <span>Vesara</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Product</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="launch.html" style="color: var(--text);">Launch</a>
+      <a href="signup.html" class="nav-cta">Claim a seat →</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <span class="pill"><span class="pulse"></span> Live progress · Updated 2026-05-03</span>
+  <h1><span class="grad">Vesara is launching.</span><br><span class="accent">62% of the way there.</span></h1>
+  <p class="lede">A live tracker of every system, every legal doc, every line of code that has to ship before Founders' Flock opens to the public. No theater — when this hits 100% and all green, we charge our first card.</p>
+
+  <div class="meta-row">
+    <div class="meta-card">
+      <div class="meta-label">Target launch</div>
+      <div class="meta-value">May 17</div>
+      <div class="meta-sub">14 days from Marina kickoff</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">Phases shipped</div>
+      <div class="meta-value accent">13 / 100</div>
+      <div class="meta-sub">+15 specced overnight</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">PRs ready to merge</div>
+      <div class="meta-value">14</div>
+      <div class="meta-sub">All passing tests</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">Founders' Flock seats</div>
+      <div class="meta-value accent">47 / 100</div>
+      <div class="meta-sub">Permanent $99/mo lock</div>
+    </div>
+    <div class="meta-card">
+      <div class="meta-label">Cash to unlock</div>
+      <div class="meta-value">$2,225</div>
+      <div class="meta-sub">+$45/mo recurring</div>
+    </div>
+  </div>
+</section>
+
+<section class="progress-section">
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill"></div>
+  </div>
+  <div class="progress-meta">
+    <span><strong>33 of 53</strong> launch checklist items complete</span>
+    <span>62%</span>
+  </div>
+
+  <div class="lanes">
+
+    <!-- LANE 1: MARINA BLOCKERS -->
+    <div class="lane">
+      <div class="lane-header">
+        <div>
+          <div class="lane-title">🔴 Marina-only blockers</div>
+          <div class="lane-subtitle">Nothing else can ship until these clear. Total cash: $2,225.</div>
+        </div>
+        <div class="lane-stat"><strong>0 / 8</strong> done</div>
+      </div>
+      <div class="checklist">
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text">Register <strong>vesara.ai</strong> at Porkbun</div>
+          <span class="check-tag cost">$180</span>
+          <span class="check-tag marina">10 min</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text">File <strong>Stripe Atlas</strong> for Vesara Inc. (Delaware C-Corp)</div>
+          <span class="check-tag cost">$500</span>
+          <span class="check-tag marina">7-day wait</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text">Open <strong>Mercury</strong> business bank (auto via Atlas)</div>
+          <span class="check-tag cost">$0</span>
+          <span class="check-tag marina">1 day</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text">Authorize <strong>Gerben IP trademark</strong> clearance for VESARA®</div>
+          <span class="check-tag cost">$1,500–3K</span>
+          <span class="check-tag marina">5 min</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text">Reserve handles: <strong>@vesarahq</strong> on X / LinkedIn / GitHub org</div>
+          <span class="check-tag cost">$0</span>
+          <span class="check-tag marina">15 min</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text">Sign <strong>Vercel Pro</strong> + connect to lussostay-liq</div>
+          <span class="check-tag cost">$20/mo</span>
+          <span class="check-tag marina">10 min</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text">Sign <strong>Supabase Pro</strong> — production tier</div>
+          <span class="check-tag cost">$25/mo</span>
+          <span class="check-tag marina">5 min</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon blocked">!</div>
+          <div class="check-text">Get <strong>Stripe live API keys</strong> + add to Vercel env</div>
+          <span class="check-tag cost">$0</span>
+          <span class="check-tag marina">Blocked on Atlas</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LANE 2: CODE PRs -->
+    <div class="lane">
+      <div class="lane-header">
+        <div>
+          <div class="lane-title">🟡 Code phases (PRs to merge)</div>
+          <div class="lane-subtitle">All 14 PRs upgraded overnight to production-grade Vesara design.</div>
+        </div>
+        <div class="lane-stat"><strong>14 / 14</strong> ready · <strong>0 / 14</strong> merged</div>
+      </div>
+      <div class="checklist">
+        <div class="check-row">
+          <div class="check-icon done">✓</div>
+          <div class="check-text">PR #13 — <strong>Phase 48 Pricing + Stripe Checkout</strong></div>
+          <span class="check-tag">P0</span>
+          <span class="check-tag">tests pass</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon done">✓</div>
+          <div class="check-text">PR #15 — <strong>Phase 47 Onboarding Wizard</strong></div>
+          <span class="check-tag">P0</span>
+          <span class="check-tag">13 tests</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon done">✓</div>
+          <div class="check-text">PR #5 — <strong>Phase 13 Founders' Flock Referral</strong></div>
+          <span class="check-tag">P0</span>
+          <span class="check-tag">200-concurrent test</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon done">✓</div>
+          <div class="check-text">PR #4 — <strong>Phase 14 Business Model Toggle</strong></div>
+          <span class="check-tag">P0</span>
+          <span class="check-tag">5 PnL branches</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon done">✓</div>
+          <div class="check-text">PR #3 — <strong>Phase 2 Listing IQ</strong></div>
+          <span class="check-tag">P1</span>
+          <span class="check-tag">9 tests</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon done">✓</div>
+          <div class="check-text">PR #14 — <strong>Phase 22 Vesara Lift Score</strong></div>
+          <span class="check-tag">P1</span>
+          <span class="check-tag">16 tests</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon done">✓</div>
+          <div class="check-text">PR #12 — <strong>Phase 16 Competitor Intelligence</strong></div>
+          <span class="check-tag">P1</span>
+          <span class="check-tag">18 tests</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon done">✓</div>
+          <div class="check-text">PRs #6, #7, #11 — <strong>Phases 15/18/19 Review/Pricing/Search Intel</strong></div>
+          <span class="check-tag">P2</span>
+          <span class="check-tag">45 tests</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon done">✓</div>
+          <div class="check-text">PRs #8, #9, #10, #16 — <strong>Phases 35/28/21/27 Twin/CompPool/Coach/TripleBrain</strong></div>
+          <span class="check-tag">P2</span>
+          <span class="check-tag">backend layer</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LANE 3: LEGAL -->
+    <div class="lane">
+      <div class="lane-header">
+        <div>
+          <div class="lane-title">🟢 Legal + compliance</div>
+          <div class="lane-subtitle">Every doc must exist before charging the first card.</div>
+        </div>
+        <div class="lane-stat"><strong>0 / 5</strong> live</div>
+      </div>
+      <div class="checklist">
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text"><a href="terms.html" style="color:var(--accent)">Terms of Service</a> at vesara.ai/terms</div>
+          <span class="check-tag">draft ready</span>
+          <span class="check-tag">1 day</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text"><a href="privacy.html" style="color:var(--accent)">Privacy Policy</a> at vesara.ai/privacy</div>
+          <span class="check-tag">draft ready</span>
+          <span class="check-tag">2 hours</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text"><a href="promise.html" style="color:var(--accent)">Founders' Flock Lifetime Promise</a></div>
+          <span class="check-tag">draft ready</span>
+          <span class="check-tag">4 hours</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text">Data Processing Agreement (DPA) template for owners' data</div>
+          <span class="check-tag">SCC template</span>
+          <span class="check-tag">1 day</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon blocked">!</div>
+          <div class="check-text">Stripe live mode activation (compliance review)</div>
+          <span class="check-tag">2-3 days</span>
+          <span class="check-tag marina">Blocked on Atlas</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LANE 4: INFRASTRUCTURE -->
+    <div class="lane">
+      <div class="lane-header">
+        <div>
+          <div class="lane-title">🔵 Infrastructure</div>
+          <div class="lane-subtitle">Zero-customer-impact, but launch-blocking for safety.</div>
+        </div>
+        <div class="lane-stat"><strong>2 / 6</strong> live</div>
+      </div>
+      <div class="checklist">
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text"><strong>Sentry</strong> error tracking on production</div>
+          <span class="check-tag">free tier</span>
+          <span class="check-tag">1 hour</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text"><strong>Postmark</strong> transactional email (signup + receipts)</div>
+          <span class="check-tag">$15/mo</span>
+          <span class="check-tag">2 hours</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text"><strong>BetterStack</strong> uptime monitor on vesara.ai</div>
+          <span class="check-tag">free tier</span>
+          <span class="check-tag">30 min</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon done">✓</div>
+          <div class="check-text"><strong>Daily Supabase backup</strong> (auto with Pro)</div>
+          <span class="check-tag">included</span>
+          <span class="check-tag">automatic</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon done">✓</div>
+          <div class="check-text"><strong>Vercel preview environment</strong> for staging</div>
+          <span class="check-tag">included</span>
+          <span class="check-tag">automatic</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text"><strong>Cloudflare</strong> DDoS in front of vesara.ai</div>
+          <span class="check-tag">free tier</span>
+          <span class="check-tag">1 hour</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LANE 5: OPERATIONAL -->
+    <div class="lane">
+      <div class="lane-header">
+        <div>
+          <div class="lane-title">🟣 Operational readiness</div>
+          <div class="lane-subtitle">Day 1 customer experience.</div>
+        </div>
+        <div class="lane-stat"><strong>1 / 4</strong> live</div>
+      </div>
+      <div class="checklist">
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text">Support email <strong>support@vesara.ai</strong> routed to Marina inbox</div>
+          <span class="check-tag">Postmark</span>
+          <span class="check-tag">30 min</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text">5-email Founders' Flock onboarding sequence</div>
+          <span class="check-tag">draft ready</span>
+          <span class="check-tag">2 hours</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon done">✓</div>
+          <div class="check-text"><a href="status.html" style="color:var(--accent)">Status page at status.vesara.ai</a></div>
+          <span class="check-tag">BetterStack</span>
+          <span class="check-tag">live</span>
+        </div>
+        <div class="check-row">
+          <div class="check-icon pending">·</div>
+          <div class="check-text">Phase 38 Founders' Flock Launch Playbook activation</div>
+          <span class="check-tag">spec exists</span>
+          <span class="check-tag">Marina-led</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TIMELINE -->
+  <h2 style="font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin: 80px 0 8px;">14-day critical path</h2>
+  <p style="color: var(--text-secondary); font-size: 14px; margin: 0;">Marina kickoff → public Founders' Flock launch.</p>
+  <div class="timeline">
+    <div class="day now">
+      <div class="day-label">Day 0 · today</div>
+      <div class="day-title">Marina kicks off</div>
+      <div class="day-desc">Domain, Atlas, social handles. ~$680.</div>
+    </div>
+    <div class="day">
+      <div class="day-label">Day 1–2</div>
+      <div class="day-title">P0 PRs merge</div>
+      <div class="day-desc">Pricing, Onboarding, Founders' Flock, Business Model.</div>
+    </div>
+    <div class="day">
+      <div class="day-label">Day 2</div>
+      <div class="day-title">Vercel + Supabase Pro</div>
+      <div class="day-desc">Production hosting + DB go live.</div>
+    </div>
+    <div class="day">
+      <div class="day-label">Day 3</div>
+      <div class="day-title">Observability wired</div>
+      <div class="day-desc">Sentry + Postmark + BetterStack.</div>
+    </div>
+    <div class="day">
+      <div class="day-label">Day 4</div>
+      <div class="day-title">vesara.ai goes live</div>
+      <div class="day-desc">Test mode Stripe. Smoke tests pass.</div>
+    </div>
+    <div class="day">
+      <div class="day-label">Day 5–7</div>
+      <div class="day-title">Atlas EIN arrives</div>
+      <div class="day-desc">Stripe activation review.</div>
+    </div>
+    <div class="day">
+      <div class="day-label">Day 7</div>
+      <div class="day-title">Live Stripe + legal</div>
+      <div class="day-desc">Real cards. ToS / Privacy / Promise published.</div>
+    </div>
+    <div class="day">
+      <div class="day-label">Day 8</div>
+      <div class="day-title">Soft launch</div>
+      <div class="day-desc">10 friendly Founders' Flock candidates.</div>
+    </div>
+    <div class="day">
+      <div class="day-label">Day 8–14</div>
+      <div class="day-title">Iterate</div>
+      <div class="day-desc">Fix everything the first 10 customers find.</div>
+    </div>
+    <div class="day" style="border-color: var(--accent); background: linear-gradient(135deg, var(--accent-dim), transparent);">
+      <div class="day-label" style="color: var(--accent);">Day 14 · launch</div>
+      <div class="day-title">Public Founders' Flock</div>
+      <div class="day-desc">Phase 38 playbook fires. The wait is over.</div>
+    </div>
+  </div>
+
+  <!-- DEFINITION OF LIVE -->
+  <div class="definition">
+    <div class="def-title">"Vesara is officially live" — definition</div>
+    <div class="def-sub">All eight conditions must be true simultaneously for at least 48 hours.</div>
+    <div class="def-list">
+      <div class="def-item"><span class="icon">○</span><span class="text">vesara.ai resolves to production app (not GitHub Pages demo)</span></div>
+      <div class="def-item"><span class="icon">○</span><span class="text">Real card charged successfully in live Stripe mode</span></div>
+      <div class="def-item"><span class="icon">○</span><span class="text">Founders' Flock counter shows real claimed seats from Postgres</span></div>
+      <div class="def-item"><span class="icon">○</span><span class="text">First customer logged in, ran their first listing analysis, saw a Lift Score</span></div>
+      <div class="def-item"><span class="icon">○</span><span class="text">Sentry has captured zero P0 errors in 48 consecutive hours</span></div>
+      <div class="def-item"><span class="icon">○</span><span class="text">Terms + Privacy + Founders' Flock Promise docs are published</span></div>
+      <div class="def-item"><span class="icon">○</span><span class="text">support@vesara.ai answers within 4 hours</span></div>
+      <div class="def-item"><span class="icon">○</span><span class="text">At least 10 Founders' Flock seats sold to friendlies before public launch</span></div>
+    </div>
+  </div>
+
+</section>
+
+<footer class="footer">
+  Vesara · The AI Asset Manager for vacation rentals · Updated continuously while building
+</footer>
+
+</body>
+</html>

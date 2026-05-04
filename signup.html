@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara — Claim Your Founders' Flock Seat</title>
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; min-height: 100vh; }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; }
+  .nav-inner { max-width: var(--container); margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+
+  .layout { display: grid; grid-template-columns: 1fr 1fr; max-width: 1200px; margin: 0 auto; gap: 80px; padding: 60px 24px; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; gap: 40px; } }
+
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--accent); border-radius: var(--r-full); font-size: 12px; color: var(--accent); margin-bottom: 24px; background: var(--accent-dim); }
+  .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  h1 { font-size: 44px; font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 16px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .lede { font-size: 17px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 32px; }
+
+  .seats-counter { padding: 24px; border: 1px solid var(--border-strong); border-radius: var(--r-lg); background: var(--surface); margin-bottom: 32px; }
+  .seats-row { display: flex; justify-content: space-between; align-items: center; }
+  .seats-num { font-size: 32px; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; }
+  .seats-label { font-size: 13px; color: var(--text-secondary); }
+  .seats-progress { margin-top: 16px; height: 8px; background: var(--surface-3); border-radius: var(--r-full); overflow: hidden; }
+  .seats-fill { height: 100%; width: 47%; background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%); border-radius: var(--r-full); }
+
+  .promises { display: grid; gap: 16px; }
+  .promise { display: flex; gap: 12px; align-items: flex-start; padding: 16px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md); }
+  .promise-icon { color: var(--accent); font-size: 20px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+  .promise-text { font-size: 14px; line-height: 1.5; }
+  .promise-text strong { color: var(--text); }
+
+  .form-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 40px; box-shadow: var(--shadow-lg); }
+  .step-pill { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-tertiary); margin-bottom: 16px; }
+  .form-title { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 8px; }
+  .form-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 32px; }
+  label { display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; }
+  input, select { width: 100%; padding: 12px 14px; background: var(--bg-elevated); border: 1px solid var(--border-strong); border-radius: var(--r-md); color: var(--text); font-family: inherit; font-size: 14.5px; box-sizing: border-box; transition: border-color var(--dur-fast); }
+  input:focus, select:focus { outline: none; border-color: var(--accent); }
+  .field { margin-bottom: 20px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .summary { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-md); padding: 20px; margin-bottom: 24px; }
+  .summary-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; }
+  .summary-row.total { border-top: 1px solid var(--border-strong); padding-top: 14px; margin-top: 8px; font-size: 16px; font-weight: 600; }
+  .summary-row .accent { color: var(--accent); }
+  .submit-btn { width: 100%; padding: 14px 24px; background: var(--accent); color: #000; border: none; border-radius: var(--r-md); font-weight: 600; font-size: 15px; cursor: pointer; transition: background var(--dur-fast); margin-top: 8px; }
+  .submit-btn:hover { background: var(--accent-hover); }
+  .micro { font-size: 12px; color: var(--text-tertiary); margin-top: 16px; text-align: center; line-height: 1.5; }
+  .micro a { color: var(--text-secondary); }
+  .progress-dots { display: flex; gap: 8px; margin-bottom: 32px; }
+  .dot { flex: 1; height: 4px; background: var(--surface-3); border-radius: var(--r-full); }
+  .dot.active { background: var(--accent); }
+  .dot.done { background: var(--accent-hover); }
+
+  .nav-back { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-strong); padding: 10px 16px; border-radius: var(--r-md); font-size: 13px; cursor: pointer; margin-right: 8px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg>
+      <span>Vesara</span>
+    </a>
+    <a href="pricing.html" style="color: var(--text-secondary); text-decoration: none; font-size: 14px;">← Back to pricing</a>
+  </div>
+</nav>
+
+<div class="layout">
+
+  <div>
+    <span class="pill"><span class="pulse"></span> Founders' Flock · Limited to 100</span>
+    <h1>Claim your <span class="accent">$99/mo lifetime</span> seat.</h1>
+    <p class="lede">First 100 operators. Locked at $99/month forever — even when standard tier hits $599. The price you sign up at is the price you pay for the lifetime of your subscription. Permanent badge. Direct line to Marina.</p>
+
+    <div class="seats-counter">
+      <div class="seats-row">
+        <div>
+          <div class="seats-num">47 / 100</div>
+          <div class="seats-label">seats claimed in real-time</div>
+        </div>
+        <div style="text-align: right;">
+          <div style="color: var(--accent); font-size: 14px; font-weight: 600;">53 left</div>
+          <div class="seats-label">closing forever at #100</div>
+        </div>
+      </div>
+      <div class="seats-progress"><div class="seats-fill"></div></div>
+    </div>
+
+    <div class="promises">
+      <div class="promise"><span class="promise-icon">●</span><span class="promise-text"><strong>$99/mo locked forever</strong> — never increases, even when standard tier hits $599. Written into your subscription contract.</span></div>
+      <div class="promise"><span class="promise-icon">●</span><span class="promise-text"><strong>Permanent Founders' Flock badge</strong> on your operator profile + product credits in every public release note.</span></div>
+      <div class="promise"><span class="promise-icon">●</span><span class="promise-text"><strong>Direct Slack + SMS line to Marina</strong> for the first 100. Not a support queue — actually her phone.</span></div>
+      <div class="promise"><span class="promise-icon">●</span><span class="promise-text"><strong>Roadmap voting rights</strong> — 1 vote per Founders' Flock seat on every quarterly priorities review.</span></div>
+      <div class="promise"><span class="promise-icon">●</span><span class="promise-text"><strong>Annual Founders' Flock retreat</strong> — 3 days, hosted by Vesara, ticket included.</span></div>
+      <div class="promise"><span class="promise-icon">●</span><span class="promise-text"><strong>14-day free trial</strong> — card on file, no charge until day 15. Cancel anytime, no questions, no retention call.</span></div>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <div class="progress-dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="step-pill">Step 1 of 3 · Account</div>
+    <h2 class="form-title">Let's start with you.</h2>
+    <p class="form-sub">90 seconds. We never share your info. Card on file but charged on day 15.</p>
+
+    <form>
+      <div class="row">
+        <div class="field">
+          <label>First name</label>
+          <input type="text" placeholder="Marina" />
+        </div>
+        <div class="field">
+          <label>Last name</label>
+          <input type="text" placeholder="Tinova" />
+        </div>
+      </div>
+      <div class="field">
+        <label>Work email</label>
+        <input type="email" placeholder="you@yourcompany.com" />
+      </div>
+      <div class="field">
+        <label>Company name</label>
+        <input type="text" placeholder="LussoStay LLC" />
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>How many properties do you manage?</label>
+          <select>
+            <option>1–5</option>
+            <option>6–15</option>
+            <option selected>16–25</option>
+            <option>26–50</option>
+            <option>50+</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Primary market</label>
+          <input type="text" placeholder="Reno, NV" />
+        </div>
+      </div>
+
+      <div class="summary">
+        <div class="summary-row">
+          <span>Founders' Flock</span>
+          <span>$99/mo</span>
+        </div>
+        <div class="summary-row">
+          <span>14-day trial</span>
+          <span class="accent">FREE</span>
+        </div>
+        <div class="summary-row">
+          <span>Charged today</span>
+          <span>$0.00</span>
+        </div>
+        <div class="summary-row total">
+          <span>Charged on May 17, 2026</span>
+          <span class="accent">$99.00</span>
+        </div>
+      </div>
+
+      <button type="button" class="submit-btn">Continue to payment →</button>
+
+      <p class="micro">By continuing you accept our <a href="terms.html">Terms</a>, <a href="privacy.html">Privacy Policy</a>, and the <a href="promise.html">Founders' Flock Lifetime Promise</a>. Cancel anytime before May 17 to avoid charge.</p>
+    </form>
+  </div>
+
+</div>
+
+</body>
+</html>

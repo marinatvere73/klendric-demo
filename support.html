@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara — Support</title>
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; }
+  .nav { padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; max-width: var(--container); margin: 0 auto; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+
+  .hero { max-width: 880px; margin: 0 auto; padding: 80px 24px 40px; text-align: center; }
+  h1 { font-size: 56px; font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 16px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .lede { font-size: 18px; color: var(--text-secondary); max-width: 640px; margin: 0 auto; line-height: 1.55; }
+
+  .search-box { max-width: 580px; margin: 40px auto; position: relative; }
+  .search-box input { width: 100%; padding: 18px 22px 18px 56px; background: var(--surface); border: 1.5px solid var(--border-strong); border-radius: var(--r-full); color: var(--text); font-size: 16px; font-family: inherit; box-sizing: border-box; }
+  .search-box input:focus { outline: none; border-color: var(--accent); }
+  .search-box::before { content: '⌕'; position: absolute; left: 22px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); font-size: 22px; }
+
+  .layout { max-width: var(--container); margin: 0 auto; padding: 0 24px 80px; }
+  .channels { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 64px; }
+  .channel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 28px; transition: all var(--dur-fast); }
+  .channel:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .ch-icon { width: 44px; height: 44px; border-radius: var(--r-md); background: var(--accent-dim); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 16px; }
+  .ch-name { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+  .ch-desc { font-size: 13.5px; color: var(--text-secondary); margin-top: 6px; line-height: 1.55; }
+  .ch-sla { font-size: 12px; color: var(--accent); margin-top: 12px; font-weight: 500; }
+  .ch-link { display: inline-block; margin-top: 16px; color: var(--accent); text-decoration: none; font-size: 14px; font-weight: 600; }
+  .channel.featured { border-color: var(--accent); background: linear-gradient(135deg, var(--accent-dim) 0%, transparent 100%); }
+  .channel.featured .ch-name::after { content: ' · Founders\' Flock'; color: var(--accent); font-weight: 500; font-size: 13px; }
+
+  .kb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .kb-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 24px; transition: border-color var(--dur-fast); }
+  .kb-card:hover { border-color: var(--border-strong); }
+  .kb-cat { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 8px; }
+  .kb-title { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .kb-articles { display: grid; gap: 6px; }
+  .kb-article { color: var(--text-secondary); text-decoration: none; font-size: 13.5px; padding: 4px 0; }
+  .kb-article:hover { color: var(--accent); }
+
+  .section-title { font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin: 56px 0 20px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="brand">
+    <svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg>
+    <span>Vesara</span>
+  </a>
+  <div class="nav-links">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="status.html">Status</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>How can we <span class="accent">help?</span></h1>
+  <p class="lede">Real humans, real fast. AI for the easy stuff, a person for everything that matters. Marina personally answers Founders' Flock messages.</p>
+  <div class="search-box">
+    <input type="text" placeholder="Search 240+ help articles…" />
+  </div>
+</section>
+
+<main class="layout">
+
+  <div class="channels">
+    <div class="channel featured">
+      <div class="ch-icon">●</div>
+      <div class="ch-name">Direct line to Marina</div>
+      <div class="ch-desc">Slack DM or SMS. The CEO answers. No tier-1 routing, no "your case has been escalated" emails.</div>
+      <div class="ch-sla">Reply within 4 hours, 7 days a week</div>
+      <a href="#" class="ch-link">Open Slack →</a>
+    </div>
+
+    <div class="channel">
+      <div class="ch-icon">✉</div>
+      <div class="ch-name">Email support</div>
+      <div class="ch-desc">For everything else. Real engineers + customer success — no outsourced first-line.</div>
+      <div class="ch-sla">Reply within 4 hours business · 24h weekends</div>
+      <a href="mailto:support@vesara.ai" class="ch-link">support@vesara.ai →</a>
+    </div>
+
+    <div class="channel">
+      <div class="ch-icon">⌘</div>
+      <div class="ch-name">In-product chat</div>
+      <div class="ch-desc">AI Coach handles 70% of questions. Hands off to a human when confidence is below threshold.</div>
+      <div class="ch-sla">AI: instant · Human: 30 min business hours</div>
+      <a href="dashboard.html" class="ch-link">Open Coach →</a>
+    </div>
+  </div>
+
+  <div class="section-title">Browse by topic</div>
+  <div class="kb-grid">
+
+    <div class="kb-card">
+      <div class="kb-cat">Getting started</div>
+      <div class="kb-title">First 60 seconds with Vesara</div>
+      <div class="kb-articles">
+        <a href="onboarding.html" class="kb-article">Connecting your first listing</a>
+        <a href="#" class="kb-article">Reading your Vesara Score</a>
+        <a href="#" class="kb-article">What the triple-brain consensus means</a>
+        <a href="#" class="kb-article">Inviting your team</a>
+      </div>
+    </div>
+
+    <div class="kb-card">
+      <div class="kb-cat">Pricing & rates</div>
+      <div class="kb-title">Pricing intelligence overlay</div>
+      <div class="kb-articles">
+        <a href="#" class="kb-article">How Vesara's pricing recs differ from PriceLabs</a>
+        <a href="#" class="kb-article">Setting price floors that stick</a>
+        <a href="#" class="kb-article">Reading the comp pool benchmarks</a>
+        <a href="#" class="kb-article">Anomaly detection: what to ignore vs act on</a>
+      </div>
+    </div>
+
+    <div class="kb-card">
+      <div class="kb-cat">Owners</div>
+      <div class="kb-title">Owner portal & statements</div>
+      <div class="kb-articles">
+        <a href="#" class="kb-article">Inviting owners to the portal</a>
+        <a href="#" class="kb-article">Generating monthly statements</a>
+        <a href="#" class="kb-article">The Owner AI Concierge action layer</a>
+        <a href="#" class="kb-article">Owner defection risk signals</a>
+      </div>
+    </div>
+
+    <div class="kb-card">
+      <div class="kb-cat">Integrations</div>
+      <div class="kb-title">Connecting your stack</div>
+      <div class="kb-articles">
+        <a href="#" class="kb-article">Guesty 2-way sync setup</a>
+        <a href="#" class="kb-article">PriceLabs read/write integration</a>
+        <a href="#" class="kb-article">Breezeway tasks pipeline</a>
+        <a href="#" class="kb-article">Stripe payouts to owners</a>
+      </div>
+    </div>
+
+    <div class="kb-card">
+      <div class="kb-cat">Billing</div>
+      <div class="kb-title">Subscription & Founders' Flock</div>
+      <div class="kb-articles">
+        <a href="promise.html" class="kb-article">The Founders' Flock Lifetime Promise</a>
+        <a href="#" class="kb-article">Switching billing cycle (monthly ↔ annual)</a>
+        <a href="#" class="kb-article">Adding properties beyond your tier limit</a>
+        <a href="#" class="kb-article">Cancellation & data export</a>
+      </div>
+    </div>
+
+    <div class="kb-card">
+      <div class="kb-cat">Privacy & security</div>
+      <div class="kb-title">Trust & compliance</div>
+      <div class="kb-articles">
+        <a href="privacy.html" class="kb-article">Privacy policy in plain language</a>
+        <a href="#" class="kb-article">Opting out of the Comp Pool</a>
+        <a href="#" class="kb-article">Exporting your data</a>
+        <a href="#" class="kb-article">Reporting a security issue</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

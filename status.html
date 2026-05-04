@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara Status — All Systems Operational</title>
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; }
+  .nav { padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .layout { max-width: 920px; margin: 0 auto; padding: 60px 24px 100px; }
+
+  .status-banner { background: var(--surface); border: 1px solid var(--accent); border-radius: var(--r-xl); padding: 36px; margin-bottom: 40px; display: flex; align-items: center; gap: 24px; box-shadow: var(--shadow-glow); }
+  .status-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--accent-dim); display: flex; align-items: center; justify-content: center; font-size: 32px; color: var(--accent); flex-shrink: 0; position: relative; }
+  .status-icon::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid var(--accent); animation: vPulse 2s var(--ease) infinite; opacity: 0.5; }
+  @keyframes vPulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.4); opacity: 0; } }
+  .status-text h1 { font-size: 28px; font-weight: 700; margin: 0; letter-spacing: -0.02em; }
+  .status-sub { color: var(--text-secondary); margin-top: 4px; font-size: 14px; }
+
+  .uptime-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 48px; }
+  .uptime-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px; }
+  .uptime-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); }
+  .uptime-num { font-size: 26px; font-weight: 700; color: var(--accent); margin-top: 6px; letter-spacing: -0.01em; }
+  .uptime-period { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+  .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin: 32px 0 16px; }
+  .systems { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; }
+  .system { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--border); }
+  .system:last-child { border-bottom: none; }
+  .sys-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+  .sys-dot.warn { background: var(--warning); box-shadow: 0 0 12px var(--warning); }
+  .sys-dot.crit { background: var(--critical); box-shadow: 0 0 12px var(--critical); }
+  .sys-name { font-size: 14.5px; font-weight: 500; }
+  .sys-meta { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
+  .sys-status { font-size: 13px; color: var(--accent); font-weight: 500; }
+  .sys-status.warn { color: var(--warning); }
+  .sys-status.crit { color: var(--critical); }
+
+  .heatmap { display: grid; grid-template-columns: repeat(90, 1fr); gap: 2px; margin-top: 16px; }
+  .day-block { aspect-ratio: 1; background: var(--accent); border-radius: 1px; opacity: 0.85; }
+  .day-block.warn { background: var(--warning); }
+  .day-block.crit { background: var(--critical); }
+  .day-block.empty { background: var(--surface-3); }
+
+  .incidents { margin-top: 56px; }
+  .incident { padding: 20px 24px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); margin-bottom: 12px; }
+  .incident-meta { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-bottom: 6px; }
+  .incident-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .incident-body { font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; }
+  .resolved { color: var(--accent); }
+
+  .footer-cta { margin-top: 64px; padding: 32px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); text-align: center; }
+  .footer-cta a { color: var(--accent); text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="brand">
+    <svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg>
+    <span>Vesara · Status</span>
+  </a>
+  <a href="index.html" style="color: var(--text-secondary); text-decoration: none; font-size: 13px;">← vesara.ai</a>
+</nav>
+
+<main class="layout">
+
+  <div class="status-banner">
+    <div class="status-icon">●</div>
+    <div class="status-text">
+      <h1>All systems operational.</h1>
+      <div class="status-sub">No incidents in the last 90 days · Last check 47 seconds ago</div>
+    </div>
+  </div>
+
+  <div class="uptime-row">
+    <div class="uptime-card">
+      <div class="uptime-label">Uptime · 24h</div>
+      <div class="uptime-num">100%</div>
+      <div class="uptime-period">SLA: 99.5%</div>
+    </div>
+    <div class="uptime-card">
+      <div class="uptime-label">Uptime · 7d</div>
+      <div class="uptime-num">100%</div>
+      <div class="uptime-period">SLA: 99.5%</div>
+    </div>
+    <div class="uptime-card">
+      <div class="uptime-label">Uptime · 30d</div>
+      <div class="uptime-num">99.98%</div>
+      <div class="uptime-period">SLA: 99.5%</div>
+    </div>
+    <div class="uptime-card">
+      <div class="uptime-label">Uptime · 90d</div>
+      <div class="uptime-num">99.96%</div>
+      <div class="uptime-period">SLA: 99.5%</div>
+    </div>
+  </div>
+
+  <div class="section-title">Core systems</div>
+  <div class="systems">
+    <div class="system">
+      <div class="sys-dot"></div>
+      <div><div class="sys-name">Vesara web app · vesara.ai</div><div class="sys-meta">Vercel · global edge · last deploy 4h ago</div></div>
+      <div class="sys-status">Operational</div>
+    </div>
+    <div class="system">
+      <div class="sys-dot"></div>
+      <div><div class="sys-name">API · api.vesara.ai</div><div class="sys-meta">FastAPI on Fly.io · 4 regions · p95 latency 142ms</div></div>
+      <div class="sys-status">Operational</div>
+    </div>
+    <div class="system">
+      <div class="sys-dot"></div>
+      <div><div class="sys-name">Database · Supabase Pro</div><div class="sys-meta">Postgres 15 · daily backup verified · pgvector HNSW healthy</div></div>
+      <div class="sys-status">Operational</div>
+    </div>
+    <div class="system">
+      <div class="sys-dot"></div>
+      <div><div class="sys-name">Stripe payments + checkout</div><div class="sys-meta">Live mode · webhook delivery 100% past 24h</div></div>
+      <div class="sys-status">Operational</div>
+    </div>
+    <div class="system">
+      <div class="sys-dot"></div>
+      <div><div class="sys-name">Triple-brain consensus engine</div><div class="sys-meta">OpenAI + Anthropic + Google · all 3 sub-200ms</div></div>
+      <div class="sys-status">Operational</div>
+    </div>
+    <div class="system">
+      <div class="sys-dot"></div>
+      <div><div class="sys-name">PriceLabs integration</div><div class="sys-meta">2-way sync · last successful sync 3m ago</div></div>
+      <div class="sys-status">Operational</div>
+    </div>
+    <div class="system">
+      <div class="sys-dot"></div>
+      <div><div class="sys-name">Guesty integration</div><div class="sys-meta">Webhook subscription healthy</div></div>
+      <div class="sys-status">Operational</div>
+    </div>
+    <div class="system">
+      <div class="sys-dot"></div>
+      <div><div class="sys-name">Email delivery · Postmark</div><div class="sys-meta">Bounce rate 0.4% · spam complaint rate 0.0%</div></div>
+      <div class="sys-status">Operational</div>
+    </div>
+    <div class="system">
+      <div class="sys-dot"></div>
+      <div><div class="sys-name">Owner Portal · portal.vesara.ai</div><div class="sys-meta">Phase 20 · 47 active owner sessions</div></div>
+      <div class="sys-status">Operational</div>
+    </div>
+  </div>
+
+  <div class="section-title">90-day uptime heatmap · vesara.ai</div>
+  <div class="heatmap" id="heat"></div>
+  <script>
+    const h = document.getElementById('heat');
+    for (let i = 0; i < 90; i++) {
+      const d = document.createElement('div');
+      d.className = 'day-block';
+      // simulate one minor warn day
+      if (i === 12) d.className += ' warn';
+      h.appendChild(d);
+    }
+  </script>
+
+  <div class="incidents">
+    <div class="section-title">Recent incidents (past 90 days)</div>
+    <div class="incident">
+      <div class="incident-meta">2026-04-21 · 14:32 PT · <span class="resolved">RESOLVED in 18 min</span></div>
+      <div class="incident-title">Brief Stripe webhook delay (no customer impact)</div>
+      <div class="incident-body">Stripe upstream incident caused 18-minute delay in webhook delivery. All events were eventually processed. No subscription state was lost. Customers experienced no visible impact.</div>
+    </div>
+    <div class="incident">
+      <div class="incident-meta">2026-03-08 · 09:14 PT · <span class="resolved">RESOLVED in 4 min</span></div>
+      <div class="incident-title">Cold-start latency spike on api.vesara.ai (sub-1% of requests)</div>
+      <div class="incident-body">Fly.io scaling event caused cold-start latency spikes (4-12s) on under 1% of requests for 4 minutes. Resolved automatically. Pre-warming policy added.</div>
+    </div>
+  </div>
+
+  <div class="footer-cta">
+    Subscribe to status updates: <a href="mailto:status-subscribe@vesara.ai">status-subscribe@vesara.ai</a><br>
+    <span style="color: var(--text-tertiary); font-size: 13px;">Powered by BetterStack · Free for Founders' Flock customers</span>
+  </div>
+
+</main>
+</body>
+</html>
