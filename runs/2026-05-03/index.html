@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Klendric Portfolio - 2026-05-03</title>
+<title>Vesara Portfolio - 2026-05-03</title>
 <script>
   // Apply theme + view BEFORE Tailwind/CSS loads to prevent flash
   (function () {
@@ -172,7 +172,7 @@
 
   
   <div class="pdf-only" style="text-align:center; padding: 0.25in 0; border-bottom: 1px solid #cbd5e1; margin-bottom: 0.25in;">
-    <div style="font-family: 'Inter', sans-serif; font-weight: 800; font-size: 18pt; letter-spacing: 0.05em; color: #4f46e5;">Klendric</div>
+    <div style="font-family: 'Inter', sans-serif; font-weight: 800; font-size: 18pt; letter-spacing: 0.05em; color: #4f46e5;">Vesara</div>
     <div style="font-family: Georgia, serif; font-size: 11pt; color: #475569; margin-top: 4px;">Listing Intelligence Quotient · LussoStay</div>
     <div style="font-family: Georgia, serif; font-size: 9pt; color: #94a3b8; margin-top: 2px;">Generated 2026-05-03T21:28:58.226188Z</div>
   </div>
@@ -181,7 +181,7 @@
     
 <section class="space-y-2">
   <div class="flex items-baseline justify-between flex-wrap gap-3">
-    <h1 class="text-3xl font-bold tracking-tight">Portfolio Klendric Report</h1>
+    <h1 class="text-3xl font-bold tracking-tight">Portfolio Vesara Report</h1>
     <div class="text-sm text-slate-500 dark:text-slate-400">Run: <span class="text-slate-900 dark:text-slate-200 font-medium">2026-05-03</span></div>
   </div>
   <p class="text-slate-600 dark:text-slate-400 max-w-2xl">In-house alternative to industry-standard listing tools. Scores 16 dimensions including booking settings, profitability, and operational fit (hidden profit levers).</p>
@@ -190,7 +190,7 @@
 <!-- KPI ROW -->
 <section class="grid grid-cols-2 md:grid-cols-4 gap-4">
   <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 shadow-sm">
-    <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Portfolio Klendric</div>
+    <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Portfolio Vesara</div>
     <div class="mt-2 flex items-baseline gap-2">
       <span class="text-4xl font-bold grade-C">73</span>
       <span class="text-lg font-semibold grade-C">C</span>
@@ -1058,7 +1058,7 @@
           <th class="text-left px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white" data-sort="code">Code</th>
           <th class="text-left px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white" data-sort="nickname">Property</th>
           <th class="text-left px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white" data-sort="market">Market</th>
-          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white" data-sort="overall_score">Klendric</th>
+          <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white" data-sort="overall_score">Vesara</th>
           
           <th class="text-right px-3 py-2 cursor-pointer hover:text-slate-900 dark:hover:text-white capitalize whitespace-nowrap" data-sort="photos">photos</th>
           
@@ -1329,7 +1329,7 @@
 
   <footer class="border-t border-slate-200 dark:border-slate-800 mt-16 no-print">
     <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between text-xs text-slate-500">
-      <div>Klendric v1.6 · Internal listing optimizer · Built in-house</div>
+      <div>Vesara v1.6 · Internal listing optimizer · Built in-house</div>
       <div>Generated 2026-05-03T21:28:58.226188Z</div>
     </div>
   </footer>
@@ -1346,7 +1346,7 @@
     })();
 
     // View switcher — set ?view=… and reload (cheap, robust, keeps URL shareable)
-    window.Klendric_setView = function (mode) {
+    window.Vesara_setView = function (mode) {
       try {
         var url = new URL(window.location.href);
         if (mode === 'pm') url.searchParams.delete('view');
@@ -1356,7 +1356,7 @@
     };
 
     // PDF download — switch to pdf view, trigger print, then return
-    window.Klendric_downloadPdf = function () {
+    window.Vesara_downloadPdf = function () {
       var url = new URL(window.location.href);
       if (url.searchParams.get('view') === 'pdf') {
         window.print();

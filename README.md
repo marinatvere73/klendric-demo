@@ -1,8 +1,8 @@
-# Klendric — Live Product Preview
+# Vesara — Live Product Preview
 
-This repo hosts the public preview of the Klendric STR Listing Intelligence platform.
+This repo hosts the public preview of the Vesara STR Listing Intelligence platform.
 
-**Live URL:** https://marinatvere73.github.io/klendric-demo/
+**Live URL:** https://marinatvere73.github.io/vesara-demo/
 
 Source code lives in a separate private repo. This repo only contains static demo output that is safe to share publicly.
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AIRBNB-DEMO - Klendric 61</title>
+<title>AIRBNB-DEMO - Vesara 61</title>
 <script>
   // Apply theme + view BEFORE Tailwind/CSS loads to prevent flash
   (function () {
@@ -166,17 +166,17 @@
     <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
   </button>
   <div class="view-switch-menu absolute right-0 mt-2 w-56 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl overflow-hidden z-50">
-    <button type="button" onclick="Klendric_setView('pm')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-indigo-50 dark:hover:bg-slate-800 flex items-start gap-2">
+    <button type="button" onclick="Vesara_setView('pm')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-indigo-50 dark:hover:bg-slate-800 flex items-start gap-2">
       <span class="text-indigo-500 font-bold">PM</span>
       <span><div class="font-semibold">Property Manager</div><div class="text-xs text-slate-500">Full ops + financial detail</div></span>
     </button>
     
-    <button type="button" onclick="Klendric_setView('owner')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-emerald-50 dark:hover:bg-slate-800 border-t border-slate-100 dark:border-slate-800 flex items-start gap-2">
+    <button type="button" onclick="Vesara_setView('owner')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-emerald-50 dark:hover:bg-slate-800 border-t border-slate-100 dark:border-slate-800 flex items-start gap-2">
       <span class="text-emerald-500 font-bold">OW</span>
       <span><div class="font-semibold">Homeowner</div><div class="text-xs text-slate-500">Simplified, owner-friendly</div></span>
     </button>
     
-    <button type="button" onclick="Klendric_downloadPdf()" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 border-t border-slate-100 dark:border-slate-800 flex items-start gap-2">
+    <button type="button" onclick="Vesara_downloadPdf()" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 border-t border-slate-100 dark:border-slate-800 flex items-start gap-2">
       <span class="text-slate-500 font-bold">PDF</span>
       <span><div class="font-semibold">Download PDF</div><div class="text-xs text-slate-500">Print-ready report</div></span>
     </button>
@@ -200,7 +200,7 @@
 
   
   <div class="pdf-only" style="text-align:center; padding: 0.25in 0; border-bottom: 1px solid #cbd5e1; margin-bottom: 0.25in;">
-    <div style="font-family: 'Inter', sans-serif; font-weight: 800; font-size: 18pt; letter-spacing: 0.05em; color: #4f46e5;">Klendric</div>
+    <div style="font-family: 'Inter', sans-serif; font-weight: 800; font-size: 18pt; letter-spacing: 0.05em; color: #4f46e5;">Vesara</div>
     <div style="font-family: Georgia, serif; font-size: 11pt; color: #475569; margin-top: 4px;">Listing Intelligence Quotient · LussoStay</div>
     <div style="font-family: Georgia, serif; font-size: 9pt; color: #94a3b8; margin-top: 2px;">Generated 2026-05-03T21:28:58.402240Z</div>
   </div>
@@ -400,7 +400,7 @@
     
   </ul>
   <div class="mt-5 pt-4 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 italic">
-    These questions are generated automatically. Your PM uses Klendric to stay on top of the same metrics — bring these up to start a productive conversation.
+    These questions are generated automatically. Your PM uses Vesara to stay on top of the same metrics — bring these up to start a productive conversation.
   </div>
 </section>
 
@@ -1475,7 +1475,7 @@
     <div class="w-10 h-10 rounded-lg bg-slate-200 dark:bg-slate-800 grid place-items-center text-slate-500">i</div>
     <div>
       <div class="font-semibold text-slate-800 dark:text-slate-200">Score History</div>
-      <div class="text-sm text-slate-500 dark:text-slate-400">Score-over-time charts will appear here after multiple Klendric runs are stored. Run weekly to enable trend analysis.</div>
+      <div class="text-sm text-slate-500 dark:text-slate-400">Score-over-time charts will appear here after multiple Vesara runs are stored. Run weekly to enable trend analysis.</div>
     </div>
   </div>
 </section>
@@ -1483,7 +1483,7 @@
 
 <section class="owner-only text-center py-6 border-t border-slate-200 dark:border-slate-800">
   <div class="text-xs text-slate-500 dark:text-slate-400">
-    Powered by <span class="font-semibold text-indigo-600 dark:text-indigo-400">Klendric</span> — your property manager uses this tool to stay on top of your investment.
+    Powered by <span class="font-semibold text-indigo-600 dark:text-indigo-400">Vesara</span> — your property manager uses this tool to stay on top of your investment.
   </div>
 </section>
 
@@ -1493,7 +1493,7 @@
 
   <footer class="border-t border-slate-200 dark:border-slate-800 mt-16 no-print">
     <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between text-xs text-slate-500">
-      <div>Klendric v1.6 · Internal listing optimizer · Built in-house</div>
+      <div>Vesara v1.6 · Internal listing optimizer · Built in-house</div>
       <div>Generated 2026-05-03T21:28:58.402240Z</div>
     </div>
   </footer>
@@ -1510,7 +1510,7 @@
     })();
 
     // View switcher — set ?view=… and reload (cheap, robust, keeps URL shareable)
-    window.Klendric_setView = function (mode) {
+    window.Vesara_setView = function (mode) {
       try {
         var url = new URL(window.location.href);
         if (mode === 'pm') url.searchParams.delete('view');
@@ -1520,7 +1520,7 @@
     };
 
     // PDF download — switch to pdf view, trigger print, then return
-    window.Klendric_downloadPdf = function () {
+    window.Vesara_downloadPdf = function () {
       var url = new URL(window.location.href);
       if (url.searchParams.get('view') === 'pdf') {
         window.print();
