@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara — Investor Brief</title>
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+
+  .deck { max-width: 1100px; margin: 0 auto; padding: 40px 24px 100px; }
+
+  .slide { min-height: 600px; padding: 80px 64px; margin-bottom: 32px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-2xl); position: relative; display: flex; flex-direction: column; justify-content: center; }
+  .slide-num { position: absolute; top: 24px; right: 32px; font-size: 11px; font-family: var(--font-mono); color: var(--text-tertiary); letter-spacing: 0.08em; }
+  .slide-tag { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 20px; font-weight: 600; }
+  .slide h2 { font-size: 56px; font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 24px; }
+  .slide h2 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .slide p { font-size: 19px; line-height: 1.55; color: var(--text-secondary); max-width: 760px; }
+  .slide p strong { color: var(--text); }
+
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 32px; }
+  @media (max-width: 800px) { .grid-3, .grid-2 { grid-template-columns: 1fr; } .slide { padding: 48px 24px; } }
+
+  .stat-card { padding: 28px; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-lg); }
+  .stat-num { font-size: 48px; font-weight: 700; color: var(--accent); font-family: var(--font-serif); font-style: italic; line-height: 1; margin-bottom: 8px; }
+  .stat-label { font-size: 13px; color: var(--text-secondary); }
+
+  .moat { padding: 24px; background: var(--surface-2); border-left: 3px solid var(--accent); border-radius: 0 var(--r-md) var(--r-md) 0; margin-top: 16px; }
+  .moat-num { display: inline-block; font-family: var(--font-mono); color: var(--accent); font-size: 13px; font-weight: 600; }
+  .moat-title { font-size: 17px; font-weight: 600; margin: 8px 0; }
+  .moat-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
+
+  .timeline-item { display: grid; grid-template-columns: 100px 1fr; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+  .timeline-item:last-child { border-bottom: none; }
+  .ti-year { font-family: var(--font-mono); font-size: 13px; color: var(--accent); font-weight: 600; padding-top: 4px; }
+  .ti-content strong { color: var(--text); display: block; margin-bottom: 4px; }
+  .ti-content span { font-size: 14px; color: var(--text-secondary); }
+
+  .ask-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 32px; align-items: center; }
+  @media (max-width: 800px) { .ask-grid { grid-template-columns: 1fr; } }
+  .ask-num { font-size: 96px; font-weight: 700; color: var(--accent); font-family: var(--font-serif); font-style: italic; line-height: 1; }
+
+  .end { text-align: center; padding: 80px 24px; border-top: 1px solid var(--border); }
+  .end-mark { font-size: 22px; color: var(--text-tertiary); font-family: var(--font-serif); font-style: italic; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="brand"><svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg><span>Vesara · Investor Brief</span></a>
+  <div class="nav-links"><a href="founder.html">Founder</a><a href="dashboard.html">Product</a><a href="mailto:marina@vesara.ai">marina@vesara.ai</a></div>
+</nav>
+
+<div class="deck">
+
+  <!-- SLIDE 1 — TITLE -->
+  <div class="slide">
+    <span class="slide-num">01 / 12</span>
+    <div class="slide-tag">Vesara · Pre-seed</div>
+    <h2><span class="accent">The AI Asset Manager</span><br>for vacation rental operators.</h2>
+    <p>$50B+ category. 1.4M operators globally. No category leader has emerged. We are positioned to be it.</p>
+    <p style="margin-top: 32px; font-size: 15px;"><strong>Marina Tinova</strong> · Founder & CEO · marina@vesara.ai</p>
+  </div>
+
+  <!-- SLIDE 2 — PROBLEM -->
+  <div class="slide">
+    <span class="slide-num">02 / 12</span>
+    <div class="slide-tag">The problem</div>
+    <h2>Operators have <span class="accent">data, not decisions.</span></h2>
+    <p>Vacation rental operators run businesses with $1M-$25M annual gross. They use 4-8 specialized tools — Guesty for ops, PriceLabs for pricing, AirDNA for data, Breezeway for cleaning, QBO for accounting. Each tool is good at one thing.</p>
+    <p style="margin-top: 24px;"><strong>None of them are an asset manager.</strong> Operators spend 40% of their week stitching data together to make decisions. Owners get poor reporting. Pricing is reactive. Listings drift. There's no decision layer.</p>
+    <div class="grid-3">
+      <div class="stat-card"><div class="stat-num">14</div><div class="stat-label">Avg tools an operator pays for</div></div>
+      <div class="stat-card"><div class="stat-num">40%</div><div class="stat-label">Of operator week on data wrangling</div></div>
+      <div class="stat-card"><div class="stat-num">28%</div><div class="stat-label">Owner churn rate at full-service competitors</div></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 — SOLUTION -->
+  <div class="slide">
+    <span class="slide-num">03 / 12</span>
+    <div class="slide-tag">The solution</div>
+    <h2>Vesara is the <span class="accent">brain on top of the stack.</span></h2>
+    <p>We sit on top of existing PMS (Guesty, Hostaway, OwnerRez), pricing tools (PriceLabs, Beyond), and data tools (AirDNA, Key Data). We aggregate the data the operator has scattered across these tools and turn it into prioritized decisions.</p>
+    <p style="margin-top: 24px;">Triple-brain consensus (ChatGPT + Gemini + Claude in parallel) on every recommendation. Property scoring across 22 dimensions. Anonymous comp pool with k-anonymity ≥5. Owner Portal that owners actually use. Closed-loop ROI attribution via Vesara Lift Score.</p>
+    <p style="margin-top: 24px;"><strong>The product:</strong> "Here's the next decision worth making, here's why, here's the dollar impact, apply or modify."</p>
+  </div>
+
+  <!-- SLIDE 4 — MARKET -->
+  <div class="slide">
+    <span class="slide-num">04 / 12</span>
+    <div class="slide-tag">Market size</div>
+    <h2>$50B+ category, <span class="accent">no category leader.</span></h2>
+    <div class="grid-3">
+      <div class="stat-card"><div class="stat-num">1.4M</div><div class="stat-label">STR operators globally</div></div>
+      <div class="stat-card"><div class="stat-num">$120B</div><div class="stat-label">Global STR booking volume</div></div>
+      <div class="stat-card"><div class="stat-num">$8.5B</div><div class="stat-label">SaaS spend in category</div></div>
+    </div>
+    <p style="margin-top: 32px;">SAM (US small/mid operators 5-100 props): <strong>180,000 operators × $99-1,499 ARPU = $1.8B-3.2B addressable.</strong></p>
+    <p>SOM Year 5: <strong>50,000 operators × avg $300/mo = $180M ARR base case.</strong></p>
+  </div>
+
+  <!-- SLIDE 5 — WHY NOW -->
+  <div class="slide">
+    <span class="slide-num">05 / 12</span>
+    <div class="slide-tag">Why now</div>
+    <h2>The category is at an <span class="accent">inflection point.</span></h2>
+    <div class="grid-2">
+      <div class="moat">
+        <span class="moat-num">→ 01</span>
+        <div class="moat-title">Vacasa is collapsing</div>
+        <div class="moat-desc">Public-company turmoil. Owners defecting in waves. Largest sub-pool of "ready to migrate" operators in category history.</div>
+      </div>
+      <div class="moat">
+        <span class="moat-num">→ 02</span>
+        <div class="moat-title">LLM costs collapsed 100x</div>
+        <div class="moat-desc">Triple-brain consensus economics impossible 24 months ago. Now $0.04 per high-stakes recommendation.</div>
+      </div>
+      <div class="moat">
+        <span class="moat-num">→ 03</span>
+        <div class="moat-title">PMS giants are AI-blind</div>
+        <div class="moat-desc">Guesty / Hostaway have minimal AI investment. They're building features, not intelligence. 18-month head start available.</div>
+      </div>
+      <div class="moat">
+        <span class="moat-num">→ 04</span>
+        <div class="moat-title">Operators want margin back</div>
+        <div class="moat-desc">Post-Covid normalization + cost pressure. Self-management is winning over full-service. Tooling makes that feasible.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6 — THE 5 MOATS -->
+  <div class="slide">
+    <span class="slide-num">06 / 12</span>
+    <div class="slide-tag">Strategic moats</div>
+    <h2>Five compounding moats.</h2>
+    <div class="moat">
+      <span class="moat-num">→ 01</span>
+      <div class="moat-title">Founder dogfooding</div>
+      <div class="moat-desc">Marina runs LussoStay (28 properties). Vesara is built on her own portfolio. Authenticity competitors cannot replicate.</div>
+    </div>
+    <div class="moat">
+      <span class="moat-num">→ 02</span>
+      <div class="moat-title">Triple-brain AI orchestration</div>
+      <div class="moat-desc">ChatGPT + Gemini + Claude consensus on every high-stakes rec. Defensible reasoning. No single-model competitor matches it.</div>
+    </div>
+    <div class="moat">
+      <span class="moat-num">→ 03</span>
+      <div class="moat-title">Anonymous Comp Pool network effect</div>
+      <div class="moat-desc">k-anonymity ≥5 + differential privacy aggregation. Every new operator makes the comp data better for all. Compounding moat.</div>
+    </div>
+    <div class="moat">
+      <span class="moat-num">→ 04</span>
+      <div class="moat-title">Owner relationship lock-in</div>
+      <div class="moat-desc">Owner Portal + Owner AI Concierge. Once operators put owners on Vesara, switching means making 8 owners learn a new tool.</div>
+    </div>
+    <div class="moat">
+      <span class="moat-num">→ 05</span>
+      <div class="moat-title">Closed-loop ROI measurement</div>
+      <div class="moat-desc">Vesara Lift Score attributes specific revenue lift to specific Vesara recommendations. Proof beats marketing.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7 — BUSINESS MODEL -->
+  <div class="slide">
+    <span class="slide-num">07 / 12</span>
+    <div class="slide-tag">Business model</div>
+    <h2>4 tiers. <span class="accent">Founders' Flock seeds the network.</span></h2>
+    <div class="grid-2" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
+      <div class="stat-card"><div class="stat-num" style="font-size: 32px;">$99</div><div class="stat-label"><strong>Founders' Flock</strong><br>First 100 only · locked forever</div></div>
+      <div class="stat-card"><div class="stat-num" style="font-size: 32px;">$299</div><div class="stat-label"><strong>Standard</strong><br>Up to 25 properties</div></div>
+      <div class="stat-card"><div class="stat-num" style="font-size: 32px;">$599</div><div class="stat-label"><strong>Pro</strong><br>50 properties + Voice Agent + A/B</div></div>
+      <div class="stat-card"><div class="stat-num" style="font-size: 32px;">$1,499</div><div class="stat-label"><strong>Autopilot</strong><br>Hands-off · Vacasa killer</div></div>
+    </div>
+    <p style="margin-top: 32px;"><strong>Year 5 ARR target: $180M base case</strong> · 30% EBITDA margin · NRR ≥130%</p>
+  </div>
+
+  <!-- SLIDE 8 — TRACTION -->
+  <div class="slide">
+    <span class="slide-num">08 / 12</span>
+    <div class="slide-tag">Traction (pre-launch)</div>
+    <h2>Pre-launch <span class="accent">infrastructure complete.</span></h2>
+    <div class="grid-3">
+      <div class="stat-card"><div class="stat-num">100</div><div class="stat-label">Phase product roadmap fully specced</div></div>
+      <div class="stat-card"><div class="stat-num">14</div><div class="stat-label">PRs production-grade ready to merge</div></div>
+      <div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">Founder dogfood property coverage (LussoStay)</div></div>
+    </div>
+    <p style="margin-top: 32px;">Public Founders' Flock launch: <strong>14 days from Marina kickoff.</strong> Conversion target Day 90: 40 of 100 seats sold via Marina-led outbound. Day 180: full Founders' Flock cohort.</p>
+  </div>
+
+  <!-- SLIDE 9 — TEAM -->
+  <div class="slide">
+    <span class="slide-num">09 / 12</span>
+    <div class="slide-tag">Team</div>
+    <h2>Operator-founder. <span class="accent">CTO hire underway.</span></h2>
+    <p><strong>Marina Tinova</strong> — Founder & CEO. 5 years operating 28 vacation rental properties at LussoStay. Built Vesara because she had to. Permanent CEO commitment through $100M ARR. 51% voting control through Series B.</p>
+    <p style="margin-top: 16px;"><strong>CTO co-founder</strong> — open spec at vesara.ai/careers/cto. 10-15% equity. Looking for someone with vertical SaaS + AI infrastructure experience who shares the operator-aligned mission.</p>
+    <p style="margin-top: 16px;"><strong>Founding eng team</strong> — 3-5 engineers in Year 1 post-Series A. Distributed. OSS-friendly hiring brand via Phase 97.</p>
+  </div>
+
+  <!-- SLIDE 10 — ROADMAP -->
+  <div class="slide">
+    <span class="slide-num">10 / 12</span>
+    <div class="slide-tag">5-year horizon</div>
+    <h2>The path to <span class="accent">$250M ARR.</span></h2>
+    <div class="timeline-item"><div class="ti-year">Y1 · 2026</div><div class="ti-content"><strong>Founders' Flock + 200 paying operators · $1.2M ARR</strong><span>Pre-seed self-funded. Phases 1-30 ship.</span></div></div>
+    <div class="timeline-item"><div class="ti-year">Y2 · 2027</div><div class="ti-content"><strong>1,200 operators · $9M ARR · Series A closed at $80M post</strong><span>Phases 31-50. Voice Agent + Autopilot tier launch.</span></div></div>
+    <div class="timeline-item"><div class="ti-year">Y3 · 2028</div><div class="ti-content"><strong>4,500 operators · $32M ARR</strong><span>EU launch. White-label PMS partnerships. Marketplace.</span></div></div>
+    <div class="timeline-item"><div class="ti-year">Y4 · 2029</div><div class="ti-content"><strong>12,000 operators · $90M ARR · Series B at $400M</strong><span>Vesara Index. Embedded banking. Acquisitions pipeline.</span></div></div>
+    <div class="timeline-item"><div class="ti-year">Y5 · 2030</div><div class="ti-content"><strong>50,000 operators · $250M ARR · IPO at $4-7B</strong><span>Or strategic acquisition by Booking Holdings / Airbnb.</span></div></div>
+  </div>
+
+  <!-- SLIDE 11 — THE ASK -->
+  <div class="slide">
+    <span class="slide-num">11 / 12</span>
+    <div class="slide-tag">The ask</div>
+    <div class="ask-grid">
+      <div class="ask-num">$1.5M</div>
+      <div>
+        <h2 style="font-size: 36px;">Pre-seed round.</h2>
+        <p><strong>Use of funds:</strong> CTO + 2 senior engineers (12 months runway), production infrastructure, first 100 customer acquisition, SOC-2 Type II audit, brand + trademark.</p>
+        <p style="margin-top: 16px;"><strong>Valuation:</strong> $8M post-money. SAFE preferred.</p>
+        <p style="margin-top: 16px;"><strong>Marina retains 51%+ voting</strong> through Series B per founder commitment.</p>
+        <p style="margin-top: 16px;"><strong>Lead investor profile:</strong> Vertical SaaS focus, ideally with hospitality/travel category experience. Operator-friendly terms only.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12 — CONTACT -->
+  <div class="slide" style="text-align: center; align-items: center;">
+    <span class="slide-num">12 / 12</span>
+    <div class="slide-tag">Contact</div>
+    <h2 style="text-align: center;">Let's talk. <span class="accent">My phone is on.</span></h2>
+    <p style="text-align: center; margin: 0 auto;">Marina Tinova · Founder & CEO · Vesara, Inc.</p>
+    <p style="text-align: center; margin: 24px auto 0; font-size: 22px; font-family: var(--font-serif); font-style: italic; color: var(--accent);">marina@vesara.ai</p>
+    <p style="text-align: center; margin: 8px auto 0; font-size: 14px; color: var(--text-tertiary);">Replies hit my phone within 4 hours.</p>
+  </div>
+
+</div>
+
+<div class="end">
+  <span class="end-mark">— end of brief —</span>
+</div>
+
+</body>
+</html>

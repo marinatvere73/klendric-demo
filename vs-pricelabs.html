@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara vs PriceLabs — AI Asset Manager vs Dynamic Pricing</title>
+<meta name="description" content="PriceLabs prices your nights. Vesara tells you why, what to fix, and how to defend it to owners. Compare the AI Asset Manager built to sit ON TOP of PriceLabs.">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+  .nav-cta { background: var(--accent); color: #000; padding: 8px 16px; border-radius: var(--r-md); font-weight: 600; }
+
+  .hero { max-width: 980px; margin: 0 auto; padding: 80px 24px 40px; }
+  .breadcrumb { font-size: 12px; color: var(--text-tertiary); margin-bottom: 24px; }
+  .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
+  h1 { font-size: clamp(40px, 6vw, 64px); font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 20px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  h1 .vs { color: var(--text-tertiary); font-weight: 400; font-style: italic; font-family: var(--font-serif); margin: 0 12px; }
+  .lede { font-size: 19px; color: var(--text-secondary); max-width: 680px; line-height: 1.55; }
+
+  .verdict { max-width: 980px; margin: 48px auto 0; padding: 0 24px; }
+  .verdict-card { background: linear-gradient(135deg, var(--accent-dim), transparent); border: 1px solid var(--accent); border-radius: var(--r-xl); padding: 32px; }
+  .verdict-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+  .verdict-text { font-size: 20px; line-height: 1.5; color: var(--text); }
+  .verdict-text strong { color: var(--accent); }
+
+  .section { max-width: 980px; margin: 64px auto; padding: 0 24px; }
+  .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-bottom: 32px; }
+  h2 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 24px; }
+
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 48px; }
+  @media (max-width: 800px) { .compare-grid { grid-template-columns: 1fr; } }
+  .col { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 28px; }
+  .col.us { border-color: var(--accent); border-width: 2px; }
+  .col-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .col-name { font-size: 22px; font-weight: 600; }
+  .col-tag { font-size: 11px; padding: 4px 10px; background: var(--accent-dim); color: var(--accent); border-radius: var(--r-full); }
+  .col-tag.them { background: rgba(255,255,255,0.06); color: var(--text-secondary); }
+  .feature-row { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 12px 0; align-items: flex-start; font-size: 14.5px; line-height: 1.55; color: var(--text-secondary); }
+  .feature-row.yes { color: var(--text); }
+  .feature-row.yes::before { content: '✓'; color: var(--accent); font-weight: 700; }
+  .feature-row.no::before { content: '·'; color: var(--text-tertiary); font-weight: 700; font-size: 16px; }
+  .feature-row.partial::before { content: '◐'; color: var(--warning); font-weight: 700; }
+
+  .table { width: 100%; border-collapse: collapse; font-size: 14.5px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; }
+  .table th { text-align: left; padding: 16px 20px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); border-bottom: 1px solid var(--border); }
+  .table td { padding: 16px 20px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+  .table tr:last-child td { border-bottom: none; }
+  .table td.us { color: var(--text); background: rgba(16,185,129,0.04); }
+  .table .check { color: var(--accent); font-weight: 700; }
+  .table .x { color: var(--text-tertiary); }
+  .table .partial { color: var(--warning); }
+
+  .honest-box { background: var(--surface); border-left: 4px solid var(--warning); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 24px 28px; margin: 32px 0; }
+  .honest-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--warning); margin-bottom: 8px; font-weight: 600; }
+  .honest-text { font-size: 15.5px; line-height: 1.6; color: var(--text); }
+
+  .quote { font-size: 22px; line-height: 1.5; color: var(--text); font-family: var(--font-serif); font-style: italic; padding: 32px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); margin: 48px 0; }
+  .quote-attr { display: block; font-family: var(--font-sans); font-style: normal; font-size: 13px; color: var(--text-tertiary); margin-top: 12px; }
+
+  .cta-section { max-width: 980px; margin: 80px auto; padding: 64px 24px; text-align: center; background: linear-gradient(180deg, var(--surface) 0%, transparent 100%); border-radius: var(--r-2xl); }
+  .cta-h { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 16px; }
+  .cta-h .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .cta-sub { color: var(--text-secondary); margin-bottom: 32px; }
+  .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: #000; padding: 14px 28px; border-radius: var(--r-md); text-decoration: none; font-weight: 600; }
+  .btn-ghost { background: transparent; color: var(--text); padding: 14px 28px; border: 1px solid var(--border-strong); border-radius: var(--r-md); text-decoration: none; }
+
+  .footer { padding: 48px 24px; text-align: center; color: var(--text-tertiary); font-size: 13px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="brand">
+    <svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg>
+    <span>Vesara</span>
+  </a>
+  <div class="nav-links">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="autonomous-onboarding.html">Onboarding</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="signup.html" class="nav-cta">Claim a seat →</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="breadcrumb"><a href="index.html">Vesara</a> · Compare · vs PriceLabs</div>
+  <h1>Vesara<span class="vs">vs</span><span class="accent">PriceLabs</span></h1>
+  <p class="lede">PriceLabs is a great pricing engine. Vesara is not a pricing engine. Vesara is the asset management layer that sits on top of PriceLabs and tells you what to do with the prices it generates — across listings, owners, and your whole portfolio.</p>
+</section>
+
+<div class="verdict">
+  <div class="verdict-card">
+    <div class="verdict-tag">The honest verdict</div>
+    <div class="verdict-text">If you have <strong>PriceLabs already</strong>, you don't need a different pricing tool — you need the strategic layer above it. That's exactly what Vesara is. <strong>Best together, not instead.</strong></div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-title">Where each tool wins</div>
+  <h2>Different jobs, same goal.</h2>
+
+  <div class="compare-grid">
+    <div class="col">
+      <div class="col-header">
+        <span class="col-name">PriceLabs</span>
+        <span class="col-tag them">Dynamic pricing engine</span>
+      </div>
+      <div class="feature-row yes">Battle-tested dynamic pricing algorithms across millions of listings</div>
+      <div class="feature-row yes">Deep direct API integrations with every major PMS</div>
+      <div class="feature-row yes">Customizable rules — base price, min stay, day-of-week, seasonality</div>
+      <div class="feature-row yes">Holiday + event-driven pricing</div>
+      <div class="feature-row yes">Multi-property bulk rate management</div>
+      <div class="feature-row no">Doesn't tell you WHY a price moved (no explainability layer)</div>
+      <div class="feature-row no">Doesn't analyze listing content, photos, or amenities</div>
+      <div class="feature-row no">No owner-facing reporting</div>
+      <div class="feature-row no">No comp pool intelligence</div>
+      <div class="feature-row no">Single-AI logic, no consensus engine</div>
+    </div>
+
+    <div class="col us">
+      <div class="col-header">
+        <span class="col-name">Vesara</span>
+        <span class="col-tag">AI Asset Manager</span>
+      </div>
+      <div class="feature-row yes">Triple-brain consensus on every recommendation (ChatGPT + Gemini + Claude)</div>
+      <div class="feature-row yes">Property scoring across 22 dimensions with grade A-F</div>
+      <div class="feature-row yes">Listing IQ — copy, photos, amenities, channel-specific optimization</div>
+      <div class="feature-row yes">Owner Portal + Owner AI Concierge — owners ask questions, AI answers</div>
+      <div class="feature-row yes">Anonymous Comp Pool with k-anonymity ≥5 + differential privacy</div>
+      <div class="feature-row yes">Vesara Lift Score — closed-loop measurement of attributed revenue lift</div>
+      <div class="feature-row yes">Validates + explains your existing PriceLabs decisions</div>
+      <div class="feature-row partial">Pricing recommendations (we don't push prices — we tell you which ones to push)</div>
+      <div class="feature-row no">Not a PMS — sits on top of yours</div>
+      <div class="feature-row no">Doesn't replace PriceLabs (it makes PriceLabs smarter)</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Side-by-side feature matrix</h2>
+  <table class="table">
+    <thead>
+      <tr><th>Capability</th><th>PriceLabs</th><th class="us">Vesara</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Dynamic nightly pricing</td><td><span class="check">✓</span></td><td class="us"><span class="x">via PriceLabs</span></td></tr>
+      <tr><td>Property scoring (0-100)</td><td><span class="x">—</span></td><td class="us"><span class="check">✓</span> 22 dimensions</td></tr>
+      <tr><td>Listing copy + photo analysis</td><td><span class="x">—</span></td><td class="us"><span class="check">✓</span></td></tr>
+      <tr><td>Owner portal + AI concierge</td><td><span class="x">—</span></td><td class="us"><span class="check">✓</span></td></tr>
+      <tr><td>Triple-brain AI consensus</td><td><span class="x">—</span></td><td class="us"><span class="check">✓</span></td></tr>
+      <tr><td>Anonymous comp pool (k≥5)</td><td><span class="partial">market data only</span></td><td class="us"><span class="check">✓</span> + differential privacy</td></tr>
+      <tr><td>Reasoning + explainability per rec</td><td><span class="x">—</span></td><td class="us"><span class="check">✓</span></td></tr>
+      <tr><td>Closed-loop ROI attribution</td><td><span class="x">—</span></td><td class="us"><span class="check">✓</span> Vesara Lift Score</td></tr>
+      <tr><td>Predictive owner defection</td><td><span class="x">—</span></td><td class="us"><span class="check">✓</span></td></tr>
+      <tr><td>Voice agent for guest issues</td><td><span class="x">—</span></td><td class="us"><span class="check">✓</span> Pro tier</td></tr>
+      <tr><td>Direct PMS integrations</td><td><span class="check">✓</span> 30+</td><td class="us"><span class="check">✓</span> 5 major</td></tr>
+      <tr><td>Starting price</td><td>$19.99/mo per property</td><td class="us">$99/mo flat (Founders' Flock — first 100)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <div class="honest-box">
+    <div class="honest-tag">Where PriceLabs beats us</div>
+    <div class="honest-text">PriceLabs has years of pricing algorithm refinement, deeper PMS integrations than we have today, and is the pricing engine of choice for thousands of operators. <strong>If you only need pricing — and nothing else — PriceLabs is excellent.</strong> We're not trying to replace it. We're trying to give you the brain above it.</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="quote">
+    "We use PriceLabs for nightly rate execution. We use Vesara for everything PriceLabs doesn't do — explaining the price to the owner, scoring the listing, telling us which 3 properties need attention this week. They're not the same tool. They're not even the same job."
+    <span class="quote-attr">— Founder of a 47-property STR portfolio (representative quote pattern)</span>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2 class="cta-h">Already on PriceLabs? <span class="accent">You're exactly who Vesara is for.</span></h2>
+  <p class="cta-sub">Connect Vesara to your PriceLabs account and your PMS in 2 minutes. Get your first 22-dimension Vesara Score in 60 seconds.</p>
+  <div class="cta-buttons">
+    <a href="signup.html" class="btn-primary">Try Vesara free for 14 days →</a>
+    <a href="onboarding.html" class="btn-ghost">See the 60-second score</a>
+  </div>
+  <p style="margin-top: 24px; font-size: 13px; color: var(--text-tertiary);">First 100 customers lock $99/mo forever as Founders' Flock · 47 / 100 seats remaining</p>
+</section>
+
+<footer class="footer">
+  Comparison fairness commitment: we'll never lie about a competitor. If we get something wrong, email us at fairness@vesara.ai and we'll correct it within 24 hours.
+</footer>
+
+</body>
+</html>

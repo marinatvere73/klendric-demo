@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara vs Vacasa — Reclaim Your Margin</title>
+<meta name="description" content="Vacasa takes 25-35% and your control. Vesara gives you the AI tools to manage your own properties — keeping 100% of the margin and all of the relationship.">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+  .nav-cta { background: var(--accent); color: #000; padding: 8px 16px; border-radius: var(--r-md); font-weight: 600; }
+  .hero { max-width: 980px; margin: 0 auto; padding: 80px 24px 40px; }
+  .breadcrumb { font-size: 12px; color: var(--text-tertiary); margin-bottom: 24px; }
+  .breadcrumb a { color: var(--text-secondary); text-decoration: none; }
+  h1 { font-size: clamp(40px, 6vw, 64px); font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 20px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  h1 .vs { color: var(--text-tertiary); font-weight: 400; font-style: italic; font-family: var(--font-serif); margin: 0 12px; }
+  .lede { font-size: 19px; color: var(--text-secondary); max-width: 680px; line-height: 1.55; }
+  .verdict { max-width: 980px; margin: 48px auto 0; padding: 0 24px; }
+  .verdict-card { background: linear-gradient(135deg, var(--accent-dim), transparent); border: 1px solid var(--accent); border-radius: var(--r-xl); padding: 32px; }
+  .verdict-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+  .verdict-text { font-size: 20px; line-height: 1.5; color: var(--text); }
+  .verdict-text strong { color: var(--accent); }
+  .section { max-width: 980px; margin: 64px auto; padding: 0 24px; }
+  .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-bottom: 32px; }
+  h2 { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 24px; }
+  .economics { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 32px; margin: 32px 0; }
+  .econ-row { display: grid; grid-template-columns: 1fr auto auto; gap: 32px; padding: 16px 0; border-bottom: 1px solid var(--border); align-items: center; }
+  .econ-row:last-child { border-bottom: none; padding-top: 24px; font-weight: 700; font-size: 18px; }
+  .econ-row.header { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); padding: 8px 0; border-bottom: 1px solid var(--border-strong); }
+  .econ-them { color: var(--critical); font-variant-numeric: tabular-nums; }
+  .econ-us { color: var(--accent); font-variant-numeric: tabular-nums; }
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 800px) { .compare-grid { grid-template-columns: 1fr; } }
+  .col { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 28px; }
+  .col.us { border-color: var(--accent); border-width: 2px; }
+  .col-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .col-name { font-size: 22px; font-weight: 600; }
+  .col-tag { font-size: 11px; padding: 4px 10px; background: var(--accent-dim); color: var(--accent); border-radius: var(--r-full); }
+  .col-tag.them { background: rgba(239, 68, 68, 0.12); color: var(--critical); }
+  .feature-row { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 12px 0; align-items: flex-start; font-size: 14.5px; line-height: 1.55; color: var(--text-secondary); }
+  .feature-row.yes { color: var(--text); }
+  .feature-row.yes::before { content: '✓'; color: var(--accent); font-weight: 700; }
+  .feature-row.bad::before { content: '✗'; color: var(--critical); font-weight: 700; }
+  .honest-box { background: var(--surface); border-left: 4px solid var(--warning); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 24px 28px; margin: 32px 0; }
+  .honest-tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--warning); margin-bottom: 8px; font-weight: 600; }
+  .honest-text { font-size: 15.5px; line-height: 1.6; color: var(--text); }
+  .quote { font-size: 22px; line-height: 1.5; color: var(--text); font-family: var(--font-serif); font-style: italic; padding: 32px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); margin: 48px 0; }
+  .quote-attr { display: block; font-family: var(--font-sans); font-style: normal; font-size: 13px; color: var(--text-tertiary); margin-top: 12px; }
+  .cta-section { max-width: 980px; margin: 80px auto; padding: 64px 24px; text-align: center; background: linear-gradient(180deg, var(--surface) 0%, transparent 100%); border-radius: var(--r-2xl); }
+  .cta-h { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 16px; }
+  .cta-h .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .cta-sub { color: var(--text-secondary); margin-bottom: 32px; }
+  .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: #000; padding: 14px 28px; border-radius: var(--r-md); text-decoration: none; font-weight: 600; }
+  .btn-ghost { background: transparent; color: var(--text); padding: 14px 28px; border: 1px solid var(--border-strong); border-radius: var(--r-md); text-decoration: none; }
+  .footer { padding: 48px 24px; text-align: center; color: var(--text-tertiary); font-size: 13px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="brand"><svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg><span>Vesara</span></a>
+  <div class="nav-links"><a href="dashboard.html">Dashboard</a><a href="autonomous-onboarding.html">Onboarding</a><a href="pricing.html">Pricing</a><a href="signup.html" class="nav-cta">Claim a seat →</a></div>
+</nav>
+
+<section class="hero">
+  <div class="breadcrumb"><a href="index.html">Vesara</a> · Compare · vs Vacasa</div>
+  <h1>Vesara<span class="vs">vs</span><span class="accent">Vacasa</span></h1>
+  <p class="lede">Vacasa takes 25-35% of your gross and gives you a hands-off experience. Vesara gives you the AI Asset Manager that lets you run your own properties — keeping 100% of the margin, all of the owner relationship, and adding intelligence Vacasa never gave you.</p>
+</section>
+
+<div class="verdict">
+  <div class="verdict-card">
+    <div class="verdict-tag">The honest verdict</div>
+    <div class="verdict-text">If you want to be hands-off, Vacasa makes sense. If you want to <strong>control your portfolio and keep your margin</strong>, Vesara is the AI tooling that makes self-management actually feasible.</div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-title">The economics</div>
+  <h2>What Vacasa actually costs you.</h2>
+  <div class="economics">
+    <div class="econ-row header">
+      <div>Line item · 25-property portfolio · $1.2M annual gross</div>
+      <div>Vacasa</div>
+      <div>Vesara</div>
+    </div>
+    <div class="econ-row">
+      <div>Annual gross revenue</div>
+      <div class="econ-them">$1,200,000</div>
+      <div class="econ-us">$1,200,000</div>
+    </div>
+    <div class="econ-row">
+      <div>Vacasa management fee (28% avg)</div>
+      <div class="econ-them">−$336,000</div>
+      <div class="econ-us">$0</div>
+    </div>
+    <div class="econ-row">
+      <div>Vesara subscription ($99/mo Founders' Flock)</div>
+      <div class="econ-them">$0</div>
+      <div class="econ-us">−$1,188</div>
+    </div>
+    <div class="econ-row">
+      <div>Self-managed ops costs (cleaning, support, comms)</div>
+      <div class="econ-them">included</div>
+      <div class="econ-us">−$84,000</div>
+    </div>
+    <div class="econ-row">
+      <div>Net margin retained</div>
+      <div class="econ-them">$864,000</div>
+      <div class="econ-us">$1,114,812</div>
+    </div>
+    <div class="econ-row">
+      <div>Difference per year</div>
+      <div></div>
+      <div class="econ-us">+$250,812</div>
+    </div>
+  </div>
+  <p style="font-size: 13px; color: var(--text-tertiary); margin-top: 12px;">Estimates based on industry-typical Vacasa fee structure (varies by market and contract). Self-managed ops costs are illustrative for a 25-property portfolio with in-house cleaning team. Real numbers depend on your specific market and operation.</p>
+</section>
+
+<section class="section">
+  <h2>What you give up vs what you keep</h2>
+  <div class="compare-grid">
+    <div class="col">
+      <div class="col-header"><span class="col-name">Vacasa</span><span class="col-tag them">Full-service · 28% avg take</span></div>
+      <div class="feature-row yes">Hands-off — Vacasa handles everything</div>
+      <div class="feature-row yes">Their cleaning network</div>
+      <div class="feature-row yes">Their guest support team</div>
+      <div class="feature-row yes">Their pricing decisions (they decide)</div>
+      <div class="feature-row bad">25-35% of your gross goes to them</div>
+      <div class="feature-row bad">You don't own the owner relationship — they do</div>
+      <div class="feature-row bad">Your properties compete against their other listings</div>
+      <div class="feature-row bad">Pricing decisions optimized for their portfolio, not yours</div>
+      <div class="feature-row bad">Termination requires 60-90 day notice</div>
+      <div class="feature-row bad">Their financial position is deteriorating (public company in turmoil)</div>
+    </div>
+    <div class="col us">
+      <div class="col-header"><span class="col-name">Vesara</span><span class="col-tag">$99/mo · self-management with AI</span></div>
+      <div class="feature-row yes">You own the operation — and the margin</div>
+      <div class="feature-row yes">AI handles the strategy work that used to require a head of revenue</div>
+      <div class="feature-row yes">22-dimension property scoring + Lift Score attribution</div>
+      <div class="feature-row yes">Owner Portal — your owners stay yours</div>
+      <div class="feature-row yes">Triple-brain consensus on every recommendation</div>
+      <div class="feature-row yes">Vesara optimizes for YOUR portfolio, not someone else's</div>
+      <div class="feature-row yes">Cancel anytime, no notice period</div>
+      <div class="feature-row yes">Founders' Flock $99/mo locked forever</div>
+      <div class="feature-row bad">You manage cleaning + comms (or hire your own team)</div>
+      <div class="feature-row bad">More involvement than full-service</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="honest-box">
+    <div class="honest-tag">Where Vacasa beats us</div>
+    <div class="honest-text">If you genuinely want zero operational involvement — you bought a vacation home for personal use and renting it is just an offset, not a business — full-service makes sense. <strong>Vesara is for operators who treat their properties as a business and want to retain control + margin.</strong> If you don't have time to be involved at all, we're not the right fit.</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="quote">
+    "We left Vacasa in 2023, took back 8 properties, and used a patchwork of tools for 18 months. Vesara is the first tool that actually makes self-management feel as managed as Vacasa felt — but with our margin intact."
+    <span class="quote-attr">— Founder of a 14-property portfolio (representative quote pattern)</span>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Vesara Vacasa Refugee Kit</h2>
+  <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.7;">If you're considering leaving Vacasa, we built a specific migration tool: <strong style="color: var(--text);">Phase 25 — Vesara Refugee Kit</strong>. 47-second migration that pulls listing data, owner records, pricing history, even reviews into Vesara so you can stand up your own operation in days, not months.</p>
+  <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.7;">Vacasa contracts typically have 60-90 day termination clauses. Use that window to set up Vesara, build out your owner relationships, and have your own operation running before the Vacasa relationship ends.</p>
+</section>
+
+<section class="cta-section">
+  <h2 class="cta-h">Take back your margin. <span class="accent">Keep your operation.</span></h2>
+  <p class="cta-sub">14-day free trial. Founders' Flock $99/mo locked forever. Refugee Kit included.</p>
+  <div class="cta-buttons">
+    <a href="signup.html" class="btn-primary">Try Vesara free for 14 days →</a>
+    <a href="dashboard.html" class="btn-ghost">See the operator dashboard</a>
+  </div>
+  <p style="margin-top: 24px; font-size: 13px; color: var(--text-tertiary);">First 100 customers lock $99/mo forever as Founders' Flock · 47 / 100 seats remaining</p>
+</section>
+
+<footer class="footer">Comparison fairness commitment: fairness@vesara.ai for corrections within 24 hours.</footer>
+</body>
+</html>
