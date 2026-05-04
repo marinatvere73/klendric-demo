@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara — Trust Center</title>
+<meta name="description" content="Vesara security, privacy, compliance, and data residency posture. SOC-2 Type II audited annually. AES-256 + TLS 1.3. We never sell your data.">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+  .nav-cta { background: var(--accent); color: #000; padding: 8px 16px; border-radius: var(--r-md); font-weight: 600; }
+  .hero { max-width: 980px; margin: 0 auto; padding: 80px 24px 48px; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--accent); background: var(--accent-dim); color: var(--accent); border-radius: var(--r-full); font-size: 12px; margin-bottom: 24px; }
+  h1 { font-size: clamp(40px, 6vw, 64px); font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 20px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .lede { font-size: 19px; color: var(--text-secondary); max-width: 680px; line-height: 1.55; }
+  .badge-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 48px 0; max-width: 980px; margin-left: auto; margin-right: auto; padding: 0 24px; }
+  .badge { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 24px; text-align: center; }
+  .badge-icon { width: 48px; height: 48px; background: var(--accent-dim); color: var(--accent); border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 12px; }
+  .badge-name { font-size: 14px; font-weight: 600; }
+  .badge-status { font-size: 12px; color: var(--accent); margin-top: 4px; }
+  .badge-status.pending { color: var(--warning); }
+  .section { max-width: 980px; margin: 64px auto; padding: 0 24px; }
+  .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-bottom: 24px; }
+  h2 { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 24px; }
+  .principles { display: grid; gap: 16px; margin: 32px 0; }
+  .principle { display: grid; grid-template-columns: 32px 1fr; gap: 16px; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); }
+  .principle-icon { color: var(--accent); font-size: 22px; line-height: 1; }
+  .principle-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .principle-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+  .table { width: 100%; border-collapse: collapse; font-size: 14.5px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); overflow: hidden; margin-top: 24px; }
+  .table th { text-align: left; padding: 16px 20px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); border-bottom: 1px solid var(--border); }
+  .table td { padding: 16px 20px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+  .table tr:last-child td { border-bottom: none; }
+  .table td strong { color: var(--text); }
+  .footer { padding: 48px 24px; text-align: center; color: var(--text-tertiary); font-size: 13px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="brand"><svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg><span>Vesara</span></a>
+  <div class="nav-links"><a href="status.html">Status</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="signup.html" class="nav-cta">Claim a seat →</a></div>
+</nav>
+
+<section class="hero">
+  <span class="pill">● Trust Center</span>
+  <h1>Security and privacy <span class="accent">aren't features. They're the floor.</span></h1>
+  <p class="lede">Operators trust us with property data, owner records, guest information, and financial transactions. The standard isn't compliance — it's that you'd let your worst critic audit how we handle your data and they wouldn't find anything to complain about.</p>
+</section>
+
+<div class="badge-row">
+  <div class="badge"><div class="badge-icon">●</div><div class="badge-name">SOC-2 Type II</div><div class="badge-status pending">In progress · Q3 2026</div></div>
+  <div class="badge"><div class="badge-icon">●</div><div class="badge-name">GDPR aligned</div><div class="badge-status">Active · DPO retained</div></div>
+  <div class="badge"><div class="badge-icon">●</div><div class="badge-name">CCPA / CPRA</div><div class="badge-status">Active</div></div>
+  <div class="badge"><div class="badge-icon">●</div><div class="badge-name">PCI DSS · via Stripe</div><div class="badge-status">Active</div></div>
+  <div class="badge"><div class="badge-icon">●</div><div class="badge-name">EU SCC + UK IDTA</div><div class="badge-status">Active · DPA on request</div></div>
+</div>
+
+<section class="section">
+  <div class="section-title">The 5 principles</div>
+  <h2>Promises, not platitudes.</h2>
+  <div class="principles">
+    <div class="principle"><span class="principle-icon">●</span><div><div class="principle-title">You own your data — always.</div><div class="principle-desc">Property, owner, guest, financial — all yours. We process it to provide the service. We don't claim ownership. Self-serve export at any time.</div></div></div>
+    <div class="principle"><span class="principle-icon">●</span><div><div class="principle-title">We never sell your data.</div><div class="principle-desc">Not to OTAs. Not to insurers. Not to marketing platforms. Not at any price. Contractual, not preferential.</div></div></div>
+    <div class="principle"><span class="principle-icon">●</span><div><div class="principle-title">Right to delete, completed in 30 days.</div><div class="principle-desc">Self-serve in Settings. Full deletion within 30 days. Some financial records retained per US tax law (7 years). No retention hostage-taking.</div></div></div>
+    <div class="principle"><span class="principle-icon">●</span><div><div class="principle-title">Comp Pool privacy by design.</div><div class="principle-desc">k-anonymity ≥5 + differential privacy (epsilon = 1.0). No addresses pooled. No owner/guest/financial detail pooled. One-click opt-out.</div></div></div>
+    <div class="principle"><span class="principle-icon">●</span><div><div class="principle-title">72-hour breach notification.</div><div class="principle-desc">If a breach affects you, you're notified within 72 hours of our discovery — including what was affected, what we did about it, and what you should do.</div></div></div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Technical security posture</h2>
+  <table class="table">
+    <tr><th>Control</th><th>Implementation</th></tr>
+    <tr><td><strong>Encryption at rest</strong></td><td>AES-256, all database tables, all file storage</td></tr>
+    <tr><td><strong>Encryption in transit</strong></td><td>TLS 1.3 minimum on all external connections</td></tr>
+    <tr><td><strong>Field-level encryption</strong></td><td>PII columns (SSN, financial accounts) additionally encrypted with rotated KMS keys</td></tr>
+    <tr><td><strong>Authentication</strong></td><td>Passwordless magic link (default) or Google SSO. SAML SSO on Pro+ tier.</td></tr>
+    <tr><td><strong>Authorization</strong></td><td>Role-based access control with least-privilege defaults. Audit log of all admin actions.</td></tr>
+    <tr><td><strong>Key management</strong></td><td>AWS KMS with automatic 90-day rotation. No keys in source code.</td></tr>
+    <tr><td><strong>Backup</strong></td><td>Daily automated backups, encrypted, 90-day retention. Tested quarterly.</td></tr>
+    <tr><td><strong>Disaster recovery</strong></td><td>RTO 4 hours, RPO 24 hours. Documented runbook, tested annually.</td></tr>
+    <tr><td><strong>Vulnerability management</strong></td><td>Automated dependency scanning (Snyk/Dependabot). Quarterly third-party penetration testing.</td></tr>
+    <tr><td><strong>Bug bounty</strong></td><td>HackerOne managed program. Tiered rewards up to $10,000 for critical.</td></tr>
+    <tr><td><strong>Sub-processor audits</strong></td><td>Annual review of all sub-processors. List published at vesara.ai/subprocessors.</td></tr>
+    <tr><td><strong>Employee security</strong></td><td>2FA mandatory. SSO via Okta. Background checks for all engineering staff.</td></tr>
+  </table>
+</section>
+
+<section class="section">
+  <h2>Where your data lives</h2>
+  <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.7;"><strong style="color: var(--text);">US default:</strong> Supabase Postgres in us-east-1 (Virginia). Backups encrypted in us-west-2 for disaster recovery.</p>
+  <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.7;"><strong style="color: var(--text);">EU residency option (Pro+ tier):</strong> Frankfurt region, contractually pinned. EU data never leaves EU. Available via separate DPA.</p>
+  <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.7;"><strong style="color: var(--text);">UK residency option (Pro+ tier):</strong> London region. UK data sovereignty per UK IDTA addendum.</p>
+</section>
+
+<section class="section">
+  <h2>How to reach us</h2>
+  <table class="table">
+    <tr><th>Concern</th><th>Contact</th></tr>
+    <tr><td>Privacy questions, DSAR requests</td><td><a href="mailto:privacy@vesara.ai" style="color: var(--accent);">privacy@vesara.ai</a></td></tr>
+    <tr><td>EU/UK GDPR questions</td><td><a href="mailto:dpo@vesara.ai" style="color: var(--accent);">dpo@vesara.ai</a></td></tr>
+    <tr><td>Security vulnerability reports</td><td><a href="mailto:security@vesara.ai" style="color: var(--accent);">security@vesara.ai</a> (PGP key on request)</td></tr>
+    <tr><td>SOC-2 report request</td><td><a href="mailto:trust@vesara.ai" style="color: var(--accent);">trust@vesara.ai</a> (NDA required, available Q3 2026)</td></tr>
+    <tr><td>Bug bounty</td><td>HackerOne program at hackerone.com/vesara</td></tr>
+    <tr><td>Data Processing Agreement</td><td><a href="mailto:legal@vesara.ai" style="color: var(--accent);">legal@vesara.ai</a> — DocuSign within 48h</td></tr>
+  </table>
+</section>
+
+<footer class="footer">Trust Center · Updated 2026-05-04 · We document changes in our public changelog</footer>
+</body>
+</html>

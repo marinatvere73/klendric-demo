@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara — Field Notes from the Operator Side</title>
+<meta name="description" content="Operator-written essays on running vacation rentals at scale, AI as a margin tool, and what's actually broken in the category.">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+  .nav-cta { background: var(--accent); color: #000; padding: 8px 16px; border-radius: var(--r-md); font-weight: 600; }
+
+  .hero { max-width: 880px; margin: 0 auto; padding: 80px 24px 48px; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--border-strong); border-radius: var(--r-full); font-size: 12px; color: var(--text-secondary); margin-bottom: 24px; }
+  h1 { font-size: clamp(40px, 6vw, 64px); font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 20px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .lede { font-size: 19px; color: var(--text-secondary); max-width: 680px; line-height: 1.55; }
+
+  .posts { max-width: 880px; margin: 64px auto; padding: 0 24px; }
+  .post { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .post:last-child { border-bottom: none; }
+  .post-meta { font-size: 13px; color: var(--text-tertiary); margin-bottom: 12px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .post-tag { padding: 4px 10px; background: var(--accent-dim); color: var(--accent); border-radius: var(--r-full); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+  .post-title { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 12px; line-height: 1.15; }
+  .post-title a { color: var(--text); text-decoration: none; }
+  .post-title a:hover { color: var(--accent); }
+  .post-excerpt { font-size: 16px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; }
+  .post-author { font-size: 13px; color: var(--text-tertiary); }
+  .post-author strong { color: var(--text); }
+
+  .article { max-width: 720px; margin: 0 auto; padding: 80px 24px 100px; display: none; }
+  .article.open { display: block; }
+  .article h2 { font-size: 28px; font-weight: 600; letter-spacing: -0.015em; margin: 56px 0 16px; }
+  .article p { font-size: 17px; line-height: 1.8; color: var(--text-secondary); margin: 16px 0; }
+  .article p strong { color: var(--text); }
+  .article blockquote { font-family: var(--font-serif); font-style: italic; font-size: 22px; line-height: 1.5; color: var(--text); border-left: 3px solid var(--accent); padding: 12px 0 12px 24px; margin: 32px 0; }
+  .footer { padding: 48px 24px; text-align: center; color: var(--text-tertiary); font-size: 13px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="brand"><svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg><span>Vesara</span></a>
+  <div class="nav-links"><a href="dashboard.html">Dashboard</a><a href="founder.html">Founder</a><a href="pricing.html">Pricing</a><a href="signup.html" class="nav-cta">Claim a seat →</a></div>
+</nav>
+
+<section class="hero">
+  <span class="pill">Field notes</span>
+  <h1>Operator essays from <span class="accent">inside the trenches.</span></h1>
+  <p class="lede">Vesara is built by an operator. Everything written here is written by Marina (or a guest operator) — no marketing copy, no SEO bait, no AI slop. Just what we're actually learning while running 28 properties and building the AI Asset Manager for the rest of you.</p>
+</section>
+
+<section class="posts">
+
+  <article class="post">
+    <div class="post-meta">
+      <span class="post-tag">Pricing</span>
+      <span>2026-05-04</span>
+      <span>14 min read</span>
+    </div>
+    <h2 class="post-title"><a href="#post1">Why "PriceLabs is enough" is the most expensive lie in vacation rentals.</a></h2>
+    <p class="post-excerpt">PriceLabs is excellent. It's also the wrong abstraction. After running it on 28 properties for 3 years, I can tell you exactly which $4,200/month I left on the table because I trusted PriceLabs to make decisions instead of giving me data to make decisions with. Here's the autopsy.</p>
+    <p class="post-author">By <strong>Marina Tinova</strong> · Founder, Vesara · Operator, LussoStay</p>
+  </article>
+
+  <article class="post">
+    <div class="post-meta">
+      <span class="post-tag">Owner Relations</span>
+      <span>2026-05-02</span>
+      <span>11 min read</span>
+    </div>
+    <h2 class="post-title"><a href="#post2">The owner question that ended a 4-year relationship — and what it taught me about reporting.</a></h2>
+    <p class="post-excerpt">In Q3 2024, an owner I'd worked with since LussoStay's first year asked me a question I couldn't answer in real time. By the end of the conversation, I had lost the property. The question wasn't about money — it was about whether I could explain my decisions. Here's what I built after, and why.</p>
+    <p class="post-author">By <strong>Marina Tinova</strong> · Founder, Vesara · Operator, LussoStay</p>
+  </article>
+
+  <article class="post">
+    <div class="post-meta">
+      <span class="post-tag">AI</span>
+      <span>2026-04-29</span>
+      <span>9 min read</span>
+    </div>
+    <h2 class="post-title"><a href="#post3">Single-AI is wrong. Triple-brain consensus is the only honest way to do AI in operations.</a></h2>
+    <p class="post-excerpt">I asked ChatGPT, Gemini, and Claude the exact same operational question 50 times over three months. They disagreed 38% of the time. Here's what I learned about why "AI says" is dangerous and what we built instead.</p>
+    <p class="post-author">By <strong>Marina Tinova</strong> · Founder, Vesara · Operator, LussoStay</p>
+  </article>
+
+  <article class="post">
+    <div class="post-meta">
+      <span class="post-tag">Operations</span>
+      <span>2026-04-25</span>
+      <span>8 min read</span>
+    </div>
+    <h2 class="post-title"><a href="#post4">14 tools, one decision: the spreadsheet I hate that runs my business.</a></h2>
+    <p class="post-excerpt">A confession: until last month, the actual source of truth for LussoStay's portfolio decisions was a Google Sheet I update on Sunday afternoons. Here's what's in it, why nothing on the market replaced it, and what we built so it doesn't have to be your Sunday too.</p>
+    <p class="post-author">By <strong>Marina Tinova</strong> · Founder, Vesara · Operator, LussoStay</p>
+  </article>
+
+  <article class="post">
+    <div class="post-meta">
+      <span class="post-tag">Industry</span>
+      <span>2026-04-21</span>
+      <span>13 min read</span>
+    </div>
+    <h2 class="post-title"><a href="#post5">Vacasa's collapse is the opportunity small operators have been waiting for.</a></h2>
+    <p class="post-excerpt">When Vacasa announced their last earnings, every operator I know quietly opened a spreadsheet. The 28% management fee that used to feel inevitable now feels like rent extracted from your business by a public company that's no longer earning it. Here's the math on taking back your portfolio — and what tooling makes that math work.</p>
+    <p class="post-author">By <strong>Marina Tinova</strong> · Founder, Vesara · Operator, LussoStay</p>
+  </article>
+
+</section>
+
+<footer class="footer">
+  Want to write a guest essay? <a href="mailto:marina@vesara.ai" style="color: var(--accent);">marina@vesara.ai</a> — operator-only. We don't accept ghostwritten or marketing-team posts.
+</footer>
+
+</body>
+</html>

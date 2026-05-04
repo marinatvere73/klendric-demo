@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara — Changelog</title>
+<meta name="description" content="Public changelog of every Vesara feature ship, infrastructure update, and process change. Updated continuously.">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+  .hero { max-width: 760px; margin: 0 auto; padding: 80px 24px 32px; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--border-strong); border-radius: var(--r-full); font-size: 12px; color: var(--text-secondary); margin-bottom: 24px; }
+  h1 { font-size: clamp(40px, 6vw, 56px); font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 20px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .lede { font-size: 18px; color: var(--text-secondary); line-height: 1.55; }
+  .log { max-width: 760px; margin: 48px auto; padding: 0 24px 100px; }
+  .entry { padding: 32px 0; border-bottom: 1px solid var(--border); }
+  .entry-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+  .entry-date { font-family: var(--font-mono); font-size: 12px; color: var(--text-tertiary); }
+  .entry-tag { font-size: 11px; padding: 4px 10px; border-radius: var(--r-full); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+  .tag-feature { background: var(--accent-dim); color: var(--accent); }
+  .tag-fix { background: rgba(59, 130, 246, 0.12); color: var(--info); }
+  .tag-infra { background: rgba(245, 158, 11, 0.12); color: var(--warning); }
+  .tag-process { background: rgba(255, 255, 255, 0.06); color: var(--text-secondary); }
+  .entry-title { font-size: 20px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 10px; }
+  .entry-body { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+  .entry-body strong { color: var(--text); }
+  .entry-body ul { padding-left: 22px; }
+  .entry-body li { margin: 4px 0; }
+  .footer { padding: 48px 24px; text-align: center; color: var(--text-tertiary); font-size: 13px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="brand"><svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg><span>Vesara · Changelog</span></a>
+  <div class="nav-links"><a href="status.html">Status</a><a href="dashboard.html">Dashboard</a></div>
+</nav>
+
+<section class="hero">
+  <span class="pill">● Updated continuously</span>
+  <h1>Every ship, every fix, every <span class="accent">infrastructure change.</span></h1>
+  <p class="lede">Public log. No marketing veneer. If it shipped, it's here. If we broke something and fixed it, that's here too.</p>
+</section>
+
+<section class="log">
+
+  <div class="entry">
+    <div class="entry-meta">
+      <span class="entry-date">2026-05-04</span>
+      <span class="entry-tag tag-feature">FEATURE</span>
+    </div>
+    <div class="entry-title">Phase 47b — Zero-Touch Autonomous Onboarding shipped</div>
+    <div class="entry-body">7-day customer journey from signup to fully operational with zero required Marina touchpoints. AI Coach handles 85% of customer questions. Auto-escalation only on 8 specific signals (customer requests human, sentiment <-0.4, billing/refund/cancel/broken keywords, etc.). <strong>Marina time per new customer: 0 minutes default.</strong></div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-meta">
+      <span class="entry-date">2026-05-04</span>
+      <span class="entry-tag tag-feature">FEATURE</span>
+    </div>
+    <div class="entry-title">5 SEO comparison pages live (vs PriceLabs, Guesty, Vacasa, Beyond, AirDNA)</div>
+    <div class="entry-body">Built from triple-brain competitive intelligence brief. Every page includes honest "where they beat us" section + verified concession. Fairness commitment: corrections at fairness@vesara.ai within 24 hours.</div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-meta">
+      <span class="entry-date">2026-05-03</span>
+      <span class="entry-tag tag-feature">FEATURE</span>
+    </div>
+    <div class="entry-title">Founder story page + Investor Brief shipped</div>
+    <div class="entry-body">Marina's narrative published at vesara.ai/founder. Pitch deck (12 slides) at vesara.ai/pitch. $1.5M pre-seed ask at $8M post-money valuation, SAFE preferred.</div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-meta">
+      <span class="entry-date">2026-05-03</span>
+      <span class="entry-tag tag-feature">FEATURE</span>
+    </div>
+    <div class="entry-title">Go-live execution package complete (10 demo pages)</div>
+    <div class="entry-body">Launch tracker, signup flow, dashboard preview, onboarding wizard, Founders' Promise, Terms, Privacy, Status, Support, Pricing — all live at marinatvere73.github.io/klendric-demo. All pages use Vesara design system (#10B981 emerald + Geist Sans + Fraunces serif).</div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-meta">
+      <span class="entry-date">2026-05-03</span>
+      <span class="entry-tag tag-process">PROCESS</span>
+    </div>
+    <div class="entry-title">Roadmap completed Phase 1 → Phase 100</div>
+    <div class="entry-body">15 new phase briefs (86-100) shipped overnight. Strategic North Star fully articulated through 5-year horizon. Phase 100 capstone defines IPO/acquisition success criteria.</div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-meta">
+      <span class="entry-date">2026-05-03</span>
+      <span class="entry-tag tag-feature">FEATURE</span>
+    </div>
+    <div class="entry-title">14 PRs upgraded to production-grade Vesara branding</div>
+    <div class="entry-body">All Codex Cloud-shipped phases (#3-#16) refreshed with Vesara design tokens. Tests passing across the board. Ready for Marina to merge in priority order: P0 batch (#13/15/5/4) → P1 (#3/14/12) → P2.</div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-meta">
+      <span class="entry-date">2026-05-02</span>
+      <span class="entry-tag tag-infra">INFRA</span>
+    </div>
+    <div class="entry-title">Codex Cloud sandbox blocker resolved</div>
+    <div class="entry-body">setup.sh + AGENTS.md added to lussostay-liq. Manual Codex env config (Setup script "Manual" + Agent internet enabled). Verified via Phase 27 PR #2. All 14 dispatched tasks now executable.</div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-meta">
+      <span class="entry-date">2026-05-01</span>
+      <span class="entry-tag tag-feature">FEATURE</span>
+    </div>
+    <div class="entry-title">Pricing page production-grade (Phase 48)</div>
+    <div class="entry-body">All 4 tiers live with monthly/annual toggle, Founders' Flock seat counter, FAQ section. Hexagon logo + Vesara emerald accent. CTAs wired to signup flow.</div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-meta">
+      <span class="entry-date">2026-04-30</span>
+      <span class="entry-tag tag-process">PROCESS</span>
+    </div>
+    <div class="entry-title">vesara-workspace private GitHub repo created</div>
+    <div class="entry-body">Full backup of /Vesara/ folder pushed to GitHub. 4 commits. Includes 100 phase briefs, 12 vesara-* skills, all strategy/legal/marketing/operations docs.</div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-meta">
+      <span class="entry-date">2026-04-29</span>
+      <span class="entry-tag tag-process">PROCESS</span>
+    </div>
+    <div class="entry-title">Brand finalized — VESARA</div>
+    <div class="entry-body">After killing 8 candidate names (Aviary, Roost, Helm, Beacon, Perch, Clarus, Voyent, Klendric, Staydex) for trademark/phonetic conflicts, VESARA cleared at YELLOW pending $1,500 attorney opinion. Hexagon logo + 6 sub-product marks (Score, Lens, Studio, Capital, Marketplace, OS) shipped.</div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-meta">
+      <span class="entry-date">2026-04-28</span>
+      <span class="entry-tag tag-process">PROCESS</span>
+    </div>
+    <div class="entry-title">Vesara folder separated from LussoStay agent system</div>
+    <div class="entry-body">/Users/marinatinova/OpenClawWork/Vesara/ created with own CLAUDE.md, 12 vesara-* skills, separation audit passed. Hard rule: no LussoStay agents (alex/jack/star/x/etc.) invoked for Vesara work.</div>
+  </div>
+
+</section>
+
+<footer class="footer">Updated continuously while building. Subscribe via RSS at vesara.ai/changelog.rss (coming with launch).</footer>
+</body>
+</html>
