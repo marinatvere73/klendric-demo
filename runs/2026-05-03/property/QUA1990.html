@@ -1,1590 +1,1215 @@
 <!doctype html>
-<html lang="en" class="h-full">
+<html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>QUA1990 - Vesara 78</title>
-<script>
-  // Apply theme + view BEFORE Tailwind/CSS loads to prevent flash
-  (function () {
-    try {
-      var t = localStorage.getItem('liq-theme');
-      if (t === 'dark') document.documentElement.classList.add('dark');
-      // default: LIGHT (Marina's preference)
-    } catch (e) {}
-    try {
-      // ?view=pm|owner|pdf — set body attribute as soon as body parses
-      var qs = (window.location.search || '').toLowerCase();
-      var m = qs.match(/[?&]view=(pm|owner|pdf)/);
-      var v = m ? m[1] : 'pm';
-      document.documentElement.setAttribute('data-view', v);
-    } catch (e) {}
-  })();
-</script>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script>
-  tailwind.config = {
-    darkMode: 'class',
-    theme: {
-      extend: {
-        fontFamily: {
-          sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
-          serif: ['Georgia', 'Cambria', '"Times New Roman"', 'serif'],
-        },
-        colors: {
-          ink: '#0b1120',
-          panel: '#111827',
-          panel2: '#1f2937',
-        }
-      }
-    }
-  }
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  body { font-family: 'Inter', system-ui, sans-serif; }
-  /* Grade colors */
-  .grade-A { color: #16a34a; }
-  .grade-B { color: #2563eb; }
-  .grade-C { color: #ca8a04; }
-  .grade-D { color: #ea580c; }
-  .grade-F { color: #dc2626; }
-  .dark .grade-A { color: #22c55e; }
-  .dark .grade-B { color: #3b82f6; }
-  .dark .grade-C { color: #eab308; }
-  .dark .grade-D { color: #f97316; }
-  .dark .grade-F { color: #ef4444; }
-  .bg-grade-A { background-color: rgba(22, 163, 74, 0.12); border-color: rgba(22, 163, 74, 0.35); }
-  .bg-grade-B { background-color: rgba(37, 99, 235, 0.12); border-color: rgba(37, 99, 235, 0.35); }
-  .bg-grade-C { background-color: rgba(202, 138, 4, 0.12); border-color: rgba(202, 138, 4, 0.35); }
-  .bg-grade-D { background-color: rgba(234, 88, 12, 0.12); border-color: rgba(234, 88, 12, 0.35); }
-  .bg-grade-F { background-color: rgba(220, 38, 38, 0.12); border-color: rgba(220, 38, 38, 0.35); }
-  .dark .bg-grade-A { background-color: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.4); }
-  .dark .bg-grade-B { background-color: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.4); }
-  .dark .bg-grade-C { background-color: rgba(234, 179, 8, 0.15); border-color: rgba(234, 179, 8, 0.4); }
-  .dark .bg-grade-D { background-color: rgba(249, 115, 22, 0.15); border-color: rgba(249, 115, 22, 0.4); }
-  .dark .bg-grade-F { background-color: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); }
-  .heatcell { transition: transform 120ms ease; }
-  .heatcell:hover { transform: scale(1.08); z-index: 10; }
-  .row-link { transition: background-color 120ms ease; }
-  .row-link:hover { background-color: rgba(99, 102, 241, 0.10); }
-  ::-webkit-scrollbar { height: 10px; width: 10px; }
-  ::-webkit-scrollbar-track { background: #f1f5f9; }
-  .dark ::-webkit-scrollbar-track { background: #0b1120; }
-  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 5px; }
-  .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 5px; }
-  .fix-resolved { opacity: 0.5; text-decoration: line-through; }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quail Hollow Reno Home · Vesara Score 78</title>
+  <meta name="description" content="Vesara intelligence report for Quail Hollow Reno Home (QUA1990) — score 78, grade C.">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#050505">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,wght@1,500;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../design-system.css">
+  <style>
+    /* ===== PROPERTY SCORECARD ===== */
+    body { background: var(--bg); color: var(--text); }
 
-  /* ================ VIEW MODES ================ */
-  /* PM view (default) — show everything; nothing to hide */
-  /* Owner view hides PM-internal blocks */
-  html[data-view="owner"] .pm-only { display: none !important; }
-  /* Show owner-only blocks only in owner view */
-  .owner-only { display: none; }
-  html[data-view="owner"] .owner-only { display: block; }
-  html[data-view="owner"] .owner-only-flex { display: flex; }
-  html[data-view="owner"] .owner-only-grid { display: grid; }
-  /* PDF view — printable layout, hides interactive chrome */
-  html[data-view="pdf"] .no-print,
-  @media print { .no-print { display: none !important; } }
-  html[data-view="pdf"] .pdf-only { display: block; }
-  .pdf-only { display: none; }
-
-  /* PDF / print stylesheet */
-  @media print {
-    @page { size: letter; margin: 0.5in; }
-    body { background: #ffffff !important; color: #111827 !important; font-family: Georgia, 'Times New Roman', serif !important; }
-    .dark body, body.dark { background: #ffffff !important; color: #111827 !important; }
-    h1, h2, h3, h4, .heading-sans { font-family: 'Inter', sans-serif !important; }
-    .no-print, header, footer, #theme-toggle, #view-switch, #reanalyze-btn, .resolve-btn { display: none !important; }
-    main { max-width: 100% !important; padding: 0 !important; }
-    section { break-inside: avoid; page-break-inside: avoid; }
-    section + section { break-before: auto; page-break-before: auto; margin-top: 0.5rem; }
-    .page-break-before { break-before: page; page-break-before: always; }
-    .pdf-only { display: block !important; }
-    /* Force light theme colors for printable elements */
-    .bg-white, .dark\:bg-panel, .dark\:bg-slate-900, .dark\:bg-slate-950\/40,
-    .dark\:bg-slate-900\/50, .dark\:bg-slate-900\/60, .dark\:bg-slate-900\/30,
-    .dark\:bg-slate-900\/40, .dark\:bg-slate-950, .dark\:bg-slate-950\/80 {
-      background: #ffffff !important; color: #111827 !important;
+    /* Hero */
+    .prop-hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 110px 0 80px;
     }
-    .text-slate-100, .text-slate-200, .text-slate-300, .text-white,
-    .dark\:text-slate-100, .dark\:text-slate-200, .dark\:text-slate-300, .dark\:text-white {
-      color: #111827 !important;
+    .prop-hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=2400&q=80');
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.05);
+      transform: scale(1.04);
     }
-    .border-slate-700, .border-slate-800, .dark\:border-slate-700, .dark\:border-slate-800 {
-      border-color: #cbd5e1 !important;
+    .prop-hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(70% 50% at 0% 100%, rgba(16,185,129,0.18), transparent 70%),
+        linear-gradient(180deg, rgba(5,5,5,0.45) 0%, rgba(5,5,5,0.78) 55%, var(--bg) 100%);
     }
-    img { max-width: 100% !important; }
-    a { color: #1d4ed8 !important; text-decoration: none !important; }
-    @page { @bottom-right { content: "Page " counter(page) " of " counter(pages); font-family: Georgia, serif; font-size: 9pt; color: #64748b; } }
-  }
+    .prop-hero .container { position: relative; z-index: 1; }
+    .prop-hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
+      gap: var(--s-7);
+      align-items: end;
+    }
+    @media (max-width: 900px) {
+      .prop-hero-grid { grid-template-columns: 1fr; gap: var(--s-6); }
+      .prop-hero { padding: 90px 0 60px; }
+    }
+    .prop-hero-meta { color: var(--text); }
+    .prop-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 12px;
+      border-radius: var(--r-full);
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .prop-eyebrow .pulse {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+      animation: pulse 2s var(--ease) infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.55; transform: scale(0.85); }
+    }
+    .prop-name {
+      font-size: clamp(40px, 6vw, 68px);
+      font-weight: 600;
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      margin: var(--s-4) 0 var(--s-3);
+    }
+    .prop-name em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 500;
+      color: var(--accent);
+    }
+    .prop-submeta {
+      display: flex; gap: var(--s-4);
+      flex-wrap: wrap;
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+    .prop-submeta-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--text-muted); align-self: center; }
+    .prop-code { font-family: var(--font-mono); font-size: 13px; color: var(--text-tertiary); letter-spacing: 0.04em; }
 
-  /* When ?view=pdf is active in-browser preview — apply same look without print */
-  html[data-view="pdf"] body { background: #ffffff !important; color: #111827 !important; font-family: Georgia, 'Times New Roman', serif !important; }
-  html[data-view="pdf"] h1, html[data-view="pdf"] h2, html[data-view="pdf"] h3 { font-family: 'Inter', sans-serif !important; }
-  html[data-view="pdf"] .bg-white, html[data-view="pdf"] [class*="dark:bg-"] { background: #ffffff !important; color: #111827 !important; }
-  html[data-view="pdf"] [class*="dark:text-"], html[data-view="pdf"] .text-white { color: #111827 !important; }
-  html[data-view="pdf"] [class*="dark:border-"] { border-color: #cbd5e1 !important; }
-  html[data-view="pdf"] .pdf-paper { background: #ffffff; color: #111827; padding: 0.5in; max-width: 8.5in; margin: 0 auto; box-shadow: 0 0 30px rgba(0,0,0,0.08); }
-  html[data-view="pdf"] header, html[data-view="pdf"] footer, html[data-view="pdf"] .no-print { display: none !important; }
-  html[data-view="pdf"] main { max-width: 8.5in !important; }
+    /* Score badge */
+    .score-badge {
+      background: rgba(10,10,10,0.7);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--r-2xl);
+      padding: var(--s-6);
+      box-shadow: var(--shadow-lg);
+    }
+    .score-badge-head {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: var(--s-4);
+    }
+    .score-badge-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-tertiary);
+      font-weight: 500;
+    }
+    .score-badge-grade {
+      font-size: 96px;
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      color: #F59E0B;
+      text-shadow: 0 0 40px #F59E0B44;
+    }
+    .score-badge-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--s-4);
+    }
+    .score-badge-num {
+      font-family: var(--font-mono);
+      font-size: 56px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+    .score-badge-num span { color: var(--text-tertiary); font-size: 24px; margin-left: 4px; }
+    .score-badge-bar {
+      margin-top: var(--s-4);
+      height: 4px;
+      border-radius: var(--r-full);
+      background: rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+    .score-badge-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #F59E0B, #F59E0Bcc);
+      border-radius: inherit;
+      transform-origin: left;
+      animation: bar-fill 1.2s var(--ease) forwards;
+    }
+    @keyframes bar-fill { from { transform: scaleX(0); } to { transform: scaleX(0.78); } }
+    .score-badge-foot {
+      margin-top: var(--s-4);
+      display: flex; justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
 
-  /* View switcher dropdown */
-  .view-switch-menu { display: none; }
-  .view-switch-menu.open { display: block; }
-</style>
+    /* Glance */
+    .glance { padding: var(--s-7) 0; border-top: 1px solid var(--border); }
+    .glance-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--s-4);
+    }
+    @media (max-width: 900px) { .glance-grid { grid-template-columns: repeat(2, 1fr); } }
+    .glance-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: var(--s-5);
+    }
+    .glance-card--accent { background: linear-gradient(180deg, rgba(16,185,129,0.06), var(--surface)); border-color: rgba(16,185,129,0.18); }
+    .glance-num {
+      font-family: var(--font-mono);
+      font-size: 30px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin: var(--s-2) 0 var(--s-1);
+    }
+    .glance-pos { color: var(--accent); }
+    .glance-neg { color: var(--text-secondary); }
+    .glance-sub { font-size: 12px; color: var(--text-tertiary); }
+
+    /* Section header */
+    .section-head {
+      display: flex; align-items: end; justify-content: space-between;
+      margin-bottom: var(--s-6); gap: var(--s-4); flex-wrap: wrap;
+    }
+    .section-head h2 { margin: 0; }
+    .section-head .lede { max-width: 540px; margin-top: 6px; }
+
+    /* Dimension bars */
+    .dims { padding: var(--s-8) 0; border-top: 1px solid var(--border); }
+    .dim-rows {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: var(--s-5) var(--s-6);
+      display: grid;
+      gap: var(--s-3);
+    }
+    .dim-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: var(--s-5);
+      align-items: center;
+      padding: var(--s-2) 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .dim-row:last-child { border-bottom: 0; }
+    @media (max-width: 720px) {
+      .dim-row { grid-template-columns: 1fr; gap: var(--s-2); }
+    }
+    .dim-meta { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-2); }
+    .dim-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      text-transform: capitalize;
+      letter-spacing: -0.01em;
+    }
+    .dim-weight {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-tertiary);
+    }
+    .dim-bar-wrap {
+      display: grid;
+      grid-template-columns: 1fr 44px 22px;
+      gap: var(--s-3);
+      align-items: center;
+    }
+    .dim-bar-track {
+      position: relative;
+      height: 8px;
+      border-radius: var(--r-full);
+      background: rgba(255,255,255,0.04);
+      overflow: visible;
+    }
+    .dim-bar-fill {
+      position: absolute; top: 0; bottom: 0; left: 0;
+      width: var(--target);
+      background: linear-gradient(90deg, var(--color), color-mix(in srgb, var(--color) 70%, white));
+      border-radius: inherit;
+      transform-origin: left;
+      animation: dim-grow 900ms var(--ease) both;
+      box-shadow: 0 0 18px color-mix(in srgb, var(--color) 30%, transparent);
+    }
+    @keyframes dim-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    .dim-bar-median {
+      position: absolute;
+      top: -3px; bottom: -3px;
+      width: 2px;
+      background: rgba(255,255,255,0.55);
+      transform: translateX(-1px);
+      pointer-events: none;
+    }
+    .dim-bar-median::after {
+      content: '';
+      position: absolute; top: -4px; left: -3px;
+      width: 8px; height: 4px;
+      background: rgba(255,255,255,0.55);
+      border-radius: 1px;
+    }
+    .dim-score {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 500;
+      text-align: right;
+    }
+    .dim-grade {
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      opacity: 0.85;
+    }
+
+    .dim-legend {
+      display: flex; gap: var(--s-4); margin-top: var(--s-4);
+      font-size: 12px; color: var(--text-tertiary);
+      flex-wrap: wrap;
+    }
+    .dim-legend-item { display: inline-flex; align-items: center; gap: 6px; }
+    .dim-legend-swatch {
+      width: 10px; height: 10px; border-radius: 2px;
+    }
+    .dim-legend-line { width: 14px; height: 2px; background: rgba(255,255,255,0.55); }
+
+    /* Priority recommendations */
+    .prio { padding: var(--s-8) 0; border-top: 1px solid var(--border); }
+    .prio-stack { display: grid; gap: var(--s-3); }
+    .prio-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: var(--s-5);
+      transition: transform var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+      position: relative;
+    }
+    .prio-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-strong);
+      background: var(--surface-2);
+    }
+    .prio-head {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: var(--s-3); flex-wrap: wrap; margin-bottom: var(--s-3);
+    }
+    .prio-tag {
+      display: inline-flex; align-items: center; gap: var(--s-2);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .prio-rank {
+      padding: 4px 8px;
+      border-radius: var(--r-sm);
+      background: color-mix(in srgb, var(--color) 14%, transparent);
+      color: var(--color);
+      border: 1px solid color-mix(in srgb, var(--color) 30%, transparent);
+    }
+    .prio-cat {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .prio-impact {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: var(--r-full);
+      background: var(--accent-dim);
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    }
+    .prio-body {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .prio-foot {
+      margin-top: var(--s-4);
+      padding-top: var(--s-3);
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      gap: var(--s-3);
+    }
+    .prio-resolve {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 10px;
+      border-radius: var(--r-sm);
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all var(--dur-fast) var(--ease);
+    }
+    .prio-resolve:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .prio-resolve.resolved {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .prio-score {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Dimension details */
+    .details { padding: var(--s-8) 0; border-top: 1px solid var(--border); }
+    .dim-detail {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      margin-bottom: var(--s-2);
+      overflow: hidden;
+    }
+    .dim-detail summary {
+      list-style: none;
+      cursor: pointer;
+      padding: var(--s-4) var(--s-5);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--s-3);
+      transition: background var(--dur-fast) var(--ease);
+    }
+    .dim-detail summary::-webkit-details-marker { display: none; }
+    .dim-detail summary:hover { background: var(--surface-2); }
+    .dim-detail-name {
+      font-size: 15px;
+      font-weight: 500;
+      text-transform: capitalize;
+      letter-spacing: -0.01em;
+    }
+    .dim-detail-meta {
+      display: inline-flex; align-items: center; gap: var(--s-4);
+      font-size: 13px;
+      color: var(--text-tertiary);
+    }
+    .dim-detail-weight { font-family: var(--font-mono); font-size: 11px; }
+    .dim-detail-score {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .dim-detail-score em {
+      font-style: normal;
+      font-size: 12px;
+      margin-left: 3px;
+      opacity: 0.8;
+    }
+    .dim-detail .chev { transition: transform var(--dur-fast) var(--ease); }
+    .dim-detail[open] .chev { transform: rotate(180deg); }
+    .dim-detail-body {
+      padding: 0 var(--s-5) var(--s-5);
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: var(--s-5);
+      border-top: 1px solid var(--border);
+      padding-top: var(--s-4);
+    }
+    @media (max-width: 720px) { .dim-detail-body { grid-template-columns: 1fr; } }
+    .dim-submetrics {
+      list-style: none; padding: 0; margin: 0;
+      display: grid; gap: var(--s-2);
+    }
+    .dim-submetrics li {
+      display: flex; justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-secondary);
+      padding: 6px 10px;
+      background: var(--surface-2);
+      border-radius: var(--r-sm);
+      text-transform: capitalize;
+    }
+    .dim-submetrics li span:last-child {
+      font-family: var(--font-mono);
+      font-weight: 500;
+    }
+    .dim-recs ul {
+      list-style: none; padding: 0; margin: 0;
+      display: grid; gap: var(--s-2);
+    }
+    .rec-item {
+      font-size: 13px;
+      color: var(--text);
+      padding: var(--s-3);
+      background: var(--surface-2);
+      border-left: 2px solid var(--accent);
+      border-radius: 0 var(--r-sm) var(--r-sm) 0;
+      line-height: 1.45;
+    }
+
+    /* Footer CTA */
+    .cta-foot {
+      padding: var(--s-9) 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      background: radial-gradient(60% 60% at 50% 0%, rgba(16,185,129,0.08), transparent 70%);
+    }
+    .cta-foot h2 {
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -0.02em;
+      margin: 0 0 var(--s-3);
+    }
+    .cta-foot p { color: var(--text-secondary); margin: 0 auto var(--s-6); max-width: 540px; }
+    .cta-foot-actions {
+      display: inline-flex; gap: var(--s-3); flex-wrap: wrap; justify-content: center;
+    }
+
+    /* Anim helpers */
+    .fade-in { opacity: 0; animation: fade-in 600ms var(--ease) forwards; }
+    .fade-in-2 { opacity: 0; animation: fade-in 600ms 100ms var(--ease) forwards; }
+    .fade-in-3 { opacity: 0; animation: fade-in 600ms 200ms var(--ease) forwards; }
+    @keyframes fade-in { to { opacity: 1; transform: translateY(0); } from { opacity: 0; transform: translateY(10px); } }
+  </style>
 </head>
-<body class="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100 text-slate-900 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900 dark:text-slate-100">
-<div style="position:sticky;top:0;z-index:200;background:rgba(5,5,5,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.08);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;color:rgba(255,255,255,0.7)" class="no-print">
-  <a href="../../../index.html" style="color:#fff;text-decoration:none;display:flex;align-items:center;gap:8px;font-weight:500">
-    <span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#10B981,#059669);color:#000;font-weight:700;font-size:12px;box-shadow:0 0 16px rgba(16,185,129,0.4)">V</span>
-    <span>Vesara</span>
-    <span style="color:rgba(255,255,255,0.4);font-weight:400">&middot; Live demo</span>
-  </a>
-  <a href="../../../index.html" style="color:rgba(255,255,255,0.7);text-decoration:none;font-size:13px">&larr; All demos</a>
-</div>
+<body>
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="../../../index.html" class="brand">
+        <div class="brand-mark">V</div>
+        <span>Vesara</span>
+      </a>
+      <div class="nav-links">
+        <a href="../../../index.html#product" class="nav-link">Product</a>
+        <a href="../../../index.html#demos" class="nav-link">Demos</a>
+        <a href="../../../index.html#roadmap" class="nav-link">Roadmap</a>
+        <a href="../../../index.html#demos" class="btn btn-primary">Try the Demo <span class="arrow">&rarr;</span></a>
+      </div>
+    </div>
+  </nav>
 
-  <header class="border-b border-slate-200 bg-white/80 dark:border-slate-800 dark:bg-slate-950/80 backdrop-blur sticky top-0 z-30 no-print">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 to-fuchsia-500 grid place-items-center font-bold text-sm text-white">N</div>
+  <!-- HERO -->
+  <section class="prop-hero">
+    <div class="prop-hero-bg"></div>
+    <div class="container">
+      <div class="prop-hero-grid">
+        <div class="prop-hero-meta fade-in">
+          <span class="prop-eyebrow"><span class="pulse"></span> Live demo &middot; Contemporary Home</span>
+          <h1 class="prop-name">Quail Hollow Reno Home</h1>
+          <div class="prop-submeta">
+            <span>Reno/Sparks</span>
+            <span class="prop-submeta-dot"></span>
+            <span class="prop-code">QUA1990</span>
+            <span class="prop-submeta-dot"></span>
+            <span>Generated 2026-05-03</span>
+          </div>
+        </div>
+        <div class="score-badge fade-in-2">
+          <div class="score-badge-head">
+            <span class="score-badge-label">Vesara Score</span>
+            <span class="score-badge-grade">C</span>
+          </div>
+          <div class="score-badge-row">
+            <div class="score-badge-num" data-target="78">0<span>/100</span></div>
+          </div>
+          <div class="score-badge-bar"><div class="score-badge-bar-fill"></div></div>
+          <div class="score-badge-foot">
+            <span>16 dimensions analyzed</span>
+            <span>9 opportunities</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <!-- DIMENSIONS -->
+  <section class="dims">
+    <div class="container">
+      <div class="section-head">
         <div>
-          <div class="text-sm uppercase tracking-widest text-slate-500 dark:text-slate-400">LussoStay</div>
-          <div class="text-base font-semibold">Listing Intelligence Quotient</div>
+          <span class="eyebrow">Score Breakdown</span>
+          <h2 class="h1" style="margin:6px 0 0">16 dimensions, scored against your comp set</h2>
+          <p class="lede">Each bar shows your score 0–100. The vertical line marks the comp set median. Color reflects letter grade.</p>
         </div>
       </div>
-      <div class="flex items-center gap-3">
-        <nav class="text-sm flex items-center gap-3">
-          <a href="../index.html" class="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">Portfolio</a>
-          <span class="text-slate-300 dark:text-slate-700">/</span>
-          <span class="text-slate-700 dark:text-slate-300">QUA1990 - Quail Hollow Reno Home</span>
-        </nav>
+      <div class="dim-rows">
         
-<div class="relative no-print">
-  <button type="button" data-view-switch-trigger
-          class="text-xs px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2 font-semibold">
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-      <path stroke-linecap="round" stroke-linejoin="round" d="M2.46 12C3.73 7.94 7.52 5 12 5s8.27 2.94 9.54 7c-1.27 4.06-5.06 7-9.54 7s-8.27-2.94-9.54-7z"/>
-    </svg>
-    <span id="view-switch-label">Switch View</span>
-    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-  </button>
-  <div class="view-switch-menu absolute right-0 mt-2 w-56 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl overflow-hidden z-50">
-    <button type="button" onclick="Vesara_setView('pm')" class="w-full text-left px-4 py-2.5 text-sm hover:bg-indigo-50 dark:hover:bg-slate-800 flex items-start gap-2">
-      <span class="text-indigo-500 font-bold">PM</span>
-      <span><div class="font-semibold">Property Manager</div><div class="text-xs text-slate-500">Full ops + financial detail</div></span>
-    </button>
-    
-    <div class="px-4 py-2.5 text-xs text-slate-400 italic border-t border-slate-100 dark:border-slate-800">
-      Owner view N/A (arbitrage property)
-    </div>
-    
-    <button type="button" onclick="Vesara_downloadPdf()" class="w-full text-left px-4 py-2.5 text-sm hover:bg-slate-50 dark:hover:bg-slate-800 border-t border-slate-100 dark:border-slate-800 flex items-start gap-2">
-      <span class="text-slate-500 font-bold">PDF</span>
-      <span><div class="font-semibold">Download PDF</div><div class="text-xs text-slate-500">Print-ready report</div></span>
-    </button>
-  </div>
-</div>
+        <div class="dim-row" data-grade="B">
+          <div class="dim-meta">
+            <span class="dim-name">photos</span>
+            <span class="dim-weight">w10%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:80%; --color:#3B82F6"></div>
+              <div class="dim-bar-median" style="left:85%" title="Comp set median: 85"></div>
+            </div>
+            <span class="dim-score" style="color:#3B82F6">80</span>
+            <span class="dim-grade" style="color:#3B82F6">B</span>
+          </div>
+        </div>
 
-        <button id="theme-toggle" type="button"
-                class="relative w-10 h-10 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 grid place-items-center transition-colors"
-                title="Toggle light/dark theme" aria-label="Toggle theme">
-          <svg class="hidden dark:block w-5 h-5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="4"/>
-            <path stroke-linecap="round" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/>
-          </svg>
-          <svg class="block dark:hidden w-5 h-5 text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-        </button>
+        <div class="dim-row" data-grade="C">
+          <div class="dim-meta">
+            <span class="dim-name">title</span>
+            <span class="dim-weight">w5%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:75%; --color:#F59E0B"></div>
+              <div class="dim-bar-median" style="left:80%" title="Comp set median: 80"></div>
+            </div>
+            <span class="dim-score" style="color:#F59E0B">75</span>
+            <span class="dim-grade" style="color:#F59E0B">C</span>
+          </div>
+        </div>
+
+        <div class="dim-row" data-grade="B">
+          <div class="dim-meta">
+            <span class="dim-name">description</span>
+            <span class="dim-weight">w8%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:80%; --color:#3B82F6"></div>
+              <div class="dim-bar-median" style="left:85%" title="Comp set median: 85"></div>
+            </div>
+            <span class="dim-score" style="color:#3B82F6">80</span>
+            <span class="dim-grade" style="color:#3B82F6">B</span>
+          </div>
+        </div>
+
+        <div class="dim-row" data-grade="C">
+          <div class="dim-meta">
+            <span class="dim-name">amenities</span>
+            <span class="dim-weight">w7%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:78%; --color:#F59E0B"></div>
+              <div class="dim-bar-median" style="left:83%" title="Comp set median: 83"></div>
+            </div>
+            <span class="dim-score" style="color:#F59E0B">78</span>
+            <span class="dim-grade" style="color:#F59E0B">C</span>
+          </div>
+        </div>
+
+        <div class="dim-row" data-grade="B">
+          <div class="dim-meta">
+            <span class="dim-name">reviews</span>
+            <span class="dim-weight">w10%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:82%; --color:#3B82F6"></div>
+              <div class="dim-bar-median" style="left:85%" title="Comp set median: 85"></div>
+            </div>
+            <span class="dim-score" style="color:#3B82F6">82</span>
+            <span class="dim-grade" style="color:#3B82F6">B</span>
+          </div>
+        </div>
+
+        <div class="dim-row" data-grade="C">
+          <div class="dim-meta">
+            <span class="dim-name">pricing</span>
+            <span class="dim-weight">w8%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:75%; --color:#F59E0B"></div>
+              <div class="dim-bar-median" style="left:80%" title="Comp set median: 80"></div>
+            </div>
+            <span class="dim-score" style="color:#F59E0B">75</span>
+            <span class="dim-grade" style="color:#F59E0B">C</span>
+          </div>
+        </div>
+
+        <div class="dim-row" data-grade="C">
+          <div class="dim-meta">
+            <span class="dim-name">booking settings</span>
+            <span class="dim-weight">w10%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:70%; --color:#F59E0B"></div>
+              <div class="dim-bar-median" style="left:75%" title="Comp set median: 75"></div>
+            </div>
+            <span class="dim-score" style="color:#F59E0B">70</span>
+            <span class="dim-grade" style="color:#F59E0B">C</span>
+          </div>
+        </div>
+
+        <div class="dim-row" data-grade="C">
+          <div class="dim-meta">
+            <span class="dim-name">operational fit</span>
+            <span class="dim-weight">w8%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:75%; --color:#F59E0B"></div>
+              <div class="dim-bar-median" style="left:80%" title="Comp set median: 80"></div>
+            </div>
+            <span class="dim-score" style="color:#F59E0B">75</span>
+            <span class="dim-grade" style="color:#F59E0B">C</span>
+          </div>
+        </div>
+
+        <div class="dim-row" data-grade="B">
+          <div class="dim-meta">
+            <span class="dim-name">consistency score</span>
+            <span class="dim-weight">w4%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:80%; --color:#3B82F6"></div>
+              <div class="dim-bar-median" style="left:85%" title="Comp set median: 85"></div>
+            </div>
+            <span class="dim-score" style="color:#3B82F6">80</span>
+            <span class="dim-grade" style="color:#3B82F6">B</span>
+          </div>
+        </div>
+
+        <div class="dim-row" data-grade="D">
+          <div class="dim-meta">
+            <span class="dim-name">guest favorite</span>
+            <span class="dim-weight">w4%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:60%; --color:#F97316"></div>
+              <div class="dim-bar-median" style="left:65%" title="Comp set median: 65"></div>
+            </div>
+            <span class="dim-score" style="color:#F97316">60</span>
+            <span class="dim-grade" style="color:#F97316">D</span>
+          </div>
+        </div>
+
+        <div class="dim-row" data-grade="C">
+          <div class="dim-meta">
+            <span class="dim-name">review summary</span>
+            <span class="dim-weight">w4%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:78%; --color:#F59E0B"></div>
+              <div class="dim-bar-median" style="left:83%" title="Comp set median: 83"></div>
+            </div>
+            <span class="dim-score" style="color:#F59E0B">78</span>
+            <span class="dim-grade" style="color:#F59E0B">C</span>
+          </div>
+        </div>
+
+        <div class="dim-row" data-grade="C">
+          <div class="dim-meta">
+            <span class="dim-name">listing overview</span>
+            <span class="dim-weight">w4%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:75%; --color:#F59E0B"></div>
+              <div class="dim-bar-median" style="left:80%" title="Comp set median: 80"></div>
+            </div>
+            <span class="dim-score" style="color:#F59E0B">75</span>
+            <span class="dim-grade" style="color:#F59E0B">C</span>
+          </div>
+        </div>
+
+        <div class="dim-row" data-grade="C">
+          <div class="dim-meta">
+            <span class="dim-name">comp summary</span>
+            <span class="dim-weight">w4%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:72%; --color:#F59E0B"></div>
+              <div class="dim-bar-median" style="left:77%" title="Comp set median: 77"></div>
+            </div>
+            <span class="dim-score" style="color:#F59E0B">72</span>
+            <span class="dim-grade" style="color:#F59E0B">C</span>
+          </div>
+        </div>
+
+        <div class="dim-row" data-grade="A">
+          <div class="dim-meta">
+            <span class="dim-name">profitability score</span>
+            <span class="dim-weight">w8%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:94%; --color:#10B981"></div>
+              <div class="dim-bar-median" style="left:85%" title="Comp set median: 85"></div>
+            </div>
+            <span class="dim-score" style="color:#10B981">94</span>
+            <span class="dim-grade" style="color:#10B981">A</span>
+          </div>
+        </div>
+
+        <div class="dim-row" data-grade="C">
+          <div class="dim-meta">
+            <span class="dim-name">revenue efficiency</span>
+            <span class="dim-weight">w4%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:72%; --color:#F59E0B"></div>
+              <div class="dim-bar-median" style="left:77%" title="Comp set median: 77"></div>
+            </div>
+            <span class="dim-score" style="color:#F59E0B">72</span>
+            <span class="dim-grade" style="color:#F59E0B">C</span>
+          </div>
+        </div>
+
+        <div class="dim-row" data-grade="A">
+          <div class="dim-meta">
+            <span class="dim-name">brand voice compliance</span>
+            <span class="dim-weight">w2%</span>
+          </div>
+          <div class="dim-bar-wrap">
+            <div class="dim-bar-track">
+              <div class="dim-bar-fill" style="--target:100%; --color:#10B981"></div>
+              <div class="dim-bar-median" style="left:85%" title="Comp set median: 85"></div>
+            </div>
+            <span class="dim-score" style="color:#10B981">100</span>
+            <span class="dim-grade" style="color:#10B981">A</span>
+          </div>
+        </div>
+      </div>
+      <div class="dim-legend">
+        <span class="dim-legend-item"><span class="dim-legend-swatch" style="background:#10B981"></span>A 90+</span>
+        <span class="dim-legend-item"><span class="dim-legend-swatch" style="background:#3B82F6"></span>B 80–89</span>
+        <span class="dim-legend-item"><span class="dim-legend-swatch" style="background:#F59E0B"></span>C 70–79</span>
+        <span class="dim-legend-item"><span class="dim-legend-swatch" style="background:#F97316"></span>D 60–69</span>
+        <span class="dim-legend-item"><span class="dim-legend-swatch" style="background:#EF4444"></span>F &lt;60</span>
+        <span class="dim-legend-item"><span class="dim-legend-line"></span>Comp median</span>
       </div>
     </div>
-  </header>
+  </section>
 
-  
-  <div class="pdf-only" style="text-align:center; padding: 0.25in 0; border-bottom: 1px solid #cbd5e1; margin-bottom: 0.25in;">
-    <div style="font-family: 'Inter', sans-serif; font-weight: 800; font-size: 18pt; letter-spacing: 0.05em; color: #4f46e5;">Vesara</div>
-    <div style="font-family: Georgia, serif; font-size: 11pt; color: #475569; margin-top: 4px;">Listing Intelligence Quotient · LussoStay</div>
-    <div style="font-family: Georgia, serif; font-size: 9pt; color: #94a3b8; margin-top: 2px;">Generated 2026-05-03T21:28:58.226188Z</div>
-  </div>
+  <!-- PRIORITY RECOMMENDATIONS -->
+  <section class="prio">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Top Priority</span>
+          <h2 class="h1" style="margin:6px 0 0">The 5 moves that unlock the most revenue</h2>
+          <p class="lede">Sorted by estimated dollar impact. Fix these first — small effort, large lift.</p>
+        </div>
+      </div>
+      <div class="prio-stack">
+        
+        <article class="prio-card" data-grade="C">
+          <div class="prio-head">
+            <div class="prio-tag" style="--color:#F59E0B">
+              <span class="prio-rank">P0</span>
+              <span class="prio-cat">booking settings</span>
+            </div>
+            <div class="prio-impact">+$340-820/mo est.</div>
+          </div>
+          <p class="prio-body">⚠️ MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).</p>
+          <div class="prio-foot">
+            <button type="button" class="prio-resolve">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+              Mark as resolved
+            </button>
+            <span class="prio-score" style="color:#F59E0B">Score 70</span>
+          </div>
+        </article>
 
-  <main class="max-w-7xl mx-auto px-6 py-8 space-y-8">
-    
-<section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-  <div class="lg:col-span-2 space-y-6">
-    <div class="flex items-start justify-between gap-4 flex-wrap">
+        <article class="prio-card" data-grade="C">
+          <div class="prio-head">
+            <div class="prio-tag" style="--color:#F59E0B">
+              <span class="prio-rank">P0</span>
+              <span class="prio-cat">operational fit</span>
+            </div>
+            <div class="prio-impact">+$110-280/mo est.</div>
+          </div>
+          <p class="prio-body">Diversify channels — only 1 active in review history.</p>
+          <div class="prio-foot">
+            <button type="button" class="prio-resolve">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+              Mark as resolved
+            </button>
+            <span class="prio-score" style="color:#F59E0B">Score 75</span>
+          </div>
+        </article>
+
+        <article class="prio-card" data-grade="C">
+          <div class="prio-head">
+            <div class="prio-tag" style="--color:#F59E0B">
+              <span class="prio-rank">P1</span>
+              <span class="prio-cat">review summary</span>
+            </div>
+            <div class="prio-impact">+$90-210/mo est.</div>
+          </div>
+          <p class="prio-body">Recurring negative signals: noisy. Audit and resolve.</p>
+          <div class="prio-foot">
+            <button type="button" class="prio-resolve">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+              Mark as resolved
+            </button>
+            <span class="prio-score" style="color:#F59E0B">Score 78</span>
+          </div>
+        </article>
+
+        <article class="prio-card" data-grade="B">
+          <div class="prio-head">
+            <div class="prio-tag" style="--color:#3B82F6">
+              <span class="prio-rank">P1</span>
+              <span class="prio-cat">photos</span>
+            </div>
+            <div class="prio-impact">+$120-340/mo est.</div>
+          </div>
+          <p class="prio-body">Caption 9 more photos to reach 80%+ captioned (current 51%)</p>
+          <div class="prio-foot">
+            <button type="button" class="prio-resolve">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+              Mark as resolved
+            </button>
+            <span class="prio-score" style="color:#3B82F6">Score 80</span>
+          </div>
+        </article>
+
+        <article class="prio-card" data-grade="B">
+          <div class="prio-head">
+            <div class="prio-tag" style="--color:#3B82F6">
+              <span class="prio-rank">P2</span>
+              <span class="prio-cat">photos</span>
+            </div>
+            <div class="prio-impact">+$120-340/mo est.</div>
+          </div>
+          <p class="prio-body">Add photos covering: amenity, exterior, gym</p>
+          <div class="prio-foot">
+            <button type="button" class="prio-resolve">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+              Mark as resolved
+            </button>
+            <span class="prio-score" style="color:#3B82F6">Score 80</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- DETAILS -->
+  <section class="details">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Deep Dive</span>
+          <h2 class="h1" style="margin:6px 0 0">All dimensions, expanded</h2>
+          <p class="lede">Tap any dimension to reveal sub-metrics and recommended actions.</p>
+        </div>
+      </div>
       <div>
-        <div class="text-xs uppercase tracking-widest text-indigo-600 dark:text-indigo-400 font-semibold">Reno/Sparks</div>
-        <h1 class="text-3xl font-bold tracking-tight mt-1">Quail Hollow Reno Home</h1>
-        <div class="text-sm text-slate-500 dark:text-slate-400 mt-1">1990 Quail Hollow Dr, Reno, NV</div>
-        <div class="text-xs font-mono text-slate-400 dark:text-slate-500 mt-1">QUA1990</div>
-      </div>
-      <button id="reanalyze-btn" type="button" disabled
-              class="pm-only no-print text-xs px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 cursor-not-allowed flex items-center gap-2"
-              title="Demo only — real re-run wired in v2">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v6h6M20 20v-6h-6M4 10a8 8 0 0114-3m2 7a8 8 0 01-14 3"/>
-        </svg>
-        Re-analyze (4 runs left this month)
-      </button>
-    </div>
-
-    
-    <div class="grid grid-cols-3 gap-2">
-      
-      <div class="aspect-[4/3] rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden">
         
-        <img src="https://picsum.photos/seed/QUA1990-1/640/480" loading="lazy" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.classList.add('grid','place-items-center'); this.parentElement.innerHTML='<span class=\'text-xs text-slate-500\'>image unavailable</span>';" />
-        
-      </div>
-      
-      <div class="aspect-[4/3] rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        
-        <img src="https://picsum.photos/seed/QUA1990-2/640/480" loading="lazy" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.classList.add('grid','place-items-center'); this.parentElement.innerHTML='<span class=\'text-xs text-slate-500\'>image unavailable</span>';" />
-        
-      </div>
-      
-      <div class="aspect-[4/3] rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        
-        <img src="https://picsum.photos/seed/QUA1990-3/640/480" loading="lazy" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.classList.add('grid','place-items-center'); this.parentElement.innerHTML='<span class=\'text-xs text-slate-500\'>image unavailable</span>';" />
-        
-      </div>
-      
-      <div class="aspect-[4/3] rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        
-        <img src="https://picsum.photos/seed/QUA1990-4/640/480" loading="lazy" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.classList.add('grid','place-items-center'); this.parentElement.innerHTML='<span class=\'text-xs text-slate-500\'>image unavailable</span>';" />
-        
-      </div>
-      
-      <div class="aspect-[4/3] rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        
-        <img src="https://picsum.photos/seed/QUA1990-5/640/480" loading="lazy" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.classList.add('grid','place-items-center'); this.parentElement.innerHTML='<span class=\'text-xs text-slate-500\'>image unavailable</span>';" />
-        
-      </div>
-      
-      <div class="aspect-[4/3] rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        
-        <img src="https://picsum.photos/seed/QUA1990-6/640/480" loading="lazy" alt="" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.classList.add('grid','place-items-center'); this.parentElement.innerHTML='<span class=\'text-xs text-slate-500\'>image unavailable</span>';" />
-        
-      </div>
-      
-    </div>
-    
-  </div>
-
-  <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-6 flex flex-col items-center justify-center text-center shadow-sm">
-    <div class="text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">Listing Intelligence Quotient</div>
-    <div class="mt-3 flex items-baseline gap-2">
-      <span class="text-7xl font-bold grade-C">78</span>
-      <span class="text-3xl font-bold grade-C">C</span>
-    </div>
-    <div class="text-sm text-slate-500 dark:text-slate-400 mt-2">Out of 100</div>
-    <div class="mt-4 w-full">
-      <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-yellow-500"
-             style="width: 78%"></div>
-      </div>
-    </div>
-    <div class="mt-4 text-xs text-slate-400 dark:text-slate-500">Run 2026-05-03</div>
-  </div>
-</section>
-
-
-
-
-
-<section class="owner-only">
-  <div class="grid md:grid-cols-2 gap-6">
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-6 shadow-sm">
-      <h2 class="text-lg font-semibold mb-1">How your listing is winning</h2>
-      <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Top 3 strengths driving bookings.</p>
-      
-      <ul class="space-y-3">
-        
-        <li class="flex items-start gap-3">
-          <div class="shrink-0 w-10 h-10 rounded-full grid place-items-center text-sm font-bold bg-grade-A grade-A border">100</div>
-          <div>
-            <div class="font-semibold capitalize">brand voice compliance</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400">Score 100 / 100 · grade A</div>
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">photos</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 10%</span>
+              <span class="dim-detail-score" style="color:#3B82F6">80 <em>B</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>count</span><span style="color:#10B981">100</span></li><li><span>caption coverage</span><span style="color:#EF4444">50</span></li><li><span>hero quality</span><span style="color:#10B981">100</span></li><li><span>room coverage</span><span style="color:#10B981">90</span></li></ul>
+            <div class="dim-recs"><div class="eyebrow" style="margin-bottom:6px">Recommended actions</div><ul><li class="rec-item">Caption 9 more photos to reach 80%+ captioned (current 51%)</li><li class="rec-item">Add photos covering: amenity, exterior, gym</li></ul></div>
           </div>
-        </li>
-        
-        <li class="flex items-start gap-3">
-          <div class="shrink-0 w-10 h-10 rounded-full grid place-items-center text-sm font-bold bg-grade-A grade-A border">94</div>
-          <div>
-            <div class="font-semibold capitalize">profitability score</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400">Score 94 / 100 · grade A</div>
-          </div>
-        </li>
-        
-        <li class="flex items-start gap-3">
-          <div class="shrink-0 w-10 h-10 rounded-full grid place-items-center text-sm font-bold bg-grade-B grade-B border">82</div>
-          <div>
-            <div class="font-semibold capitalize">reviews</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400">Score 82 / 100 · grade B</div>
-          </div>
-        </li>
-        
-      </ul>
-    </div>
-    <div class="rounded-xl border border-amber-300 dark:border-amber-700/40 bg-gradient-to-br from-amber-50 to-white dark:from-amber-950/30 dark:to-slate-900 p-6">
-      <h2 class="text-lg font-semibold mb-1">Top opportunities</h2>
-      <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Where your property could grow most.</p>
-      
-      <ol class="space-y-3 list-decimal list-inside">
-        
-        <li class="text-sm">
-          <span class="font-semibold capitalize">booking settings:</span>
-          <span class="text-slate-700 dark:text-slate-300">⚠️ MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).</span>
-        </li>
-        
-        <li class="text-sm">
-          <span class="font-semibold capitalize">operational fit:</span>
-          <span class="text-slate-700 dark:text-slate-300">Diversify channels — only 1 active in review history.</span>
-        </li>
-        
-        <li class="text-sm">
-          <span class="font-semibold capitalize">review summary:</span>
-          <span class="text-slate-700 dark:text-slate-300">Recurring negative signals: noisy. Audit and resolve.</span>
-        </li>
-        
-      </ol>
-      
-    </div>
-  </div>
-</section>
+        </details>
 
-
-
-
-<section class="owner-only rounded-xl border border-indigo-200 dark:border-indigo-800/40 bg-gradient-to-br from-indigo-50 to-white dark:from-indigo-950/30 dark:to-slate-900 p-6">
-  <h2 class="text-lg font-semibold mb-1">How you compare in your area</h2>
-  <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Reno/Sparks comparison</p>
-  <div class="grid md:grid-cols-3 gap-4">
-    <div class="rounded-lg bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 p-4 text-center">
-      <div class="text-xs uppercase tracking-wider text-slate-500">Your occupancy (30d)</div>
-      <div class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mt-1">68%</div>
-    </div>
-    <div class="rounded-lg bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 p-4 text-center">
-      <div class="text-xs uppercase tracking-wider text-slate-500">Local market avg</div>
-      <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mt-1">65%</div>
-    </div>
-    <div class="rounded-lg bg-white dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 p-4 text-center">
-      <div class="text-xs uppercase tracking-wider text-slate-500">Your edge</div>
-      <div class="text-2xl font-bold mt-1 text-emerald-600 dark:text-emerald-400">
-        +3.0 pts
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-<section class="owner-only rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-6 shadow-sm">
-  <h2 class="text-lg font-semibold mb-1">Questions for your property manager</h2>
-  <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Talking points for your next call — generated from areas where your listing scored lowest.</p>
-  <ul class="space-y-3">
-    
-    
-    <li class="flex gap-3">
-      <span class="text-indigo-500 font-bold shrink-0">Q.</span>
-      <span class="text-sm text-slate-700 dark:text-slate-300">Could we add photos of <span class="font-semibold">workspace</span>? Guests look for visual proof of the amenities we list.</span>
-    </li>
-    
-    
-    
-    
-    <li class="flex gap-3">
-      <span class="text-indigo-500 font-bold shrink-0">Q.</span>
-      <span class="text-sm text-slate-700 dark:text-slate-300">Could we capture more revenue with pricing adjustments? Current occupancy is 20% vs market 27%.</span>
-    </li>
-    
-    
-    
-    
-    <li class="flex gap-3">
-      <span class="text-indigo-500 font-bold shrink-0">Q.</span>
-      <span class="text-sm text-slate-700 dark:text-slate-300">On <span class="font-semibold capitalize">booking settings</span>: ⚠️ MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).</span>
-    </li>
-    
-    
-    
-    <li class="flex gap-3">
-      <span class="text-indigo-500 font-bold shrink-0">Q.</span>
-      <span class="text-sm text-slate-700 dark:text-slate-300">On <span class="font-semibold capitalize">operational fit</span>: Diversify channels — only 1 active in review history.</span>
-    </li>
-    
-    
-    
-  </ul>
-  <div class="mt-5 pt-4 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 italic">
-    These questions are generated automatically. Your PM uses Vesara to stay on top of the same metrics — bring these up to start a productive conversation.
-  </div>
-</section>
-
-
-<section class="pm-only grid grid-cols-1 lg:grid-cols-3 gap-6">
-  <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 lg:col-span-1 shadow-sm">
-    <h2 class="text-sm font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-4">16-Dimension Radar</h2>
-    <div class="relative h-72"><canvas id="radarChart"></canvas></div>
-  </div>
-
-  <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-6 lg:col-span-2 shadow-sm">
-    <h2 class="text-lg font-semibold mb-1">Prioritized Fixes</h2>
-    <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Lowest-scoring dimensions first. Focus here for fastest score gains.</p>
-    
-    <ol class="space-y-2" id="fixes-list">
-      
-      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
-          data-fix-id="QUA1990-1">
-        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-C grade-C border">70</div>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center justify-between gap-2 flex-wrap">
-            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">booking settings</div>
-            <div class="flex items-center gap-2">
-              
-              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$340-820/mo est.</span>
-              
-              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
-                <span class="resolve-label">Mark as Resolved</span>
-              </button>
-            </div>
-          </div>
-          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">⚠️ MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).</div>
-        </div>
-      </li>
-      
-      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
-          data-fix-id="QUA1990-2">
-        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-C grade-C border">75</div>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center justify-between gap-2 flex-wrap">
-            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">operational fit</div>
-            <div class="flex items-center gap-2">
-              
-              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$110-280/mo est.</span>
-              
-              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
-                <span class="resolve-label">Mark as Resolved</span>
-              </button>
-            </div>
-          </div>
-          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Diversify channels — only 1 active in review history.</div>
-        </div>
-      </li>
-      
-      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
-          data-fix-id="QUA1990-3">
-        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-C grade-C border">78</div>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center justify-between gap-2 flex-wrap">
-            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">review summary</div>
-            <div class="flex items-center gap-2">
-              
-              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$90-210/mo est.</span>
-              
-              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
-                <span class="resolve-label">Mark as Resolved</span>
-              </button>
-            </div>
-          </div>
-          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Recurring negative signals: noisy. Audit and resolve.</div>
-        </div>
-      </li>
-      
-      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
-          data-fix-id="QUA1990-4">
-        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-B grade-B border">80</div>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center justify-between gap-2 flex-wrap">
-            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">photos</div>
-            <div class="flex items-center gap-2">
-              
-              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$120-340/mo est.</span>
-              
-              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
-                <span class="resolve-label">Mark as Resolved</span>
-              </button>
-            </div>
-          </div>
-          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Caption 9 more photos to reach 80%+ captioned (current 51%)</div>
-        </div>
-      </li>
-      
-      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
-          data-fix-id="QUA1990-5">
-        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-B grade-B border">80</div>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center justify-between gap-2 flex-wrap">
-            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">photos</div>
-            <div class="flex items-center gap-2">
-              
-              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$120-340/mo est.</span>
-              
-              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
-                <span class="resolve-label">Mark as Resolved</span>
-              </button>
-            </div>
-          </div>
-          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Add photos covering: amenity, exterior, gym</div>
-        </div>
-      </li>
-      
-      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
-          data-fix-id="QUA1990-6">
-        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-B grade-B border">80</div>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center justify-between gap-2 flex-wrap">
-            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">consistency score</div>
-            <div class="flex items-center gap-2">
-              
-              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$70-160/mo est.</span>
-              
-              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
-                <span class="resolve-label">Mark as Resolved</span>
-              </button>
-            </div>
-          </div>
-          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Photos missing for declared amenities: workspace. Visual proof builds trust.</div>
-        </div>
-      </li>
-      
-      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
-          data-fix-id="QUA1990-7">
-        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-B grade-B border">82</div>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center justify-between gap-2 flex-wrap">
-            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">reviews</div>
-            <div class="flex items-center gap-2">
-              
-              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$280-720/mo est.</span>
-              
-              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
-                <span class="resolve-label">Mark as Resolved</span>
-              </button>
-            </div>
-          </div>
-          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Only 2 reviews — implement automated post-stay review prompt to lift count.</div>
-        </div>
-      </li>
-      
-      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
-          data-fix-id="QUA1990-8">
-        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-B grade-B border">82</div>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center justify-between gap-2 flex-wrap">
-            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">reviews</div>
-            <div class="flex items-center gap-2">
-              
-              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$280-720/mo est.</span>
-              
-              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
-                <span class="resolve-label">Mark as Resolved</span>
-              </button>
-            </div>
-          </div>
-          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Only 0 reviews in last 90d — review velocity is too low.</div>
-        </div>
-      </li>
-      
-      <li class="fix-item flex items-start gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3"
-          data-fix-id="QUA1990-9">
-        <div class="shrink-0 w-10 h-10 rounded grid place-items-center text-xs font-bold bg-grade-B grade-B border">82</div>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center justify-between gap-2 flex-wrap">
-            <div class="text-xs uppercase tracking-wider text-indigo-600 dark:text-indigo-400 font-semibold">reviews</div>
-            <div class="flex items-center gap-2">
-              
-              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold">+$280-720/mo est.</span>
-              
-              <button type="button" class="resolve-btn no-print text-[10px] px-2 py-0.5 rounded border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:border-emerald-400">
-                <span class="resolve-label">Mark as Resolved</span>
-              </button>
-            </div>
-          </div>
-          <div class="text-sm text-slate-800 dark:text-slate-100 mt-1 fix-text">Host response rate 50% — respond to all reviews within 48h.</div>
-        </div>
-      </li>
-      
-    </ol>
-    
-  </div>
-</section>
-
-
-<section class="pm-only rounded-xl border border-amber-300 dark:border-amber-700/40 bg-gradient-to-br from-amber-50 to-white dark:from-amber-950/40 dark:to-slate-900 p-6">
-  <div class="flex items-center gap-2 mb-1">
-    <div class="w-8 h-8 rounded grid place-items-center bg-amber-200 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold">industry-tools</div>
-    <h2 class="text-lg font-semibold">Hidden Profit Levers</h2>
-  </div>
-  <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">industry-tools's Listing Optimizer can't see these dimensions. Our internal scorer catches them.</p>
-  <div class="grid md:grid-cols-2 gap-4">
-    
-    
-    <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/40 p-4">
-      <div class="flex items-center justify-between mb-2">
-        <div class="text-sm font-semibold capitalize">booking settings</div>
-        <div class="text-xl font-bold grade-C">70</div>
-      </div>
-      <div class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
-        
-        <div><span class="text-slate-500">min nights:</span>
-          <span class="text-slate-800 dark:text-slate-200">4</span>
-        </div>
-        
-        <div><span class="text-slate-500">max nights:</span>
-          <span class="text-slate-800 dark:text-slate-200">60</span>
-        </div>
-        
-        <div><span class="text-slate-500">cleaning fee:</span>
-          <span class="text-slate-800 dark:text-slate-200">165</span>
-        </div>
-        
-        <div><span class="text-slate-500">base price:</span>
-          <span class="text-slate-800 dark:text-slate-200">449</span>
-        </div>
-        
-        <div><span class="text-slate-500">cleaning to base ratio:</span>
-          <span class="text-slate-800 dark:text-slate-200">0.37</span>
-        </div>
-        
-      </div>
-      
-      <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800 space-y-1">
-        
-        <div class="text-xs text-amber-700 dark:text-amber-300">- ⚠️ MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).</div>
-        
-      </div>
-      
-    </div>
-    
-    
-    <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/40 p-4">
-      <div class="flex items-center justify-between mb-2">
-        <div class="text-sm font-semibold capitalize">operational fit</div>
-        <div class="text-xl font-bold grade-C">75</div>
-      </div>
-      <div class="text-xs text-slate-600 dark:text-slate-400 space-y-1">
-        
-        <div><span class="text-slate-500">channels in review history:</span>
-          <span class="text-slate-800 dark:text-slate-200">[&#39;airbnb2&#39;]</span>
-        </div>
-        
-        <div><span class="text-slate-500">is active:</span>
-          <span class="text-slate-800 dark:text-slate-200">True</span>
-        </div>
-        
-        <div><span class="text-slate-500">tags:</span>
-          <span class="text-slate-800 dark:text-slate-200">[&#39;san-diego&#39;, &#39;penthouse&#39;, &#39;1br&#39;, &#39;premium-tier&#39;, &#39;gaslamp&#39;]</span>
-        </div>
-        
-      </div>
-      
-      <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800 space-y-1">
-        
-        <div class="text-xs text-amber-700 dark:text-amber-300">- Diversify channels — only 1 active in review history.</div>
-        
-      </div>
-      
-    </div>
-    
-  </div>
-</section>
-
-
-
-
-<section class="pm-only rounded-xl border border-emerald-300 dark:border-emerald-700/40 bg-gradient-to-br from-emerald-50 to-white dark:from-emerald-950/30 dark:to-slate-900 p-6">
-  <div class="flex items-center justify-between gap-2 mb-1 flex-wrap">
-    <div class="flex items-center gap-2">
-      <div class="w-8 h-8 rounded grid place-items-center bg-emerald-200 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 font-bold">$</div>
-      <h2 class="text-lg font-semibold">Profitability</h2>
-    </div>
-    
-    <div class="flex items-center gap-3">
-      <div class="text-xs text-slate-500 dark:text-slate-400">2025 FY (Mark verified)</div>
-      <div class="text-xs px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Source: Mark Manalac (external bookkeeper)</div>
-    </div>
-    
-  </div>
-  
-  <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Per-property unit economics. the legacy industry tool doesn't see this — we own the financial truth.</p>
-
-  <div class="grid lg:grid-cols-3 gap-6">
-    <div class="lg:col-span-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/40 overflow-hidden">
-      <table class="w-full text-sm">
-        <tbody>
-          <tr class="border-b border-slate-200 dark:border-slate-800">
-            <td class="px-4 py-3 font-medium text-slate-800 dark:text-slate-200">Revenue (gross)</td>
-            <td class="px-4 py-3 text-right font-bold text-emerald-700 dark:text-emerald-400">$54,141</td>
-          </tr>
-          
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">title</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 5%</span>
+              <span class="dim-detail-score" style="color:#F59E0B">75 <em>C</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>length</span><span style="color:#10B981">100</span></li><li><span>keywords</span><span style="color:#10B981">100</span></li><li><span>no anti patterns</span><span style="color:#10B981">100</span></li></ul>
             
-            <tr class="border-b border-slate-100 dark:border-slate-800/50">
-              <td class="px-4 py-2 text-slate-600 dark:text-slate-400 capitalize pl-8">- rent paid</td>
-              <td class="px-4 py-2 text-right text-slate-700 dark:text-slate-300">($24,000)</td>
-            </tr>
+          </div>
+        </details>
+
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">description</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 8%</span>
+              <span class="dim-detail-score" style="color:#3B82F6">80 <em>B</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>sections filled</span><span style="color:#10B981">100</span></li><li><span>total length</span><span style="color:#F97316">60</span></li><li><span>hook</span><span style="color:#3B82F6">80</span></li></ul>
             
-          
+          </div>
+        </details>
+
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">amenities</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 7%</span>
+              <span class="dim-detail-score" style="color:#F59E0B">78 <em>C</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>count</span><span style="color:#10B981">100</span></li><li><span>high impact coverage</span><span style="color:#10B981">100</span></li></ul>
             
-          
+          </div>
+        </details>
+
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">reviews</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 10%</span>
+              <span class="dim-detail-score" style="color:#3B82F6">82 <em>B</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>count</span><span style="color:#EF4444">15</span></li><li><span>rating</span><span style="color:#10B981">100</span></li><li><span>recency</span><span style="color:#EF4444">20</span></li><li><span>response</span><span style="color:#F97316">65</span></li></ul>
+            <div class="dim-recs"><div class="eyebrow" style="margin-bottom:6px">Recommended actions</div><ul><li class="rec-item">Only 2 reviews — implement automated post-stay review prompt to lift count.</li><li class="rec-item">Only 0 reviews in last 90d — review velocity is too low.</li><li class="rec-item">Host response rate 50% — respond to all reviews within 48h.</li></ul></div>
+          </div>
+        </details>
+
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">pricing</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 8%</span>
+              <span class="dim-detail-score" style="color:#F59E0B">75 <em>C</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>recommendation fit</span><span style="color:#10B981">100</span></li><li><span>spread</span><span style="color:#10B981">100</span></li><li><span>market relative</span><span style="color:#EF4444">50</span></li></ul>
             
-            <tr class="border-b border-slate-100 dark:border-slate-800/50">
-              <td class="px-4 py-2 text-slate-600 dark:text-slate-400 capitalize pl-8">- utilities</td>
-              <td class="px-4 py-2 text-right text-slate-700 dark:text-slate-300">($4,473)</td>
-            </tr>
+          </div>
+        </details>
+
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">booking settings</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 10%</span>
+              <span class="dim-detail-score" style="color:#F59E0B">70 <em>C</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>min nights</span><span style="color:#EF4444">50</span></li><li><span>max nights</span><span style="color:#3B82F6">85</span></li><li><span>cleaning ratio</span><span style="color:#3B82F6">80</span></li></ul>
+            <div class="dim-recs"><div class="eyebrow" style="margin-bottom:6px">Recommended actions</div><ul><li class="rec-item">⚠️ MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).</li></ul></div>
+          </div>
+        </details>
+
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">operational fit</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 8%</span>
+              <span class="dim-detail-score" style="color:#F59E0B">75 <em>C</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>channel diversification</span><span style="color:#EF4444">45</span></li><li><span>active state</span><span style="color:#10B981">100</span></li><li><span>tag quality</span><span style="color:#10B981">100</span></li></ul>
+            <div class="dim-recs"><div class="eyebrow" style="margin-bottom:6px">Recommended actions</div><ul><li class="rec-item">Diversify channels — only 1 active in review history.</li></ul></div>
+          </div>
+        </details>
+
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">consistency score</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 4%</span>
+              <span class="dim-detail-score" style="color:#3B82F6">80 <em>B</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>visual coverage pct</span><span style="color:#F59E0B">78</span></li></ul>
+            <div class="dim-recs"><div class="eyebrow" style="margin-bottom:6px">Recommended actions</div><ul><li class="rec-item">Photos missing for declared amenities: workspace. Visual proof builds trust.</li></ul></div>
+          </div>
+        </details>
+
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">guest favorite</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 4%</span>
+              <span class="dim-detail-score" style="color:#F97316">60 <em>D</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>eligibility</span><span style="color:#10B981">100</span></li></ul>
             
-          
+          </div>
+        </details>
+
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">review summary</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 4%</span>
+              <span class="dim-detail-score" style="color:#F59E0B">78 <em>C</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>positive tone</span><span style="color:#F97316">60</span></li><li><span>absence of negatives</span><span style="color:#3B82F6">80</span></li></ul>
+            <div class="dim-recs"><div class="eyebrow" style="margin-bottom:6px">Recommended actions</div><ul><li class="rec-item">Recurring negative signals: noisy. Audit and resolve.</li></ul></div>
+          </div>
+        </details>
+
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">listing overview</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 4%</span>
+              <span class="dim-detail-score" style="color:#F59E0B">75 <em>C</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>usp clarity</span><span style="color:#F59E0B">72</span></li><li><span>segment targeting</span><span style="color:#EF4444">50</span></li><li><span>hook length</span><span style="color:#10B981">100</span></li></ul>
             
-          
+          </div>
+        </details>
+
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">comp summary</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 4%</span>
+              <span class="dim-detail-score" style="color:#F59E0B">72 <em>C</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>occupancy vs comp</span><span style="color:#F59E0B">75</span></li></ul>
             
-          
+          </div>
+        </details>
+
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">profitability score</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 8%</span>
+              <span class="dim-detail-score" style="color:#10B981">94 <em>A</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>net contribution</span><span style="color:#10B981">90</span></li><li><span>margin health</span><span style="color:#10B981">100</span></li></ul>
             
-          
+          </div>
+        </details>
+
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">revenue efficiency</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 4%</span>
+              <span class="dim-detail-score" style="color:#F59E0B">72 <em>C</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>rate strength</span><span style="color:#F59E0B">70</span></li><li><span>occupancy vs market</span><span style="color:#3B82F6">80</span></li></ul>
             
-          
+          </div>
+        </details>
+
+        <details class="dim-detail">
+          <summary>
+            <span class="dim-detail-name">brand voice compliance</span>
+            <span class="dim-detail-meta">
+              <span class="dim-detail-weight">weight 2%</span>
+              <span class="dim-detail-score" style="color:#10B981">100 <em>A</em></span>
+              <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </summary>
+          <div class="dim-detail-body">
+            <ul class="dim-submetrics"><li><span>rule compliance</span><span style="color:#10B981">100</span></li></ul>
             
-          
-          <tr class="border-t-2 border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60">
-            <td class="px-4 py-4 font-bold text-base">Net Contribution</td>
-            <td class="px-4 py-4 text-right font-bold text-2xl text-emerald-600 dark:text-emerald-400">
-              $25,668
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/40 p-5 flex flex-col">
-      <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Net Margin</div>
-      <div class="mt-2 flex items-baseline gap-2">
-        <span class="text-4xl font-bold text-emerald-600 dark:text-emerald-400">47.4%</span>
-      </div>
-      <div class="mt-4">
-        <div class="flex items-center justify-between text-[10px] text-slate-400 mb-1">
-          <span>0%</span><span class="font-semibold">Portfolio avg ~32%</span><span>50%+</span>
-        </div>
-        <div class="h-3 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden relative">
-          <div class="h-full bg-emerald-500"
-               style="width: 94.8%"></div>
-          <div class="absolute top-0 bottom-0 w-0.5 bg-slate-900 dark:bg-white" style="left: 64%;"></div>
-        </div>
-      </div>
-      <div class="mt-5 pt-4 border-t border-slate-200 dark:border-slate-800">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Profitability Score</div>
-        <div class="mt-1 flex items-baseline gap-2">
-          <span class="text-3xl font-bold grade-A">94</span>
-          <span class="text-base font-semibold grade-A">A</span>
-        </div>
+          </div>
+        </details>
       </div>
     </div>
-  </div>
-  
-</section>
+  </section>
 
-
-<section class="pm-only">
-  <h2 class="text-lg font-semibold mb-3">All Dimensions (16)</h2>
-  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">photos</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 10%</div>
+  <!-- FOOTER CTA -->
+  <section class="cta-foot">
+    <div class="container">
+      <h2>Get a Vesara score for <em style="font-family:var(--font-serif);font-style:italic;color:var(--accent);font-weight:500">your</em> property.</h2>
+      <p>Same 22-dimension analysis. Same comp-set benchmarking. Same dollar-impact recommendations. Built by an operator who lives in this business daily.</p>
+      <div class="cta-foot-actions">
+        <a href="../../../index.html#demos" class="btn btn-accent btn-lg">Request your score &rarr;</a>
+        <a href="../../../index.html#product" class="btn btn-ghost btn-lg">See how it works</a>
       </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-B">80</span>
-        <span class="text-sm font-semibold grade-B">B</span>
-        
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-blue-500"
-             style="width: 80%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">count</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">caption coverage</span>
-          <span class="font-medium grade-F">50</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">hero quality</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">room coverage</span>
-          <span class="font-medium grade-A">90</span>
-        </div>
-        
-      </div>
-      
-
-      
-      <div class="mt-auto pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
-        
-        <div class="text-xs text-slate-700 dark:text-slate-300">- Caption 9 more photos to reach 80%+ captioned (current 51%)</div>
-        
-        <div class="text-xs text-slate-700 dark:text-slate-300">- Add photos covering: amenity, exterior, gym</div>
-        
-      </div>
-      
     </div>
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">title</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 5%</div>
-      </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-C">75</span>
-        <span class="text-sm font-semibold grade-C">C</span>
-        
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-yellow-500"
-             style="width: 75%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">length</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">keywords</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">no anti patterns</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-      </div>
-      
-
-      
-    </div>
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">description</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 8%</div>
-      </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-B">80</span>
-        <span class="text-sm font-semibold grade-B">B</span>
-        
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-blue-500"
-             style="width: 80%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">sections filled</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">total length</span>
-          <span class="font-medium grade-D">60</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">hook</span>
-          <span class="font-medium grade-B">80</span>
-        </div>
-        
-      </div>
-      
-
-      
-    </div>
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">amenities</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 7%</div>
-      </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-C">78</span>
-        <span class="text-sm font-semibold grade-C">C</span>
-        
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-yellow-500"
-             style="width: 78%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">count</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">high impact coverage</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-      </div>
-      
-
-      
-    </div>
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">reviews</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 10%</div>
-      </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-B">82</span>
-        <span class="text-sm font-semibold grade-B">B</span>
-        
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-blue-500"
-             style="width: 82%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">count</span>
-          <span class="font-medium grade-F">15</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">rating</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">recency</span>
-          <span class="font-medium grade-F">20</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">response</span>
-          <span class="font-medium grade-D">65</span>
-        </div>
-        
-      </div>
-      
-
-      
-      <div class="mt-auto pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
-        
-        <div class="text-xs text-slate-700 dark:text-slate-300">- Only 2 reviews — implement automated post-stay review prompt to lift count.</div>
-        
-        <div class="text-xs text-slate-700 dark:text-slate-300">- Only 0 reviews in last 90d — review velocity is too low.</div>
-        
-        <div class="text-xs text-slate-700 dark:text-slate-300">- Host response rate 50% — respond to all reviews within 48h.</div>
-        
-      </div>
-      
-    </div>
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">pricing</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 8%</div>
-      </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-C">75</span>
-        <span class="text-sm font-semibold grade-C">C</span>
-        
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-yellow-500"
-             style="width: 75%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">recommendation fit</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">spread</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">market relative</span>
-          <span class="font-medium grade-F">50</span>
-        </div>
-        
-      </div>
-      
-
-      
-    </div>
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">booking settings</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 10%</div>
-      </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-C">70</span>
-        <span class="text-sm font-semibold grade-C">C</span>
-        
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-yellow-500"
-             style="width: 70%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">min nights</span>
-          <span class="font-medium grade-F">50</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">max nights</span>
-          <span class="font-medium grade-B">85</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">cleaning ratio</span>
-          <span class="font-medium grade-B">80</span>
-        </div>
-        
-      </div>
-      
-
-      
-      <div class="mt-auto pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
-        
-        <div class="text-xs text-slate-700 dark:text-slate-300">- ⚠️ MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).</div>
-        
-      </div>
-      
-    </div>
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">operational fit</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 8%</div>
-      </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-C">75</span>
-        <span class="text-sm font-semibold grade-C">C</span>
-        
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-yellow-500"
-             style="width: 75%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">channel diversification</span>
-          <span class="font-medium grade-F">45</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">active state</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">tag quality</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-      </div>
-      
-
-      
-      <div class="mt-auto pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
-        
-        <div class="text-xs text-slate-700 dark:text-slate-300">- Diversify channels — only 1 active in review history.</div>
-        
-      </div>
-      
-    </div>
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">consistency score</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 4%</div>
-      </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-B">80</span>
-        <span class="text-sm font-semibold grade-B">B</span>
-        <span class="ml-auto text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300" title="STUB — v2 uses Claude vision for true photo&lt;&gt;amenity verification.">STUB</span>
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-blue-500"
-             style="width: 80%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">visual coverage pct</span>
-          <span class="font-medium grade-C">78</span>
-        </div>
-        
-      </div>
-      
-
-      
-      <div class="mt-auto pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
-        
-        <div class="text-xs text-slate-700 dark:text-slate-300">- Photos missing for declared amenities: workspace. Visual proof builds trust.</div>
-        
-      </div>
-      
-    </div>
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">guest favorite</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 4%</div>
-      </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-D">60</span>
-        <span class="text-sm font-semibold grade-D">D</span>
-        <span class="ml-auto text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300" title="STUB — v2 reads true badge state from Airbnb listing scrape.">STUB</span>
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-orange-500"
-             style="width: 60%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">eligibility</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-      </div>
-      
-
-      
-    </div>
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">review summary</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 4%</div>
-      </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-C">78</span>
-        <span class="text-sm font-semibold grade-C">C</span>
-        <span class="ml-auto text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300" title="STUB — v2 uses Claude for true sentiment + theme clusters.">STUB</span>
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-yellow-500"
-             style="width: 78%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">positive tone</span>
-          <span class="font-medium grade-D">60</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">absence of negatives</span>
-          <span class="font-medium grade-B">80</span>
-        </div>
-        
-      </div>
-      
-
-      
-      <div class="mt-auto pt-2 border-t border-slate-200 dark:border-slate-800 space-y-1">
-        
-        <div class="text-xs text-slate-700 dark:text-slate-300">- Recurring negative signals: noisy. Audit and resolve.</div>
-        
-      </div>
-      
-    </div>
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">listing overview</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 4%</div>
-      </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-C">75</span>
-        <span class="text-sm font-semibold grade-C">C</span>
-        
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-yellow-500"
-             style="width: 75%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">usp clarity</span>
-          <span class="font-medium grade-C">72</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">segment targeting</span>
-          <span class="font-medium grade-F">50</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">hook length</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-      </div>
-      
-
-      
-    </div>
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">comp summary</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 4%</div>
-      </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-C">72</span>
-        <span class="text-sm font-semibold grade-C">C</span>
-        <span class="ml-auto text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300" title="STUB — v2 pulls real comp set ADR + revenue per available night.">STUB</span>
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-yellow-500"
-             style="width: 72%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">occupancy vs comp</span>
-          <span class="font-medium grade-C">75</span>
-        </div>
-        
-      </div>
-      
-
-      
-    </div>
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">profitability score</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 8%</div>
-      </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-A">94</span>
-        <span class="text-sm font-semibold grade-A">A</span>
-        
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-green-500"
-             style="width: 94%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">net contribution</span>
-          <span class="font-medium grade-A">90</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">margin health</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-      </div>
-      
-
-      
-    </div>
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">revenue efficiency</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 4%</div>
-      </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-C">72</span>
-        <span class="text-sm font-semibold grade-C">C</span>
-        <span class="ml-auto text-[9px] px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300" title="STUB — v2 wires true RevPAR from PMS.">STUB</span>
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-yellow-500"
-             style="width: 72%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">rate strength</span>
-          <span class="font-medium grade-C">70</span>
-        </div>
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">occupancy vs market</span>
-          <span class="font-medium grade-B">80</span>
-        </div>
-        
-      </div>
-      
-
-      
-    </div>
-    
-    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-panel p-5 flex flex-col shadow-sm">
-      <div class="flex items-center justify-between mb-2 gap-2">
-        <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 capitalize truncate">brand voice compliance</div>
-        <div class="text-xs text-slate-400 dark:text-slate-500 shrink-0">w 2%</div>
-      </div>
-      <div class="flex items-baseline gap-1">
-        <span class="text-3xl font-bold grade-A">100</span>
-        <span class="text-sm font-semibold grade-A">A</span>
-        
-      </div>
-      <div class="my-3 h-1.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
-        <div class="h-full bg-green-500"
-             style="width: 100%"></div>
-      </div>
-
-      
-      <div class="space-y-1 text-xs mb-3">
-        
-        <div class="flex items-center justify-between">
-          <span class="text-slate-500 capitalize">rule compliance</span>
-          <span class="font-medium grade-A">100</span>
-        </div>
-        
-      </div>
-      
-
-      
-    </div>
-    
-  </div>
-</section>
-
-<section class="pm-only rounded-xl border border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/30 p-6">
-  <div class="flex items-center gap-3">
-    <div class="w-10 h-10 rounded-lg bg-slate-200 dark:bg-slate-800 grid place-items-center text-slate-500">i</div>
-    <div>
-      <div class="font-semibold text-slate-800 dark:text-slate-200">Score History</div>
-      <div class="text-sm text-slate-500 dark:text-slate-400">Score-over-time charts will appear here after multiple Vesara runs are stored. Run weekly to enable trend analysis.</div>
-    </div>
-  </div>
-</section>
-
-
-<section class="owner-only text-center py-6 border-t border-slate-200 dark:border-slate-800">
-  <div class="text-xs text-slate-500 dark:text-slate-400">
-    Powered by <span class="font-semibold text-indigo-600 dark:text-indigo-400">Vesara</span> — your property manager uses this tool to stay on top of your investment.
-  </div>
-</section>
-
-<script id="liq-property" type="application/json">{"overall_score": 78, "dimension_scores": {"photos": 80, "title": 75, "description": 80, "amenities": 78, "reviews": 82, "pricing": 75, "booking_settings": 70, "operational_fit": 75, "consistency_score": 80, "guest_favorite": 60, "review_summary": 78, "listing_overview": 75, "comp_summary": 72, "profitability_score": 94, "revenue_efficiency": 72, "brand_voice_compliance": 100}, "dimensions": {"photos": {"score": 80, "photo_count": 51, "captioned_count": 26, "pct_captioned": 51.0, "rooms_covered_in_captions": ["balcony", "bathroom", "bedroom", "dining", "kitchen", "living", "pool", "rooftop", "view"], "sub_scores": {"count": 100, "caption_coverage": 50, "hero_quality": 100, "room_coverage": 90}, "fixes": ["Caption 9 more photos to reach 80%+ captioned (current 51%)", "Add photos covering: amenity, exterior, gym"]}, "title": {"score": 75, "title": "39th-Floor Penthouse \u00b7 Ocean Views \u00b7 Gaslamp Quarter", "length": 52, "has_location": true, "has_property_type": true, "has_signature": true, "sub_scores": {"length": 100, "keywords": 100, "no_anti_patterns": 100}, "fixes": []}, "description": {"score": 80, "total_chars": 5557, "sections_filled": 8, "section_lens": {"summary": 691, "space": 1196, "access": 431, "interactionWithGuests": 346, "neighborhood": 1028, "transit": 1053, "notes": 269, "houseRules": 543}, "sub_scores": {"sections_filled": 100, "total_length": 60, "hook": 80}, "fixes": []}, "amenities": {"score": 78, "amenity_count": 142, "high_impact_coverage_pct": 100, "high_impact_present": ["air_conditioning", "dryer", "gym", "hairdryer", "heating", "hot_tub", "iron", "kitchen", "parking", "pool", "self_checkin", "tv", "view", "washer", "wifi", "workspace"], "high_impact_missing": [], "sub_scores": {"count": 100, "high_impact_coverage": 100}, "fixes": []}, "reviews": {"score": 82, "review_count": 2, "avg_rating": 5.0, "response_rate_pct": 50, "recent_90d_count": 0, "sub_scores": {"count": 15, "rating": 100, "recency": 20, "response": 65}, "fixes": ["Only 2 reviews \u2014 implement automated post-stay review prompt to lift count.", "Only 0 reviews in last 90d \u2014 review velocity is too low.", "Host response rate 50% \u2014 respond to all reviews within 48h."]}, "pricing": {"score": 75, "base": 449.0, "min": 449.0, "max": 1200.0, "recommended_base": 446.0, "occ_30d": 20, "market_occ_30d": 27, "occ_delta_vs_market": -7, "sub_scores": {"recommendation_fit": 100, "spread": 100, "market_relative": 50}, "fixes": []}, "booking_settings": {"score": 70, "min_nights": 4, "max_nights": 60, "cleaning_fee": 165, "base_price": 449, "cleaning_to_base_ratio": 0.37, "sub_scores": {"min_nights": 50, "max_nights": 85, "cleaning_ratio": 80}, "fixes": ["\u26a0\ufe0f MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only)."]}, "operational_fit": {"score": 75, "channels_in_review_history": ["airbnb2"], "is_active": true, "tags": ["san-diego", "penthouse", "1br", "premium-tier", "gaslamp"], "sub_scores": {"channel_diversification": 45, "active_state": 100, "tag_quality": 100}, "fixes": ["Diversify channels \u2014 only 1 active in review history."]}, "consistency_score": {"score": 80, "declared_amenities_checked": ["pool", "kitchen", "workspace"], "visible_in_photos": ["pool", "kitchen"], "missing_visual_proof": ["workspace"], "sub_scores": {"visual_coverage_pct": 78}, "fixes": ["Photos missing for declared amenities: workspace. Visual proof builds trust."], "note": "STUB \u2014 v2 uses Claude vision for true photo<>amenity verification."}, "guest_favorite": {"score": 60, "guest_favorite_eligible": true, "avg_rating": 4.91, "review_count": 47, "sub_scores": {"eligibility": 100}, "fixes": [], "note": "STUB \u2014 v2 reads true badge state from Airbnb listing scrape."}, "review_summary": {"score": 78, "positive_signals": ["amazing", "beautiful", "stunning", "spotless"], "negative_signals": ["noisy"], "review_count_analyzed": 47, "sub_scores": {"positive_tone": 60, "absence_of_negatives": 80}, "fixes": ["Recurring negative signals: noisy. Audit and resolve."], "note": "STUB \u2014 v2 uses Claude for true sentiment + theme clusters."}, "listing_overview": {"score": 75, "usp_signals_found": 6, "segment_signals_found": 2, "summary_length": 412, "sub_scores": {"usp_clarity": 72, "segment_targeting": 50, "hook_length": 100}, "fixes": []}, "comp_summary": {"score": 72, "occ_30d": 68, "market_occ_30d": 65, "delta_vs_market": 3.0, "sub_scores": {"occupancy_vs_comp": 75}, "fixes": [], "note": "STUB \u2014 v2 pulls real comp set ADR + revenue per available night."}, "profitability_score": {"score": 94, "has_pnl_data": true, "net_contribution": 25668.18, "margin_pct": 47.4, "period_label": "2025 FY (Mark verified)", "sub_scores": {"net_contribution": 90, "margin_health": 100}, "fixes": []}, "revenue_efficiency": {"score": 72, "estimated_revpar": 268.4, "base_price": 449, "occupancy_30d": 68, "market_occupancy_30d": 65, "sub_scores": {"rate_strength": 70, "occupancy_vs_market": 80}, "fixes": [], "note": "STUB \u2014 v2 wires true RevPAR from PMS."}, "brand_voice_compliance": {"score": 100, "violations_found": 0, "violation_list": [], "sub_scores": {"rule_compliance": 100}, "fixes": []}}, "prioritized_fixes": [{"dimension": "booking_settings", "fix": "\u26a0\ufe0f MIN NIGHTS = 4 is killing weekend demand. Reduce to 2 (or 3 for premium events only).", "dim_score": 70, "est_impact": "+$340-820/mo est.", "resolved": false}, {"dimension": "operational_fit", "fix": "Diversify channels \u2014 only 1 active in review history.", "dim_score": 75, "est_impact": "+$110-280/mo est.", "resolved": false}, {"dimension": "review_summary", "fix": "Recurring negative signals: noisy. Audit and resolve.", "dim_score": 78, "est_impact": "+$90-210/mo est.", "resolved": false}, {"dimension": "photos", "fix": "Caption 9 more photos to reach 80%+ captioned (current 51%)", "dim_score": 80, "est_impact": "+$120-340/mo est.", "resolved": false}, {"dimension": "photos", "fix": "Add photos covering: amenity, exterior, gym", "dim_score": 80, "est_impact": "+$120-340/mo est.", "resolved": false}, {"dimension": "consistency_score", "fix": "Photos missing for declared amenities: workspace. Visual proof builds trust.", "dim_score": 80, "est_impact": "+$70-160/mo est.", "resolved": false}, {"dimension": "reviews", "fix": "Only 2 reviews \u2014 implement automated post-stay review prompt to lift count.", "dim_score": 82, "est_impact": "+$280-720/mo est.", "resolved": false}, {"dimension": "reviews", "fix": "Only 0 reviews in last 90d \u2014 review velocity is too low.", "dim_score": 82, "est_impact": "+$280-720/mo est.", "resolved": false}, {"dimension": "reviews", "fix": "Host response rate 50% \u2014 respond to all reviews within 48h.", "dim_score": 82, "est_impact": "+$280-720/mo est.", "resolved": false}], "weights": {"photos": 0.1, "title": 0.05, "description": 0.08, "amenities": 0.07, "reviews": 0.1, "pricing": 0.08, "booking_settings": 0.1, "operational_fit": 0.08, "consistency_score": 0.04, "guest_favorite": 0.04, "review_summary": 0.04, "listing_overview": 0.04, "comp_summary": 0.04, "profitability_score": 0.08, "revenue_efficiency": 0.04, "brand_voice_compliance": 0.02}, "code": "QUA1990", "nickname": "Quail Hollow Reno Home", "market": "Reno/Sparks", "address": "1990 Quail Hollow Dr, Reno, NV", "pnl": {"period_label": "2025 FY (Mark verified)", "revenue_gross": 54140.8, "revenue_source": "Mark Manalac (external bookkeeper)", "expenses": {"rent_paid": 24000, "cleaning": 0, "utilities": 4472.62, "supplies": 0, "maintenance": 0, "insurance": 0, "software": 0, "other": 0}, "net_contribution": 25668.18, "margin_pct": 47.4}, "liq_version": "1.5", "photos": ["https://picsum.photos/seed/QUA1990-1/640/480", "https://picsum.photos/seed/QUA1990-2/640/480", "https://picsum.photos/seed/QUA1990-3/640/480", "https://picsum.photos/seed/QUA1990-4/640/480", "https://picsum.photos/seed/QUA1990-5/640/480", "https://picsum.photos/seed/QUA1990-6/640/480"], "overall_grade": "C"}</script>
-
-  </main>
-
-  <footer class="border-t border-slate-200 dark:border-slate-800 mt-16 no-print">
-    <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between text-xs text-slate-500">
-      <div>Vesara v1.6 · Internal listing optimizer · Built in-house</div>
-      <div>Generated 2026-05-03T21:28:58.226188Z</div>
-    </div>
-  </footer>
+  </section>
 
   <script>
-    // Theme toggle
-    (function () {
-      var btn = document.getElementById('theme-toggle');
-      if (!btn) return;
-      btn.addEventListener('click', function () {
-        var isDark = document.documentElement.classList.toggle('dark');
-        try { localStorage.setItem('liq-theme', isDark ? 'dark' : 'light'); } catch (e) {}
+    // Sticky nav border
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Animated count-up for score
+    (function() {
+      const el = document.querySelector('.score-badge-num');
+      if (!el) return;
+      const target = parseInt(el.dataset.target, 10);
+      const duration = 900;
+      const start = performance.now();
+      const tick = (now) => {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const v = Math.round(target * eased);
+        el.firstChild.nodeValue = String(v);
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    })();
+
+    // Resolve buttons
+    document.querySelectorAll('.prio-resolve').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('resolved');
+        const card = btn.closest('.prio-card');
+        if (card) card.style.opacity = btn.classList.contains('resolved') ? '0.55' : '1';
       });
-    })();
-
-    // View switcher — set ?view=… and reload (cheap, robust, keeps URL shareable)
-    window.Vesara_setView = function (mode) {
-      try {
-        var url = new URL(window.location.href);
-        if (mode === 'pm') url.searchParams.delete('view');
-        else url.searchParams.set('view', mode);
-        window.location.href = url.toString();
-      } catch (e) { window.location.search = '?view=' + mode; }
-    };
-
-    // PDF download — switch to pdf view, trigger print, then return
-    window.Vesara_downloadPdf = function () {
-      var url = new URL(window.location.href);
-      if (url.searchParams.get('view') === 'pdf') {
-        window.print();
-        return;
-      }
-      url.searchParams.set('view', 'pdf');
-      // Open pdf-view in new tab and auto-print
-      var pdfUrl = url.toString() + '#auto-print';
-      var w = window.open(pdfUrl, '_blank');
-      if (!w) { window.location.href = pdfUrl; }
-    };
-
-    // Auto-print when arriving with #auto-print
-    (function () {
-      if (window.location.hash === '#auto-print') {
-        window.addEventListener('load', function () { setTimeout(function () { window.print(); }, 600); });
-      }
-    })();
-
-    // View-switch dropdown toggle (delegated)
-    document.addEventListener('click', function (e) {
-      var trig = e.target.closest('[data-view-switch-trigger]');
-      var menu = document.querySelector('.view-switch-menu');
-      if (trig && menu) { menu.classList.toggle('open'); e.stopPropagation(); return; }
-      if (menu && !e.target.closest('.view-switch-menu')) menu.classList.remove('open');
     });
   </script>
-
-  
-<script>
-  const prop = JSON.parse(document.getElementById('liq-property').textContent);
-  const dimScores = prop.dimension_scores;
-  const labels = Object.keys(dimScores).map(k => k.replace(/_/g, ' '));
-  const data = Object.values(dimScores);
-
-  function chartColors() {
-    const isDark = document.documentElement.classList.contains('dark');
-    const isPdf = document.documentElement.getAttribute('data-view') === 'pdf';
-    if (isPdf) {
-      return { tick: '#64748b', grid: '#cbd5e1', label: '#334155', fill: 'rgba(99, 102, 241, 0.15)', stroke: '#6366f1' };
-    }
-    return {
-      tick: isDark ? '#64748b' : '#94a3b8',
-      grid: isDark ? '#334155' : '#e2e8f0',
-      label: isDark ? '#cbd5e1' : '#334155',
-      fill: isDark ? 'rgba(99, 102, 241, 0.25)' : 'rgba(99, 102, 241, 0.15)',
-      stroke: '#6366f1',
-    };
-  }
-
-  let radarChart = null;
-  const canvas = document.getElementById('radarChart');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    radarChart = new Chart(ctx, {
-      type: 'radar',
-      data: { labels, datasets: [{ label: 'Score', data,
-        backgroundColor: chartColors().fill, borderColor: chartColors().stroke,
-        borderWidth: 2, pointBackgroundColor: chartColors().stroke, pointBorderColor: '#fff', pointRadius: 3, }] },
-      options: { scales: { r: { min: 0, max: 100,
-        ticks: { color: chartColors().tick, backdropColor: 'transparent', stepSize: 25 },
-        grid: { color: chartColors().grid }, angleLines: { color: chartColors().grid },
-        pointLabels: { color: chartColors().label, font: { size: 10 } } } },
-        plugins: { legend: { display: false } }, maintainAspectRatio: false, responsive: true, }
-    });
-  }
-
-  const themeBtn = document.getElementById('theme-toggle');
-  if (themeBtn && radarChart) {
-    themeBtn.addEventListener('click', function () {
-      setTimeout(function () {
-        const c = chartColors();
-        radarChart.data.datasets[0].backgroundColor = c.fill;
-        radarChart.data.datasets[0].borderColor = c.stroke;
-        radarChart.data.datasets[0].pointBackgroundColor = c.stroke;
-        radarChart.options.scales.r.ticks.color = c.tick;
-        radarChart.options.scales.r.grid.color = c.grid;
-        radarChart.options.scales.r.angleLines.color = c.grid;
-        radarChart.options.scales.r.pointLabels.color = c.label;
-        radarChart.update();
-      }, 50);
-    });
-  }
-
-  // View-switch label reflects current view
-  (function () {
-    const v = document.documentElement.getAttribute('data-view') || 'pm';
-    const lbl = document.getElementById('view-switch-label');
-    if (!lbl) return;
-    lbl.textContent = ({ pm: 'PM View', owner: 'Owner View', pdf: 'PDF Preview' })[v] || 'Switch View';
-  })();
-
-  // Mark as Resolved — persist in localStorage
-  (function () {
-    const KEY = 'liq-resolved-' + prop.code;
-    let resolved = {};
-    try { resolved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
-    document.querySelectorAll('.fix-item').forEach(function (item) {
-      const id = item.dataset.fixId;
-      const txt = item.querySelector('.fix-text');
-      const btn = item.querySelector('.resolve-btn');
-      const lbl = item.querySelector('.resolve-label');
-      if (!btn) return;
-      function paint(isResolved) {
-        if (isResolved) {
-          txt.classList.add('fix-resolved');
-          lbl.textContent = 'Resolved ✓';
-          btn.classList.add('bg-emerald-100', 'dark:bg-emerald-900/40', 'border-emerald-400', 'text-emerald-700', 'dark:text-emerald-300');
-        } else {
-          txt.classList.remove('fix-resolved');
-          lbl.textContent = 'Mark as Resolved';
-          btn.classList.remove('bg-emerald-100', 'dark:bg-emerald-900/40', 'border-emerald-400', 'text-emerald-700', 'dark:text-emerald-300');
-        }
-      }
-      paint(!!resolved[id]);
-      btn.addEventListener('click', function () {
-        resolved[id] = !resolved[id];
-        try { localStorage.setItem(KEY, JSON.stringify(resolved)); } catch (e) {}
-        paint(!!resolved[id]);
-      });
-    });
-  })();
-</script>
-
 </body>
 </html>
