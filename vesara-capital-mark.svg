@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Vesara Capital mark">
+  <title>Vesara Capital</title>
+  <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#D4AF37" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M32 19 L43 24 V34 C43 39 38 43 32 45 C26 43 21 39 21 34 V24 Z" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linejoin="round"/>
+  <path d="M32 28 V38 M28 31 H35 M29 35 H35" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+</svg>

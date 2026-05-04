@@ -98,6 +98,39 @@
     .download-meta { font-size: 12px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
     .download-arrow { color: var(--accent); }
 
+    .subproduct-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .subproduct {
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
+      background: #0F0F10; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .subproduct-canvas {
+      aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center;
+      padding: 28px; background: #0A0A0A;
+    }
+    .subproduct-meta {
+      padding: 16px 18px 14px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .subproduct-row { display:flex; align-items:center; gap:8px; }
+    .subproduct-name { font-size: 14px; font-weight: 600; color: var(--text); flex:1; }
+    .subproduct-tint {
+      width: 12px; height: 12px; border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .subproduct-desc { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+    .subproduct-file { font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 8px; }
+    .subproduct-favicon-strip {
+      display:flex; align-items:center; justify-content:center; gap: 28px;
+      padding: 28px; margin-top: 24px;
+      background: #0A0A0A; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);
+    }
+    .subproduct-favicon-strip > div { display:flex; flex-direction:column; align-items:center; gap:6px; }
+    .subproduct-favicon-strip .label { font-size: 10px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
     .clearspace-demo { display:flex; justify-content:center; padding: 48px; background: #0A0A0A; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08); }
     .clearspace-frame { position: relative; padding: 60px; border: 1px dashed rgba(16,185,129,0.4); border-radius: 8px; }
     .clearspace-frame::before {
@@ -191,7 +224,7 @@
       </div>
 
       <!-- Mark only -->
-      <div class="variation">
+      <div class="variation" id="parent-mark">
         <div class="variation-canvas dark">
           <svg width="120" height="120" viewBox="0 0 64 64">
             <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linejoin="round"/>
@@ -232,6 +265,162 @@
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <section class="container section-block" id="sub-products">
+    <div class="section-title">Sub-Product Family</div>
+    <h2 class="section-h">One geometry. Six products.</h2>
+    <p class="section-lede">Each Vesara product wears the same chamfered hexagon. The inner symbol changes — Score speaks numbers, Lens sees, Studio creates, Capital secures, Marketplace connects, OS commands. The tint shifts to give each product its own voice without breaking the family.</p>
+
+    <div class="subproduct-grid">
+
+      <!-- Vesara Score -->
+      <div class="subproduct">
+        <div class="subproduct-canvas">
+          <svg width="120" height="120" viewBox="0 0 64 64" role="img" aria-label="Vesara Score mark">
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linejoin="round"/>
+            <text x="32" y="40" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="18" letter-spacing="-0.5" fill="#10B981">73</text>
+          </svg>
+        </div>
+        <div class="subproduct-meta">
+          <div class="subproduct-row">
+            <span class="subproduct-name">Vesara Score</span>
+            <span class="subproduct-tint" style="background:#10B981"></span>
+          </div>
+          <div class="subproduct-desc">0–100 listing score. Emerald — the core product.</div>
+          <div class="subproduct-file">vesara-score-mark.svg · #10B981</div>
+        </div>
+      </div>
+
+      <!-- Vesara Lens -->
+      <div class="subproduct">
+        <div class="subproduct-canvas">
+          <svg width="120" height="120" viewBox="0 0 64 64" role="img" aria-label="Vesara Lens mark">
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#06B6D4" stroke-width="2.5" stroke-linejoin="round"/>
+            <circle cx="32" cy="32" r="9" fill="none" stroke="#06B6D4" stroke-width="2.2"/>
+            <circle cx="32" cy="32" r="3" fill="#06B6D4"/>
+          </svg>
+        </div>
+        <div class="subproduct-meta">
+          <div class="subproduct-row">
+            <span class="subproduct-name">Vesara Lens</span>
+            <span class="subproduct-tint" style="background:#06B6D4"></span>
+          </div>
+          <div class="subproduct-desc">Photo &amp; copy analyzer. Cyan — sees, perceives.</div>
+          <div class="subproduct-file">vesara-lens-mark.svg · #06B6D4</div>
+        </div>
+      </div>
+
+      <!-- Vesara Studio -->
+      <div class="subproduct">
+        <div class="subproduct-canvas">
+          <svg width="120" height="120" viewBox="0 0 64 64" role="img" aria-label="Vesara Studio mark">
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#8B5CF6" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M22 21 L22 41 L29 36 L33 44 L36 42 L32 35 L40 35 Z" fill="#8B5CF6"/>
+          </svg>
+        </div>
+        <div class="subproduct-meta">
+          <div class="subproduct-row">
+            <span class="subproduct-name">Vesara Studio</span>
+            <span class="subproduct-tint" style="background:#8B5CF6"></span>
+          </div>
+          <div class="subproduct-desc">AI rewrite + visual editor. Purple — creative.</div>
+          <div class="subproduct-file">vesara-studio-mark.svg · #8B5CF6</div>
+        </div>
+      </div>
+
+      <!-- Vesara Capital -->
+      <div class="subproduct">
+        <div class="subproduct-canvas">
+          <svg width="120" height="120" viewBox="0 0 64 64" role="img" aria-label="Vesara Capital mark">
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#D4AF37" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M32 19 L43 24 V34 C43 39 38 43 32 45 C26 43 21 39 21 34 V24 Z" fill="none" stroke="#D4AF37" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M32 28 V38 M28 31 H35 M29 35 H35" stroke="#D4AF37" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="subproduct-meta">
+          <div class="subproduct-row">
+            <span class="subproduct-name">Vesara Capital</span>
+            <span class="subproduct-tint" style="background:#D4AF37"></span>
+          </div>
+          <div class="subproduct-desc">Embedded fintech. Gold — financial, premium.</div>
+          <div class="subproduct-file">vesara-capital-mark.svg · #D4AF37</div>
+        </div>
+      </div>
+
+      <!-- Vesara Marketplace -->
+      <div class="subproduct">
+        <div class="subproduct-canvas">
+          <svg width="120" height="120" viewBox="0 0 64 64" role="img" aria-label="Vesara Marketplace mark">
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#F97316" stroke-width="2.5" stroke-linejoin="round"/>
+            <line x1="24" y1="24" x2="40" y2="40" stroke="#F97316" stroke-width="1.4" opacity="0.55"/>
+            <line x1="40" y1="24" x2="24" y2="40" stroke="#F97316" stroke-width="1.4" opacity="0.55"/>
+            <line x1="24" y1="24" x2="40" y2="24" stroke="#F97316" stroke-width="1.4" opacity="0.55"/>
+            <line x1="24" y1="40" x2="40" y2="40" stroke="#F97316" stroke-width="1.4" opacity="0.55"/>
+            <circle cx="24" cy="24" r="3" fill="#F97316"/>
+            <circle cx="40" cy="24" r="3" fill="#F97316"/>
+            <circle cx="24" cy="40" r="3" fill="#F97316"/>
+            <circle cx="40" cy="40" r="3" fill="#F97316"/>
+          </svg>
+        </div>
+        <div class="subproduct-meta">
+          <div class="subproduct-row">
+            <span class="subproduct-name">Vesara Marketplace</span>
+            <span class="subproduct-tint" style="background:#F97316"></span>
+          </div>
+          <div class="subproduct-desc">Vendor network. Coral — energy, transactions.</div>
+          <div class="subproduct-file">vesara-marketplace-mark.svg · #F97316</div>
+        </div>
+      </div>
+
+      <!-- VesaraOS -->
+      <div class="subproduct">
+        <div class="subproduct-canvas">
+          <svg width="120" height="120" viewBox="0 0 64 64" role="img" aria-label="VesaraOS mark">
+            <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M22 26 L28 32 L22 38" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="32" y="36" width="10" height="3" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <div class="subproduct-meta">
+          <div class="subproduct-row">
+            <span class="subproduct-name">VesaraOS</span>
+            <span class="subproduct-tint" style="background:#FFFFFF"></span>
+          </div>
+          <div class="subproduct-desc">Platform &amp; CLI. White — foundational, neutral.</div>
+          <div class="subproduct-file">vesara-os-mark.svg · #FFFFFF</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Favicon test strip — proves recognizability at 16px -->
+    <div class="subproduct-favicon-strip" aria-label="16px favicon test">
+      <div>
+        <svg width="16" height="16" viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><text x="32" y="42" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="20" fill="#10B981">73</text></svg>
+        <span class="label">Score</span>
+      </div>
+      <div>
+        <svg width="16" height="16" viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#06B6D4" stroke-width="3.2" stroke-linejoin="round"/><circle cx="32" cy="32" r="10" fill="none" stroke="#06B6D4" stroke-width="3"/><circle cx="32" cy="32" r="4" fill="#06B6D4"/></svg>
+        <span class="label">Lens</span>
+      </div>
+      <div>
+        <svg width="16" height="16" viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#8B5CF6" stroke-width="3.2" stroke-linejoin="round"/><path d="M22 21 L22 41 L29 36 L33 44 L36 42 L32 35 L40 35 Z" fill="#8B5CF6"/></svg>
+        <span class="label">Studio</span>
+      </div>
+      <div>
+        <svg width="16" height="16" viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#D4AF37" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 19 L43 24 V34 C43 39 38 43 32 45 C26 43 21 39 21 34 V24 Z" fill="none" stroke="#D4AF37" stroke-width="2.6"/></svg>
+        <span class="label">Capital</span>
+      </div>
+      <div>
+        <svg width="16" height="16" viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#F97316" stroke-width="3.2" stroke-linejoin="round"/><circle cx="24" cy="24" r="4" fill="#F97316"/><circle cx="40" cy="24" r="4" fill="#F97316"/><circle cx="24" cy="40" r="4" fill="#F97316"/><circle cx="40" cy="40" r="4" fill="#F97316"/></svg>
+        <span class="label">Market</span>
+      </div>
+      <div>
+        <svg width="16" height="16" viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linejoin="round"/><path d="M22 26 L28 32 L22 38" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="32" y="36" width="10" height="3.2" fill="#FFFFFF"/></svg>
+        <span class="label">OS</span>
+      </div>
     </div>
   </section>
 
@@ -364,6 +553,24 @@
       </a>
       <a class="download" href="vesara-logo-mark-badge.svg" download>
         <div><div class="download-name">App icon · badge</div><div class="download-meta">vesara-logo-mark-badge.svg</div></div><span class="download-arrow">&darr;</span>
+      </a>
+      <a class="download" href="vesara-score-mark.svg" download>
+        <div><div class="download-name">Vesara Score · mark</div><div class="download-meta">vesara-score-mark.svg</div></div><span class="download-arrow">&darr;</span>
+      </a>
+      <a class="download" href="vesara-lens-mark.svg" download>
+        <div><div class="download-name">Vesara Lens · mark</div><div class="download-meta">vesara-lens-mark.svg</div></div><span class="download-arrow">&darr;</span>
+      </a>
+      <a class="download" href="vesara-studio-mark.svg" download>
+        <div><div class="download-name">Vesara Studio · mark</div><div class="download-meta">vesara-studio-mark.svg</div></div><span class="download-arrow">&darr;</span>
+      </a>
+      <a class="download" href="vesara-capital-mark.svg" download>
+        <div><div class="download-name">Vesara Capital · mark</div><div class="download-meta">vesara-capital-mark.svg</div></div><span class="download-arrow">&darr;</span>
+      </a>
+      <a class="download" href="vesara-marketplace-mark.svg" download>
+        <div><div class="download-name">Vesara Marketplace · mark</div><div class="download-meta">vesara-marketplace-mark.svg</div></div><span class="download-arrow">&darr;</span>
+      </a>
+      <a class="download" href="vesara-os-mark.svg" download>
+        <div><div class="download-name">VesaraOS · mark</div><div class="download-meta">vesara-os-mark.svg</div></div><span class="download-arrow">&darr;</span>
       </a>
       <a class="download" href="vesara-logo-wordmark.svg" download>
         <div><div class="download-name">Wordmark only</div><div class="download-meta">vesara-logo-wordmark.svg</div></div><span class="download-arrow">&darr;</span>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Vesara Score mark">
+  <title>Vesara Score</title>
+  <path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linejoin="round"/>
+  <text x="32" y="40" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="18" letter-spacing="-0.5" fill="#10B981">73</text>
+</svg>
