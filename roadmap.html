@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vesara — Public Roadmap</title>
+<meta name="description" content="What's shipping next, what's in flight, what's planned. Founders' Flock customers vote on quarterly priorities.">
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="design-system.css">
+<style>
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); margin: 0; }
+  .nav { position: sticky; top: 0; backdrop-filter: blur(14px); background: rgba(5,5,5,0.78); border-bottom: 1px solid var(--border); z-index: 50; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 600; }
+  .brand svg { width: 22px; height: 22px; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; margin-left: 24px; }
+  .nav-cta { background: var(--accent); color: #000; padding: 8px 16px; border-radius: var(--r-md); font-weight: 600; }
+  .hero { max-width: 980px; margin: 0 auto; padding: 80px 24px 32px; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1px solid var(--accent); background: var(--accent-dim); color: var(--accent); border-radius: var(--r-full); font-size: 12px; margin-bottom: 24px; }
+  h1 { font-size: clamp(40px, 6vw, 64px); font-weight: 700; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 20px; }
+  h1 .accent { color: var(--accent); font-style: italic; font-family: var(--font-serif); }
+  .lede { font-size: 19px; color: var(--text-secondary); max-width: 720px; line-height: 1.55; }
+  .layout { max-width: 1200px; margin: 48px auto; padding: 0 24px 100px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 1000px) { .layout { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .layout { grid-template-columns: 1fr; } }
+  .col { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 24px; min-height: 600px; }
+  .col-header { padding-bottom: 16px; border-bottom: 1px solid var(--border); margin-bottom: 16px; }
+  .col-name { font-size: 18px; font-weight: 600; }
+  .col-count { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+  .col.shipped .col-name { color: var(--accent); }
+  .col.in-flight .col-name { color: var(--info); }
+  .col.next .col-name { color: var(--warning); }
+  .col.future .col-name { color: var(--text-secondary); }
+  .item { padding: 12px 14px; background: var(--surface-2); border-radius: var(--r-md); margin-bottom: 8px; border: 1px solid transparent; }
+  .item-id { font-family: var(--font-mono); font-size: 10px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; }
+  .item-title { font-size: 13.5px; font-weight: 500; margin-top: 4px; line-height: 1.4; }
+  .item-vote { display: flex; gap: 6px; align-items: center; margin-top: 8px; font-size: 11px; color: var(--text-tertiary); }
+  .vote-bar { flex: 1; height: 4px; background: var(--surface-3); border-radius: var(--r-full); overflow: hidden; }
+  .vote-fill { height: 100%; background: var(--accent); border-radius: var(--r-full); }
+  .footer { padding: 48px 24px; text-align: center; color: var(--text-tertiary); font-size: 13px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="brand"><svg viewBox="0 0 64 64"><path d="M32 4 L56 18 V46 L32 60 L8 46 V18 Z" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linejoin="round"/><path d="M32 20 L44 40 H20 Z" fill="#10B981"/></svg><span>Vesara · Roadmap</span></a>
+  <div class="nav-links"><a href="changelog.html">Changelog</a><a href="dashboard.html">Dashboard</a><a href="signup.html" class="nav-cta">Claim a seat →</a></div>
+</nav>
+
+<section class="hero">
+  <span class="pill">● Public roadmap · Founders' Flock votes on Q3 priorities</span>
+  <h1>What's <span class="accent">shipping next.</span></h1>
+  <p class="lede">100 phases. 13 shipped. 4 in flight. Public, voted, transparent. Founders' Flock customers get 3 votes per quarterly priorities review — last quarter's #1 vote shipped 6 weeks later.</p>
+</section>
+
+<div class="layout">
+
+  <div class="col shipped">
+    <div class="col-header">
+      <div class="col-name">● Shipped</div>
+      <div class="col-count">13 phases live</div>
+    </div>
+    <div class="item"><div class="item-id">Phase 02</div><div class="item-title">Listing IQ scoring engine (22 dimensions)</div></div>
+    <div class="item"><div class="item-id">Phase 13</div><div class="item-title">Founders' Flock referral + seat allocation</div></div>
+    <div class="item"><div class="item-id">Phase 14</div><div class="item-title">Business model toggle (arbitrage/PM/hybrid)</div></div>
+    <div class="item"><div class="item-id">Phase 15</div><div class="item-title">Review intelligence layer</div></div>
+    <div class="item"><div class="item-id">Phase 16</div><div class="item-title">Competitor intelligence engine</div></div>
+    <div class="item"><div class="item-id">Phase 18</div><div class="item-title">Pricing intelligence overlay (12 anomaly rules)</div></div>
+    <div class="item"><div class="item-id">Phase 19</div><div class="item-title">Search visibility (CSVS channel-weighted)</div></div>
+    <div class="item"><div class="item-id">Phase 21</div><div class="item-title">AI Coach widget (in-product chat)</div></div>
+    <div class="item"><div class="item-id">Phase 22</div><div class="item-title">Vesara Lift Score (closed-loop ROI)</div></div>
+    <div class="item"><div class="item-id">Phase 27</div><div class="item-title">Triple-brain consensus engine</div></div>
+    <div class="item"><div class="item-id">Phase 28</div><div class="item-title">Anonymous Comp Pool (k-anonymity ≥5)</div></div>
+    <div class="item"><div class="item-id">Phase 35</div><div class="item-title">Property Digital Twin (JSONB twin_state)</div></div>
+    <div class="item"><div class="item-id">Phase 47</div><div class="item-title">Onboarding wizard (60-second first score)</div></div>
+    <div class="item"><div class="item-id">Phase 47b</div><div class="item-title">Zero-touch autonomous onboarding</div></div>
+    <div class="item"><div class="item-id">Phase 48</div><div class="item-title">Pricing page + Stripe checkout</div></div>
+  </div>
+
+  <div class="col in-flight">
+    <div class="col-header">
+      <div class="col-name">◐ In flight</div>
+      <div class="col-count">Q2 2026</div>
+    </div>
+    <div class="item"><div class="item-id">Phase 17</div><div class="item-title">Ranking engine (channel-specific position tracking)</div></div>
+    <div class="item"><div class="item-id">Phase 20</div><div class="item-title">Owner Portal v1</div></div>
+    <div class="item"><div class="item-id">Phase 25</div><div class="item-title">Vacasa Refugee Kit (47-second migration)</div></div>
+    <div class="item"><div class="item-id">Phase 38</div><div class="item-title">Founders' Flock launch playbook</div></div>
+    <div class="item"><div class="item-id">Phase 42</div><div class="item-title">Onboarding & activation engine</div></div>
+  </div>
+
+  <div class="col next">
+    <div class="col-header">
+      <div class="col-name">→ Next quarter</div>
+      <div class="col-count">Q3 2026 · vote open</div>
+    </div>
+    <div class="item">
+      <div class="item-id">Phase 24</div>
+      <div class="item-title">Predictive owner defection ML</div>
+      <div class="item-vote">
+        <div class="vote-bar"><div class="vote-fill" style="width: 78%;"></div></div>
+        <span>78%</span>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-id">Phase 26</div>
+      <div class="item-title">Owner Statement Transparency</div>
+      <div class="item-vote">
+        <div class="vote-bar"><div class="vote-fill" style="width: 64%;"></div></div>
+        <span>64%</span>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-id">Phase 29</div>
+      <div class="item-title">Vendor Marketplace (12% take rate)</div>
+      <div class="item-vote">
+        <div class="vote-bar"><div class="vote-fill" style="width: 52%;"></div></div>
+        <span>52%</span>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-id">Phase 32</div>
+      <div class="item-title">Voice Agent for guest issues</div>
+      <div class="item-vote">
+        <div class="vote-bar"><div class="vote-fill" style="width: 48%;"></div></div>
+        <span>48%</span>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-id">Phase 33</div>
+      <div class="item-title">Real-Time A/B Testing Engine</div>
+      <div class="item-vote">
+        <div class="vote-bar"><div class="vote-fill" style="width: 38%;"></div></div>
+        <span>38%</span>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-id">Phase 40</div>
+      <div class="item-title">Owner AI Concierge (read layer)</div>
+      <div class="item-vote">
+        <div class="vote-bar"><div class="vote-fill" style="width: 71%;"></div></div>
+        <span>71%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col future">
+    <div class="col-header">
+      <div class="col-name">○ On the horizon</div>
+      <div class="col-count">Year 2-5</div>
+    </div>
+    <div class="item"><div class="item-id">Phase 30</div><div class="item-title">Autopilot tier ($1,499/mo Vacasa killer)</div></div>
+    <div class="item"><div class="item-id">Phase 34</div><div class="item-title">Generative Photo Upgrades</div></div>
+    <div class="item"><div class="item-id">Phase 37</div><div class="item-title">Mobile app (iOS + Android)</div></div>
+    <div class="item"><div class="item-id">Phase 41</div><div class="item-title">Owner Concierge action layer</div></div>
+    <div class="item"><div class="item-id">Phase 50</div><div class="item-title">Multi-tenant enterprise architecture</div></div>
+    <div class="item"><div class="item-id">Phase 52</div><div class="item-title">Vesara Index (S&P-for-STR public benchmark)</div></div>
+    <div class="item"><div class="item-id">Phase 78</div><div class="item-title">Vesara Capital LP fund</div></div>
+    <div class="item"><div class="item-id">Phase 87</div><div class="item-title">EU + UK international expansion</div></div>
+    <div class="item"><div class="item-id">Phase 90</div><div class="item-title">5-year Horizon vision (north star)</div></div>
+    <div class="item"><div class="item-id">Phase 100</div><div class="item-title">Vesara North Star (capstone)</div></div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  Want to vote? Become a Founders' Flock customer — every active seat votes on quarterly priorities.<br>
+  See full 100-phase roadmap at vesara-workspace GitHub repo (private, available to investors + Founders' Flock).
+</footer>
+</body>
+</html>
