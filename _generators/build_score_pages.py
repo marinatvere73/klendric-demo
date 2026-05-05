@@ -85,6 +85,24 @@ def render_page(p: dict) -> str:
     note_html = f'<div class="note-box">★ {note}</div>' if note else ""
     test_html = f'<div class="note-box test">⚡ ACTIVE TEST: {test}</div>' if test else ""
 
+    # Data confidence + Guesty truth banner (added 2026-05-05)
+    confidence = p.get("data_confidence", "")
+    occ_pl_raw = p.get("occ_60d_pl_raw")
+    pl_delta = p.get("pl_guesty_delta_pp")
+    confidence_html = ""
+    if confidence and ("LOW" in confidence or "MEDIUM" in confidence) and pl_delta:
+        confidence_html = (
+            f'<div class="note-box" style="background: rgba(239,68,68,0.10); border-color: var(--critical); color: var(--critical);">'
+            f'⚠ DATA CORRECTION 2026-05-05: occupancy figures updated to Guesty paying-revenue truth. '
+            f'PriceLabs raw was {occ_pl_raw}% (60d), Guesty truth is {p.get("occ_60d")}% — delta {pl_delta}pp. '
+            f'Confidence: {confidence}.'
+            f'</div>'
+        )
+    elif confidence == "HIGH":
+        confidence_html = (
+            f'<div class="note-box" style="font-size: 12.5px;">✓ Data confidence: HIGH — PriceLabs and Guesty revenue truth aligned.</div>'
+        )
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -216,6 +234,7 @@ def render_page(p: dict) -> str:
 
 {note_html}
 {test_html}
+{confidence_html}
 
 <section class="score-hero-row">
   <div class="score-card">
